@@ -5,6 +5,7 @@ Github Repository for the SOEN341 W2023 - By
 - Andrew Chebli 
 - Luis Ramirez 
 - Sepehr Mohebbi
+- Ruaid Usmani
 
 ## Project Description
 In this project, we will design a career services platform (website) aimed at two main types of clients: job-seeking students and employers. The students will be able to browse and apply to job postings, while the employers will be able to make job postings and seek out candidates. The functionalities of this platform are similiar to that of Concordia's COMPASS platform, but we also implement some unique functionalities. 
