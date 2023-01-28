@@ -29,6 +29,7 @@ Employees:
  Admins:
  - Ability to edit/remove postings
  - Ability to edit/remove reported postings
+ - Ability to block/remove a user
  
  (Keep in mind that this list may be updated with more features as the project progresses)
  
