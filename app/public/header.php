@@ -16,7 +16,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="#">Option 1</a>
-        </li>
+        </li> 
         <li class="nav-item">
           <a class="nav-link" href="#">Option 2 </a>
         </li>

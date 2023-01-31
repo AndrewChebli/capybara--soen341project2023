@@ -11,8 +11,10 @@
   <body>
     <?php include "header.php" ?> 
 
-    <div id="container">
-      <h1 class="text-justify"> Welcome to JobHive. </h1>
+    <div class="mx-auto" style="padding: 300px;">
+      
+      <h1 class="text-center" > Welcome to JobHive. </h1>
+      <p class="text-center"> The professional hive for all your needs, for employers and employees. </p>
     </div>
 
     <script src="js/bootstrap.bundle.min.js"></script>
