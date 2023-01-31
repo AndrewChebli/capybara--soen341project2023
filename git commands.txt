@@ -1,0 +1,9 @@
+git init (in right directory)
+git checkout -b "branch"
+git add .
+git commit -m "message"
+git remote add origin <link>
+git push 
+
+
+git clone --branch <branchname> <remote-repo-url>
