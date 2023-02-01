@@ -32,7 +32,8 @@ Employees:
  - Ability to block/remove a user
  
  (Keep in mind that this list may be updated with more features as the project progresses)
- 
+ Flowchat 
+![Flowchart Soen341T](https://user-images.githubusercontent.com/43799537/216101877-c18b5891-4db4-44f6-895e-2baa2f133b11.png)
 
 ## Roles of each Team Member
 TBD
