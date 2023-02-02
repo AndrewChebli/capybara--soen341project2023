@@ -35,4 +35,9 @@ Employees:
  
 
 ## Roles of each Team Member
-TBD
+- Samuel Lopez-Ferrada : Full Stack Developer
+- Gabriel Frenette : Full Stack Developer
+- Andrew Chebli : Full Stack Developer
+- Luis Ramirez : Full Stack Developer
+- Sepehr Mohebbi: Full Stack Developer
+- Ruaid Usmani: Full Stack Developer
