@@ -35,7 +35,7 @@ Employees:
  
 
 ## Roles of each Team Member
-- Samuel Lopez-Ferrada : Full Stack Developer
+- Samuel Lopez-Ferrada : Software Architect
 - Gabriel Frenette : Full Stack Developer
 - Andrew Chebli : Full Stack Developer
 - Luis Ramirez : Full Stack Developer
