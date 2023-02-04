@@ -1,0 +1,88 @@
+[
+  {
+    "Deleted": false,
+    "User ID": 1,
+    "Db id": 1,
+    "Is_emp": true,
+    "Is_company": false,
+    "First name": "John",
+    "Last name": "Doe",
+    "Previous experience": {
+      "Start year": 2015,
+      "End year": 2019,
+      "Company": "Company A",
+      "Position": "Software Engineer"
+    },
+    "Education": {
+      "Start year": 2011,
+      "End year": 2015,
+      "School": "University of California, Berkeley",
+      "Degree": "Computer Science"
+    }
+  },
+  {
+    "Deleted": false,
+    "User ID": 2,
+    "Db id": 2,
+    "Is_emp": false,
+    "Is_company": false,
+    "First name": "Jane",
+    "Last name": "Doe",
+    "Previous experience": {
+      "Start year": 2013,
+      "End year": 2018,
+      "Company": "Company B",
+      "Position": "Product Manager"
+    },
+    "Education": {
+      "Start year": 2009,
+      "End year": 2013,
+      "School": "Stanford University",
+      "Degree": "Product Design"
+    }
+  },
+
+  {
+    "Deleted": false,
+    "User ID": 3,
+    "Db id": 3,
+    "Is_emp": true,
+    "Is_company": false,
+    "First name": "Tran",
+    "Last name": "Gaga",
+    "Previous experience": {
+      "Start year": 2012,
+      "End year": 2019,
+      "Company": "Company Foo",
+      "Position": "Data Analyst"
+    },
+    "Education": {
+      "Start year": 2002,
+      "End year": 2012,
+      "School": "Preppy school",
+      "Degree": "Data Analysm"
+    }
+  },
+  
+  {
+    "Deleted": false,
+    "User ID": 20,
+    "Db id": 20,
+    "Is_emp": true,
+    "Is_company": false,
+    "First name": "Bobby",
+    "Last name": "Grangran",
+    "Previous experience": {
+      "Start year": 2012,
+      "End year": 2017,
+      "Company": "Company T",
+      "Position": "Overpaid Engineer"
+    },
+    "Education": {
+      "Start year": 2003,
+      "End year": 2006,
+      "School": "Big name school",
+      "Degree": "Degree for big job"
+    }
+  }
+]
