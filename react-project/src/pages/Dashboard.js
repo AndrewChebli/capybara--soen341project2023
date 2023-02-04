@@ -1,4 +1,3 @@
-import { React, useState, useContext } from "react";
 import job_postings from "../job_postings.json";
 import JobPosting from "../components/JobPosting";
 

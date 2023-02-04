@@ -113,7 +113,7 @@ function HeaderBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            JOB HIVE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
