@@ -8,10 +8,8 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import HomeIcon from '@mui/icons-material/Home';
 
 
 const settings = ['Login','SignUp'];
@@ -39,7 +37,6 @@ function ResponsiveHeader() {
     <AppBar color="error" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        {/* <HomeIcon sx={{ fontSize: 20, }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -89,7 +86,6 @@ function ResponsiveHeader() {
             >
             </Menu>
           </Box>
-          {/* <HomeIcon sx={{ fontSize: 40 }} /> */}
           <Typography
             variant="h5"
             noWrap
