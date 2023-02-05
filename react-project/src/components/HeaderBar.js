@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 
-const pages = ["Home", "Dashboard", "Offers", "About"];
+const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HeaderBar() {

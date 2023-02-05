@@ -48,14 +48,13 @@ function JobPosting(job_posting) {
   console.log(job.CompanyName);
   let title = job.CompanyName;
   return (
-    <Card sx={{ maxWidth: 1500 }}>
+    <Card sx={{ maxWidth: 1200 ,flexDirection: 2} }>
       <CardActionArea>
         <CardContent>
         <Avatar {...stringAvatar(title)} />
           <Typography gutterBottom variant="h4" component="div">
             {job.CompanyName}
           </Typography>
-        
           <Typography gutterBottom variant="h5" component="div">
             {job.JobTitle}
           </Typography>
