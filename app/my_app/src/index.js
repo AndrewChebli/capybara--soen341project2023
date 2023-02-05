@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Heading from "./Components/heading"
+import ResponsiveHeader from "./Components/header";
 
 ReactDOM.render(
-    <Heading/>,
+    <ResponsiveHeader/>,
   document.getElementById("root")
 );
