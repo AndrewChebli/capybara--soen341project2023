@@ -6,11 +6,17 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.11.0",
 >>>>>>> 4c0a8a2 (creating component: header, navbar postlogin)
+=======
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@mui/icons-material": "^5.11.0",
+>>>>>>> 20074d311d9ba128a0fcfd6ac4c6d1765f04c870
     "@mui/material": "^5.11.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
