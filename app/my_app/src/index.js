@@ -1,8 +1,8 @@
+import App from "./App"
 import React from "react";
 import ReactDOM from "react-dom";
-import ResponsiveHeader from "./Components/header";
 
 ReactDOM.render(
-    <ResponsiveHeader/>,
+    <App/>,
   document.getElementById("root")
 );
