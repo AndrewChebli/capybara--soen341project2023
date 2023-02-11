@@ -38,7 +38,7 @@ Employees:
 ![Final-Flowchart-fix](https://user-images.githubusercontent.com/43799537/218161834-f522d040-fcf9-4025-9bd0-135c71b4b52a.png)
 
 ## Roles of each Team Member
-- Samuel Lopez-Ferrada : Full Stack Developer
+- Samuel Lopez-Ferrada : Software Architect
 - Gabriel Frenette : Full Stack Developer
 - Andrew Chebli : Full Stack Developer
 - Luis Ramirez : Full Stack Developer
