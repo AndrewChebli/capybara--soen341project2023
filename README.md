@@ -32,7 +32,10 @@ Employees:
  - Ability to block/remove a user
  
  (Keep in mind that this list may be updated with more features as the project progresses)
+##Flowchat 
  
+ 
+![Final-Flowchart-fix](https://user-images.githubusercontent.com/43799537/218161834-f522d040-fcf9-4025-9bd0-135c71b4b52a.png)
 
 ## Roles of each Team Member
 - Samuel Lopez-Ferrada : Full Stack Developer
