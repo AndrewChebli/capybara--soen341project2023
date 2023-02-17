@@ -14,8 +14,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
+import { Link } from "react-router-dom";
 
-const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp","Profile","EditProfile"];
+const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp","Profile","EditProfile", "ProfilePageEmployer", "EditProfileEmployer"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HeaderBar() {
@@ -155,7 +156,7 @@ function HeaderBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

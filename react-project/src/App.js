@@ -7,6 +7,8 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
+import ProfilePageEmployer from "./pages/ProfilePageEmployer";
+import EditProfilePageEmployer from "./pages/EditProfilePageEmployer";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/SignUp" element={<SignUpPage />} />
           <Route path="/Profile" element={<ProfilePage />} />
           <Route path="/EditProfile" element={<EditProfilePage />} />
+          <Route path="/ProfilePageEmployer" element={<ProfilePageEmployer />} />
+          <Route path="/EditProfileEmployer" element={<EditProfilePageEmployer />} />
         </Routes>
       </BrowserRouter>
     </div>
