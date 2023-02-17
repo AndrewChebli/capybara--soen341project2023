@@ -15,11 +15,9 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import { useEffect } from "react";
-import { useState } from "react";
 import Dashboard from "../pages/Dashboard";
-import Divider from "@mui/material/Divider";
-import SignInPage from "./SignIn";
-import SignUpPage from "./SignUp";
+import SignInPage from "../pages/SignInPage";
+import SignUpPage from "../pages/SignUpPage";
 
 const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -33,7 +31,7 @@ function HeaderBar() {
   useEffect(() => {
    
     console.log("HeaderBar: useEffect");
-    console.log("current_view: ", current_view);
+
     if(current_view === "Home"){
       current_component =  <Dashboard/>;
     }else if(current_view === "Dashboard"){
@@ -48,7 +46,7 @@ function HeaderBar() {
       current_component =  <SignUpPage />;
     }
   }, [current_view]);
-
+  console.log("current_view: ", current_view);
   const handleOpenNavMenu = (event) => {
   };
   const handleOpenUserMenu = (event) => {
@@ -148,7 +146,8 @@ function HeaderBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
-              
+                to = {page}
+                href = {page}
               >
                 {page}
               </Button>
