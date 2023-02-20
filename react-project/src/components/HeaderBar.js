@@ -14,24 +14,53 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
+
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import Dashboard from "../pages/Dashboard";
+import Divider from "@mui/material/Divider";
+import SignInPage from "./SignIn";
+import SignUpPage from "./SignUp";
+
 
 const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp","Profile","EditProfile", "ProfilePageEmployer", "EditProfileEmployer"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
+let current_component = null;
 function HeaderBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [current_view, set_current_view] = React.useState("Home");
+
+  useEffect(() => {
+   
+    console.log("HeaderBar: useEffect");
+    console.log("current_view: ", current_view);
+    if(current_view === "Home"){
+      current_component =  <Dashboard/>;
+    }else if(current_view === "Dashboard"){
+      current_component =  <Dashboard />;
+    }else if(current_view === "Offers"){
+      current_component =  <Dashboard />;
+    }else if(current_view === "About"){
+      current_component =  <Dashboard />;
+    }else if(current_view === "SignIn"){
+      current_component =  <SignInPage />;
+    }else if(current_view === "SignUp"){
+      current_component =  <SignUpPage />;
+    }
+  }, [current_view]);
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = (event) => {
-    console.log(event.currentTarget);
+    console.log(event.currentTarget.textContent);
+    set_current_view(event.currentTarget.textContent);
+
     setAnchorElNav(null);
   };
 
@@ -122,7 +151,7 @@ function HeaderBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
-                href={page}
+              
               >
                 {page}
               </Button>
@@ -164,7 +193,8 @@ function HeaderBar() {
           </Box>
         </Toolbar>
       </Container>
-    </AppBar>
+     
+      </AppBar>
   );
 }
 export default HeaderBar;
