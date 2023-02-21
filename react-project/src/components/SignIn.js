@@ -44,16 +44,17 @@ export default function SignIn() {
               password: data.get('password'),
             })
         });
-        
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
+
     
         const resp = await response.json();
         console.log(resp);
         if (resp.status === "success") {
           console.log(resp.status);
+          console.log(JSON.stringify(resp.data.firstname));
+          localStorage.setItem("firstName", JSON.stringify(resp.data.firstname));
+          localStorage.setItem("lastName", JSON.stringify(resp.data.lastname));
+          localStorage.setItem("email", JSON.stringify(resp.data.email));
+          localStorage.setItem("response", JSON.stringify(resp.data));
           alert("Login Successful");
           window.location.href = "http://localhost:3000/Dashboard";
         }else{
@@ -73,7 +74,7 @@ export default function SignIn() {
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'stretch',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

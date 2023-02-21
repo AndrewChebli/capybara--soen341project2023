@@ -15,7 +15,7 @@ mongoose.connect("mongodb+srv://root:1234@soen341.4bcqb8l.mongodb.net/SOEN341");
 mongoose.connection.once("open", () => {
   console.log("connected to database");
   db = mongoose.connection.db;
-}); 
+});
 //===================END OF CONNECTION BLOCK===================
 
 //=======================ENDPOINTS=============================
@@ -23,40 +23,70 @@ mongoose.connection.once("open", () => {
 //=====================REGISTER ENDPOINT=======================
 
 app.post("/register", async (req, res) => {
-
   console.log("register attempt from " + req.body.email);
   console.log("BODY  : " + JSON.stringify(req.body));
 
   const { firstName, lastName, email, password } = req.body;
-  const user = new UserRegisterModel({
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    password: password,
-  });
-  await user.save();
-  res.send(user);
-});
+  const { dateStartedSchool, dateCompletedSchool, school, academicProgram } =
+    req.body;
+  const {
+    dateStartedWork,
+    dateCompletedWork,
+    companyName,
+    jobTitle,
+    Description,
+  } = req.body;
 
+  console.log("lastName " + lastName)
+
+  try {
+    await UserRegisterModel.create({
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      password: password,
+      education: {
+        Start: dateStartedSchool,
+        End: dateCompletedSchool,
+        School: school,
+        Degree: academicProgram,
+      },
+      previousExperience: [
+        {
+          Start: dateStartedWork,
+          End: dateCompletedWork,
+          Company: companyName,
+          Position: jobTitle,
+          Description: Description,
+        },
+      ],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  res.json({ status: "success" });
+});
 
 //=====================LOGIN ENDPOINT=======================
 app.post("/login", async (req, res) => {
   console.log("login attempt from " + req.body.email);
   console.log("BODY  : " + JSON.stringify(req.body));
-  
+
   const { email, password } = req.body;
   const database_response = await UserLoginModel.findOne({
     email: email,
     password: password,
-  });
+  }, {
 
-  if (database_response) {
-    res.send({ status: "success" });
   }
-  else {
+  );
+  console.log(JSON.stringify(database_response))
+  console.log("database_response : " + database_response)
+  if (database_response) {
+    res.send({ status: "success", data: database_response });
+  } else {
     res.send({ status: "failed" });
   }
-
 });
 
 //=====================END OF ENDPOINTS=======================

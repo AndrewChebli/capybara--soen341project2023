@@ -6,8 +6,6 @@ const EducationUserSchema = new mongoose.Schema(
     End : {type: String, unique: false, required: true},
     School : {type: String, unique: false, required: true},
     Degree : {type: String, unique: false, required: true},
-    Field : {type: String, unique: false, required: true},
-    Description : {type: String, unique: false, required: true},
   },{collection: "users"}
 );
 

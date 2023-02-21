@@ -48,7 +48,7 @@ function JobPosting(job_posting) {
   console.log(job.CompanyName);
   let title = job.CompanyName;
   return (
-    <Card sx={{ maxWidth: 1200 ,flexDirection: 2} }>
+    <Card sx={{ width: 1200 ,flexDirection: "column", margin: 2 } }>
       <CardActionArea>
         <CardContent>
         <Avatar {...stringAvatar(title)} />

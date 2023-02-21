@@ -35,37 +35,36 @@ Item.propTypes = {
     PropTypes.object,
   ]),
 };
-
-
+const firstName = localStorage.getItem("firstName");
+console.log(firstName);
 function Dashboard() {
 
 
   return (
     <div>
+      <h1 style={{ marginTop: 80 }}>Welcome back {firstName} </h1>
       <h1>Dashboard</h1>
       <h4>
         This is the dashboard page. It will display a list of job postings that
-        a user has applied to.
+        a user can apply to.
       </h4>
-      <div style={{ width: "80%" }}>
         <Box
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            alignContent: "baseline",
+            alignContent: "center",
             p: 10,
-            m: 10,
+            marginTop: 80,
             bgcolor: "background.paper",
             maxWidth: 1200,
             height: 300,
-            borderRadius: 1,
+            borderRadius: 10,
           }}
         >
           {job_postings.map((job_posting) => (
             <JobPosting data={job_posting} key={job_posting.id} />
           ))}
         </Box>
-      </div>
     </div>
   );
 }

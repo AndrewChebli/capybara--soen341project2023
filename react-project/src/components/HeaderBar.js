@@ -16,10 +16,15 @@ import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import { useEffect } from "react";
 import Dashboard from "../pages/Dashboard";
-import SignInPage from "../pages/SignInPage";
-import SignUpPage from "../pages/SignUpPage";
+import SignInPage from "../pages/SignInPageEmployee";
+import SignUpPage from "../pages/SignUpPageEmployee";
+import ProfilePage from "../pages/ProfilePage";
+import EditProfilePage from "../pages/EditProfilePage";
+import ProfilePageEmployer from "../pages/ProfilePageEmployer";
+import EditProfilePageEmployer from "../pages/EditProfilePageEmployer";
 
-const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+
+const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp","Profile","EditProfile", "ProfilePageEmployer", "EditProfileEmployer"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 let current_component = null;

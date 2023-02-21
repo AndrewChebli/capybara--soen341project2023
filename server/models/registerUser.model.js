@@ -14,8 +14,6 @@ const UserRegister = new mongoose.Schema(
         End: { type: String, unique: false},
         School: { type: String, unique: false},
         Degree: { type: String, unique: false},
-        Field: { type: String, unique: false},
-        Description: { type: String, unique: false },
       },
     previousExperience: [{
         Start: { type: String, unique: false},
@@ -23,7 +21,6 @@ const UserRegister = new mongoose.Schema(
         Company: { type: String, unique: false},
         Position: { type: String, unique: false},
         Description: { type: String, unique: false },
-        id : { type: Number, unique: false },
     }
     ],
   },
