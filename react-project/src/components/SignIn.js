@@ -51,10 +51,12 @@ export default function SignIn() {
         if (resp.status === "success") {
           console.log(resp.status);
           console.log(JSON.stringify(resp.data.firstname));
-          localStorage.setItem("firstName", JSON.stringify(resp.data.firstname));
-          localStorage.setItem("lastName", JSON.stringify(resp.data.lastname));
-          localStorage.setItem("email", JSON.stringify(resp.data.email));
+          localStorage.setItem("firstName", resp.data.firstname);
+          localStorage.setItem("lastName", resp.data.lastname);
+          localStorage.setItem("email", resp.data.email);
           localStorage.setItem("response", JSON.stringify(resp.data));
+          localStorage.setItem("loginStatus", "true");
+          localStorage.setItem("loginType", "user");
           alert("Login Successful");
           window.location.href = "http://localhost:3000/Dashboard";
         }else{

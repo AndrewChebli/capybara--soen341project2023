@@ -1,5 +1,7 @@
 import React from "react";
 import { Box, Grid, TextField, Typography } from "@mui/material";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 function WorkExperienceBox(registerService) {
   return (
@@ -12,7 +14,7 @@ function WorkExperienceBox(registerService) {
       }}
     >
       <Grid item xs={"auto"}>
-        <Typography component="h1" variant="h5" marginBottom={2}>
+        <Typography component="h1" variant="h4" marginBottom={2}>
           Work Experience
         </Typography>
 
@@ -54,13 +56,19 @@ function WorkExperienceBox(registerService) {
           </Grid>
           <Grid item xs={12} sm={20}>
             <TextField
+              multiline={true}
+              rows={4}
               name="Description"
               fullWidth
               id="Description"
               label="Description"
               type="text"
             />
+
           </Grid>
+          <Fab color="primary" aria-label="add" sx={{mt :2, mr: 5}}>
+              <AddIcon />
+            </Fab>
         </Grid>
       </Grid>
     </Box>

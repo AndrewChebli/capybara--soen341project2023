@@ -11,15 +11,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
 
-function SignUpBox (registerService)
-{
+function SignUpBox(registerService) {
   return (
-<ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="stretch">
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -28,15 +27,15 @@ function SignUpBox (registerService)
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h3" sx={{ mb: 2 }}>
             Sign up
           </Typography>
-          <Box
-
-            sx={{ mt: 3 }}
-          >
+          <Box sx={{ mt: 3 }}>
+            <Typography component="h1" variant="h4" margin={3} marginTop={6}>
+              Personal Information
+            </Typography>
             <Grid container spacing={3}>
-              <Grid item xs={'auto'} sm={6}>
+              <Grid item xs={"auto"} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
@@ -47,7 +46,7 @@ function SignUpBox (registerService)
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={'auto'} sm={6}>
+              <Grid item xs={"auto"} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -90,7 +89,6 @@ function SignUpBox (registerService)
                 />
               </Grid>
             </Grid>
-            
           </Box>
         </Box>
       </Container>

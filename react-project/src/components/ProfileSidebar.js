@@ -42,7 +42,7 @@ const ProfileSidebar = ({ user }) => {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: 'calc(100% - 64px)', padding: 2 }}>
         <Avatar sx={{ width: 80, height: 80, mb: 2 }} src={user.photo} alt="Profile picture" />
         <Typography variant="h6" component="div">
-          {`${user.firstName} ${user.lastName}`}
+          {`${user.name}`}
         </Typography>
         <Typography variant="body2" component="div" sx={{ marginBottom: 2 }}>
           {user.email}

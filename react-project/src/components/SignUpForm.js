@@ -8,6 +8,8 @@ import EducationBox from "./EducationBox";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { GridOnTwoTone } from "@mui/icons-material";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function Copyright(props) {
   return (
@@ -34,25 +36,24 @@ export default function SignUpForm() {
 
     //Prints the data to the console
     //User Block
-    console.log (data.get(`firstName`))
-    console.log (data.get(`lastName`))
-    console.log (data.get(`email`))
-    console.log(data.get(`password`))
-    console.log(data.get(`confirmPassword`))
+    console.log(data.get(`firstName`));
+    console.log(data.get(`lastName`));
+    console.log(data.get(`email`));
+    console.log(data.get(`password`));
+    console.log(data.get(`confirmPassword`));
 
     //Experience Block
-    console.log(data.get(`companyName`))
-    console.log(data.get(`jobTitle`))
-    console.log(data.get(`Description`))
-    console.log(data.get(`dateStartedWork`))
-    console.log(data.get(`dateCompletedWork`))
+    console.log(data.get(`companyName`));
+    console.log(data.get(`jobTitle`));
+    console.log(data.get(`Description`));
+    console.log(data.get(`dateStartedWork`));
+    console.log(data.get(`dateCompletedWork`));
 
     //Education Block
-    console.log(data.get(`school`))
-    console.log(data.get(`academicProgram`))
-    console.log(data.get(`dateStartedSchool`))
-    console.log(data.get(`dateCompletedSchool`))
-
+    console.log(data.get(`school`));
+    console.log(data.get(`academicProgram`));
+    console.log(data.get(`dateStartedSchool`));
+    console.log(data.get(`dateCompletedSchool`));
 
     const response = await fetch("http://localhost:8080/register", {
       method: "POST",
@@ -64,7 +65,7 @@ export default function SignUpForm() {
         lastName: data.get("lastName"),
         email: data.get("email"),
         password: data.get("password"),
-        
+
         companyName: data.get("companyName"),
         jobTitle: data.get("jobTitle"),
         dateStartedWork: data.get("dateStartedWork"),
@@ -79,11 +80,11 @@ export default function SignUpForm() {
     });
     console.log(response);
 
-    if (response.status === 200){
-      alert("Registration Successful")
+    if (response.status === 200) {
+      alert("Registration Successful");
       window.location.href = "/SignIn";
-    }else{
-      alert("Registration Failed")
+    } else {
+      alert("Registration Failed");
     }
   }
 
@@ -100,8 +101,10 @@ export default function SignUpForm() {
           alignItems: "stretch",
         }}
       >
-        <Grid container spacing={3} sm={"auto"} alignContent="center">
-          <SignUpBox />
+        <Grid container spacing={3} sm={12} alignContent="center">
+          <Grid item xs={12}>
+            <SignUpBox />
+          </Grid>
           <Grid item xs={12}>
             <WorkExperienceBox />
           </Grid>
@@ -109,14 +112,15 @@ export default function SignUpForm() {
             <EducationBox />
           </Grid>
         </Grid>
-        <Button
+
+      </Box>
+      <Button
           type="submit"
           variant="contained"
           sx={{ mt: 3, mb: 2, alignContent: "center" }}
         >
           Sign Up
         </Button>
-      </Box>
       <Copyright marginTop={4} />
     </Container>
   );
