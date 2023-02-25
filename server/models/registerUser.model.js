@@ -8,6 +8,8 @@ const UserRegister = new mongoose.Schema(
 
     email: { type: String, unique: false, required: true },
     password: { type: String, unique: false, required: true },
+    photo:{ type: Buffer, unique: false, required: false},
+    resume:{ type: Buffer, unique: false, required: false},
 
     education: {
         Start: { type: String, unique: false},
