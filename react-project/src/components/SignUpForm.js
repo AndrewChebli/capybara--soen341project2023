@@ -2,14 +2,18 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
-import SignUpBox from "./SignUpBox";
+import PersonalInformationBox from "./PersonalInformationBox";
 import WorkExperienceBox from "./WorkExperienceBox";
 import EducationBox from "./EducationBox";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { GridOnTwoTone } from "@mui/icons-material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import Avatar from "@mui/material/Avatar";
+import { useState } from "react";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 
 function Copyright(props) {
   return (
@@ -30,6 +34,22 @@ function Copyright(props) {
 }
 
 export default function SignUpForm() {
+  const [photo, setPhoto] = useState(null);
+
+  const handlePhotoChange = (event) => {
+    console.log("photo change")
+    setPhoto(URL.createObjectURL(event.target.files[0]));
+  };
+
+  const [resume, setResume] = useState(null);
+
+  const handleResumeChange = (event) => {
+    console.log("click");
+    setResume(event.target.files[0]);
+  };
+
+  let resume_name = resume ? resume.name : "No file chosen";
+
   async function registerService(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -65,6 +85,8 @@ export default function SignUpForm() {
         lastName: data.get("lastName"),
         email: data.get("email"),
         password: data.get("password"),
+        photo: photo,
+        resume: resume,
 
         companyName: data.get("companyName"),
         jobTitle: data.get("jobTitle"),
@@ -103,7 +125,77 @@ export default function SignUpForm() {
       >
         <Grid container spacing={3} sm={12} alignContent="center">
           <Grid item xs={12}>
-            <SignUpBox />
+            <Grid item xs={12}>
+              <Grid item xs={4}>
+                <label htmlFor="photoInput">
+                  <input
+                    id="photoInput"
+                    name="photo"
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={handlePhotoChange}
+                  />
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                  >
+                    <PhotoCamera />
+                  </IconButton>
+                </label>
+              </Grid>
+              <Grid
+                item
+                xs={4}
+                sx={{ pl: 20, justifyContent: "center", display: "flex" }}
+              >
+                <Avatar
+                  sx={{ width: 128, height: 128, marginBottom: 2 }}
+                  src={photo}
+                  alt="Profile picture"
+                />
+              </Grid>
+
+              <Grid sx={{ display: "flex", justifyContent: "center" }}>
+                <Avatar
+                  sx={{
+                    m: 5,
+                    mr: 3,
+                    bgcolor: "secondary.main",
+                    justifyContent: "center",
+                    display: "flex",
+                  }}
+                >
+                  <LockOutlinedIcon />
+                </Avatar>
+
+                <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
+                  Sign up
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <PersonalInformationBox />
+              <Grid item xs={12} sx={{m:3}}>
+                <label htmlFor="resumeInput">
+                <Typography component="h4" variant="h6">
+                    {`${resume_name}`} </Typography>
+                  <input
+                    id="resumeInput"
+                    name="resume"
+                    type="file"
+                    accept=".pdf, .docx"
+                    hidden
+                    onChange={handleResumeChange}
+                  />
+                  <AttachFileOutlinedIcon
+                    fontSize="large"
+                    color="primary"
+                  ></AttachFileOutlinedIcon>
+                </label>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <WorkExperienceBox />
@@ -112,15 +204,14 @@ export default function SignUpForm() {
             <EducationBox />
           </Grid>
         </Grid>
-
       </Box>
       <Button
-          type="submit"
-          variant="contained"
-          sx={{ mt: 3, mb: 2, alignContent: "center" }}
-        >
-          Sign Up
-        </Button>
+        type="submit"
+        variant="contained"
+        sx={{ mt: 3, mb: 2, alignContent: "center" }}
+      >
+        Sign Up
+      </Button>
       <Copyright marginTop={4} />
     </Container>
   );

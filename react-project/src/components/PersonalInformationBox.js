@@ -4,14 +4,19 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { useState } from "react";
 
 const theme = createTheme();
 
-function SignUpBox(registerService) {
+function PersonalInformationBox(registerService) {
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="stretch">
@@ -24,12 +29,6 @@ function SignUpBox(registerService) {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h3" sx={{ mb: 2 }}>
-            Sign up
-          </Typography>
           <Box sx={{ mt: 3 }}>
             <Typography component="h1" variant="h4" margin={3} marginTop={6}>
               Personal Information
@@ -88,6 +87,7 @@ function SignUpBox(registerService) {
                   autoComplete="new-password"
                 />
               </Grid>
+              
             </Grid>
           </Box>
         </Box>
@@ -96,4 +96,4 @@ function SignUpBox(registerService) {
   );
 }
 
-export default SignUpBox;
+export default PersonalInformationBox;

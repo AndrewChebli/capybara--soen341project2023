@@ -36,6 +36,7 @@ app.post("/register", async (req, res) => {
     jobTitle,
     Description,
   } = req.body;
+  const {photo, resume} = req.body;
 
   console.log("lastName " + lastName)
 
