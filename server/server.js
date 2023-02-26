@@ -46,6 +46,8 @@ app.post("/register", async (req, res) => {
       lastname: lastName,
       email: email,
       password: password,
+      photo: photo,
+      resume: resume,
       education: {
         Start: dateStartedSchool,
         End: dateCompletedSchool,
