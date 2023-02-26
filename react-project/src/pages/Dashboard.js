@@ -51,7 +51,7 @@ function Dashboard() {
         </h4>
         <Box
           sx={{
-            display: "flex",
+            display: "inline-flex",
             flexWrap: "wrap",
             alignContent: "center",
             p: 10,
@@ -59,7 +59,8 @@ function Dashboard() {
             bgcolor: "background.paper",
             maxWidth: 1200,
             height: 300,
-            borderRadius: 10,
+
+            justifyContent: 'center' 
           }}
         >
           {job_postings.map((job_posting) => (
