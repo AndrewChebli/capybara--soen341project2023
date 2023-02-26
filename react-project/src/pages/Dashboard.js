@@ -47,10 +47,10 @@ function Dashboard() {
         This is the dashboard page. It will display a list of job postings that
         a user has applied to.
       </h4>
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "100%" }}>
         <Box
           sx={{
-            display: "flex",
+            display: "inline-flex",
             flexWrap: "wrap",
             alignContent: "baseline",
             p: 10,
@@ -59,6 +59,7 @@ function Dashboard() {
             maxWidth: 1200,
             height: 300,
             borderRadius: 1,
+            justifyContent: 'center' 
           }}
         >
           {job_postings.map((job_posting) => (
