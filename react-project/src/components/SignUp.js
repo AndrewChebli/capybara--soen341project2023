@@ -115,16 +115,16 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container sx={{justifyContent:'center'}}>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="../SignInPage" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* s<Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );

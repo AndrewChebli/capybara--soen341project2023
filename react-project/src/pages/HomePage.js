@@ -14,6 +14,7 @@ import { Typography } from "@mui/material";
 import handshake_image from "../images/download.jpeg";
 import register_image from "../images/register_image.jpeg";
 
+
 import { style } from "@mui/system";
 
 function Home() {
@@ -91,8 +92,10 @@ function Home() {
           </CardContent>
         </CardActionArea>
       </Card>
+
     </div>
   );
 }
+
 
 export default Home;
