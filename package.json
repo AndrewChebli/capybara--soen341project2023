@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0"
+    "@testing-library/react": "^13.4.0",
+    "material-icons": "^1.13.1"
   }
 }
