@@ -16,12 +16,13 @@ import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import { useEffect } from "react";
 import { useState } from "react";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/DashboardPage";
 import Divider from "@mui/material/Divider";
 import SignInPage from "./SignIn";
 import SignUpPage from "./SignUp";
 
 const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+const pages_names = ["HomePage", "DashboardPage", "OffersPage", "AboutPage", "SignUpPage", "SignUpPage"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 let current_component = null;
@@ -69,11 +70,12 @@ function HeaderBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* JobHive Logo */}
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component="a"
-            href="/"
+            href="HomePage"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -82,11 +84,14 @@ function HeaderBar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              mr: 10
             }}
           >
             JOB HIVE
           </Typography>
 
+
+          
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -124,7 +129,9 @@ function HeaderBar() {
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
+          
+          
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -141,24 +148,36 @@ function HeaderBar() {
             }}
           >
             JOB HIVE
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          </Typography> */}
+
+          {/* Elements of navbar */}
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'Center',justifyContent: 'Center' }}>
+            
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              
+                sx={{ my: 2, color: "white", display: "block", mr:3 }}
+                
+                href={page+"Page"} //Page name MUST BE the same as page variable
+                
               >
                 {page}
+                {console.log(page+"Page")}
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 20, display: { xs: "none", md: "flex" } }}>
+          
+          
+          {/* Mail icon */}
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}> 
             <Badge badgeContent={9} color="secondary">
               <MailIcon color="action" />
             </Badge>
           </Box>
+          
+
+          {/* User Icon */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
