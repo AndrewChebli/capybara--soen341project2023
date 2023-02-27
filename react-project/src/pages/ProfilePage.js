@@ -33,7 +33,7 @@ function ProfilePage() {
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
           New York, USA
         </Typography>
-        <Divider sx={{ background: '#2196f3', height: '3px', marginBottom: 2 }} />
+        <Divider sx={{ background: '#746e62', height: '3px', marginBottom: 2 }} />
       </Box>
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
@@ -45,7 +45,7 @@ function ProfilePage() {
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
           Started: 2010-09-01 | Completed: 2014-06-30
         </Typography>
-        <Divider sx={{ background: '#2196f3', height: '3px', marginBottom: 2 }} />
+        <Divider sx={{ background: '#746e62', height: '3px', marginBottom: 2 }} />
       </Box>
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
@@ -54,7 +54,7 @@ function ProfilePage() {
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
           Software Engineer at Google
         </Typography>
-        <Divider sx={{ background: '#2196f3', height: '3px', marginBottom: 2 }} />
+        <Divider sx={{ background: '#746e62', height: '3px', marginBottom: 2 }} />
       </Box>
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 2 }}>

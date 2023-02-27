@@ -15,7 +15,7 @@ const ProfileSidebar = ({ user }) => {
   };
 
   return (
-<AppBar position="fixed" sx={{ width: 250, zIndex: (theme) => theme.zIndex.drawer +1, left: 0, top: '69px',height:'100%' }}>
+<AppBar position="fixed" sx={{ width: 250, zIndex: (theme) => theme.zIndex.drawer +1, left: 0, top: '69px',height:'100%', backgroundColor: "746e62" }}>
       <Toolbar sx={{ bgcolor: '#fff' }}>
         <IconButton
           color="inherit"

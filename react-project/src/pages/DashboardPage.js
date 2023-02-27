@@ -2,6 +2,8 @@ import job_postings from "../job_postings.json";
 import JobPosting from "../components/JobPosting";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
+import grey_background from "../images/grey_background.jpeg";
+import Image from "mui-image";
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -42,7 +44,8 @@ console.log(firstName);
 function Dashboard() {
   if (firstName == "undefined") {
     return (
-      <div>
+      <div style={{ background: '#897f4c' }} >
+
         <h1 style={{ marginTop: 80 }}>Please Login to apply with yourt account </h1>
         <h1>Dashboard</h1>
         <h4>
@@ -54,7 +57,7 @@ function Dashboard() {
             display: "inline-flex",
             flexWrap: "wrap",
             alignContent: "center",
-            p: 10,
+            p: 20,
             marginTop: 80,
             bgcolor: "background.paper",
             maxWidth: 1200,
@@ -64,7 +67,7 @@ function Dashboard() {
           }}
         >
           {job_postings.map((job_posting) => (
-            <JobPosting data={job_posting} key={job_posting.id} />
+            <JobPosting  data={job_posting} key={job_posting.id} />
           ))}
         </Box>
       </div>

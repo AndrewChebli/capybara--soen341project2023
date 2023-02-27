@@ -2,15 +2,16 @@ import "./App.css";
 
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import  Dashboard  from "./pages/Dashboard";
+import  Dashboard  from "./pages/DashboardPage";
 import SignInPage from "./pages/SignInPageEmployee";
 import SignUpPage from "./pages/SignUpPageEmployee";
-import ProfilePage from "./pages/ProfilePage";
-import EditProfilePage from "./pages/EditProfilePage";
-import ProfilePageEmployer from "./pages/ProfilePageEmployer";
-import EditProfilePageEmployer from "./pages/EditProfilePageEmployer";
-import Homepage from "./pages/Homepage";
 import LogoutPage from "./pages/LogoutPage";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import OffersPage from "./pages/OffersPage";
+import ProfilePage from "./pages/ProfilePage";
+import EditProfilePage from "./pages/EditProfilePage";  
+
 
 
 function App() {
@@ -32,15 +33,16 @@ function App() {
     <div className="App" >
       <BrowserRouter>
         <Routes>
-        <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/SignIn" element={<SignInPage />} />
-          <Route path="/SignUp" element={<SignUpPage />} />
-          <Route path="/Profile" element={<ProfilePage />} />
-          <Route path="/EditProfile" element={<EditProfilePage />} />
-          <Route path="/ProfilePageEmployer" element={<ProfilePageEmployer />} />
-          <Route path="/EditProfileEmployer" element={<EditProfilePageEmployer />} />
-          <Route path="/Home" element={<Homepage />} />
-          <Route path = "/Logout" element = {<LogoutPage></LogoutPage>} />
+        <Route path="/" element={<HomePage />} />
+          <Route path="/DashboardPage" element={<Dashboard />} />
+          <Route path="/SignInPage" element={<SignInPage />} />
+          <Route path="/SignUpPage" element={<SignUpPage />} />
+          <Route path="/HomePage" element={<HomePage />} />
+          <Route path="/AboutPage" element={<AboutPage />} />
+          <Route path="/ProfilePage" element={<ProfilePage />} />
+          <Route path="/EditProfilePage" element={<EditProfilePage  />} />
+          <Route path="/OffersPage" element={<OffersPage />} />
+          <Route path = "/LogoutPage" element = {<LogoutPage></LogoutPage>} />
         </Routes>
       </BrowserRouter>
     </div>
