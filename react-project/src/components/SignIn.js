@@ -12,8 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { Visibility, VisibilityOff } from "@material-ui/icons";
-// import {InputAdornment,IconButton,} from "@material-ui/core";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Copyright(props) { 
   return (
@@ -36,6 +37,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [showPassword, setShowPassword] = React.useState(false);
   const [values, setValues] = React.useState({
     email: "",
     password: "",
@@ -50,7 +52,7 @@ export default function SignIn() {
     event.preventDefault();
   };
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setShowPassword(!showPassword);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -122,9 +124,21 @@ export default function SignIn() {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              // type="password"
               id="password"
               autoComplete="current-password"
+              type={showPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                ),
+              }}
             />
             
             <FormControlLabel
