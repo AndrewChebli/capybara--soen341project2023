@@ -9,8 +9,8 @@ import ProfileSidebar from '../components/ProfileSidebar';
 
 function ProfilePage() {
   const user = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
+    name: localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
+    email: localStorage.getItem("email"),
     profilePicture: 'https://via.placeholder.com/150',
   };
 
@@ -69,3 +69,4 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+

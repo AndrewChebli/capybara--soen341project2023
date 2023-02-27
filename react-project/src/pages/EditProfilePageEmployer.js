@@ -142,6 +142,26 @@ const handlePhotoChange = (event) => {
                   id="telephone"
                 />
               </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="CompanyWebsite"
+                  label="Company Website"
+                  id="companyWebsite"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  required
+                  fullWidth
+                  multiline={true}
+                  rows={4}
+                  name="Description"
+                  label="Description"
+                  id="Description"
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -174,6 +194,15 @@ const handlePhotoChange = (event) => {
                   name="lastName"
                   label="Last Name"
                   id="lastName"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="ManagerEmail"
+                  label="Manager Email"
+                  id="managerEmail"
                 />
               </Grid>
             </Grid>

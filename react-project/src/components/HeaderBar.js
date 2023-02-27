@@ -17,26 +17,45 @@ import MailIcon from "@mui/icons-material/Mail";
 
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { useState } from "react";
 import Dashboard from "../pages/Dashboard";
-import Divider from "@mui/material/Divider";
-import SignInPage from "./SignIn";
-import SignUpPage from "./SignUp";
+import SignInPage from "../pages/SignInPageEmployee";
+import SignUpPage from "../pages/SignUpPageEmployee";
+import ProfilePage from "../pages/ProfilePage";
+import EditProfilePage from "../pages/EditProfilePage";
+import ProfilePageEmployer from "../pages/ProfilePageEmployer";
+import EditProfilePageEmployer from "../pages/EditProfilePageEmployer";
 
 
-const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp","Profile","EditProfile", "ProfilePageEmployer", "EditProfileEmployer"];
+let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp","Profile","EditProfile", "ProfilePageEmployer", "EditProfileEmployer"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 let current_component = null;
+
+
 function HeaderBar() {
+
+  if(localStorage.getItem("loginStatus") === "true"){
+    if(localStorage.loginType === "user"){
+    pages = ["Home", "Dashboard", "Offers", "About","Profile","EditProfile", "Logout"];
+    }else if (localStorage.loginType === "employer"){
+      pages = ["Home", "Dashboard", "Applications", "About","ProfilePageEmployer","EditProfileEmployer"];
+    }else{
+      pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+    }
+  }else{
+    pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+  }
+  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [current_view, set_current_view] = React.useState("Home");
 
+
+
   useEffect(() => {
    
     console.log("HeaderBar: useEffect");
-    console.log("current_view: ", current_view);
+
     if(current_view === "Home"){
       current_component =  <Dashboard/>;
     }else if(current_view === "Dashboard"){
@@ -51,7 +70,7 @@ function HeaderBar() {
       current_component =  <SignUpPage />;
     }
   }, [current_view]);
-
+  console.log("current_view: ", current_view);
   const handleOpenNavMenu = (event) => {
   };
   const handleOpenUserMenu = (event) => {
@@ -151,7 +170,8 @@ function HeaderBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
-              
+                to = {page}
+                href = {page}
               >
                 {page}
               </Button>
