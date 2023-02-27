@@ -39,7 +39,7 @@ function HeaderBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" style ={{ background: '#746362' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
