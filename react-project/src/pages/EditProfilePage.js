@@ -9,11 +9,13 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 function EditProfilePage() {
   const theme = createTheme();
@@ -30,11 +32,23 @@ function EditProfilePage() {
       country: data.get('country'),
     });
   };
+
   const [photo, setPhoto] = useState(null);
 
-const handlePhotoChange = (event) => {
-  setPhoto(URL.createObjectURL(event.target.files[0]));
-};
+  const handlePhotoChange = (event) => {
+    setPhoto(URL.createObjectURL(event.target.files[0]));
+  };
+
+  const [resume, setResume] = useState(null);
+  const [resumeName, setResume_Name] = useState(null);
+
+  const handleResumeChange = (event) => {
+    setResume(URL.createObjectURL(event.target.files[0]));
+    setResume_Name(event.target.files[0].name);
+  };
+
+  let resume_name = resume ? resumeName : "No file chosen";
+
   const handleEducationSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -102,6 +116,43 @@ const handlePhotoChange = (event) => {
                     <PhotoCamera />
                   </IconButton>
                 </label>
+              </Grid>
+
+              <Grid item xs={12}>
+              <div style={{ justifyContent: "center", display: "flex", alignItems: 'center' }}>
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                  <PictureAsPdfIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Upload CV
+                </Typography>
+              </div>
+              </Grid>
+
+              <Grid item xs={12}>
+                <label htmlFor="resumeInput">
+                  <Typography component="h4" variant="h7">
+                    {`${resume_name}`}
+                  </Typography>
+                  <input
+                    id="resumeInput"
+                    name="resume"
+                    type="file"
+                    accept="application/pdf"
+                    hidden
+                    onChange={handleResumeChange}
+                  />
+                  <IconButton
+                    sx={{ color: 'white', bgcolor: 'primary.main', '&:hover': {bgcolor: 'primary.dark', }}}
+                    color="white"
+                    bgcolor="primary"
+                    aria-label="upload cv"
+                    component="span"
+                  >
+                    <ArrowUpwardIcon />
+                  </IconButton>
+                </label>
+                {resume && <iframe src={resume} width="50%" height="250px" />}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField

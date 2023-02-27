@@ -3,10 +3,8 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import  Dashboard  from "./pages/Dashboard";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import SignInPage from "./pages/SignInPageEmployee";
-import SignUpPage from "./pages/SignUpPageEmployee";
+import SignInPageEmployee from "./pages/SignInPageEmployee";
+import SignUpPageEmployee from "./pages/SignUpPageEmployee";
 import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import ProfilePageEmployer from "./pages/ProfilePageEmployer";
@@ -35,13 +33,11 @@ function App() {
       <BrowserRouter>
         <Routes>
         <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/SignIn" element={<SignInPage />} />
-          <Route path="/SignUp" element={<SignUpPage />} />
           <Route path="/Profile" element={<ProfilePage />} />
           <Route path="/EditProfile" element={<EditProfilePage />} />
           <Route path="/ProfilePageEmployer" element={<ProfilePageEmployer />} />
           <Route path="/EditProfileEmployer" element={<EditProfilePageEmployer />} />
-          <Route path="/Home" element={<Homepage />} />
+          <Route path="/Home" element={<HomePage />} />
           <Route path = "/Logout" element = {<LogoutPage></LogoutPage>} />
         </Routes>
       </BrowserRouter>
