@@ -52,18 +52,10 @@ function JobPosting(job_posting) {
   let title = job.CompanyName;
   let spacing = 2;
   return (
-    <Card
-      sx={{
-        width: "100%",
-        maxWidth: 1000,
-        flexDirection: 2,
-        justifyContent: "center",
-      }}
-      style={{ background: "#746e62", opacity: "0.8", margin: 10 }}
-    >
+    <Card sx={{ width: '100%', maxWidth: 1000 , flexDirection: 2, justifyContent: 'center'} }>
       <CardActionArea>
         <CardContent>
-          <Avatar {...stringAvatar(title)} />
+        <Avatar {...stringAvatar(title)} />
           <Typography gutterBottom variant="h4" component="div">
             {job.CompanyName}
           </Typography>
@@ -71,41 +63,23 @@ function JobPosting(job_posting) {
             {job.JobTitle}
           </Typography>
 
-          <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-            {" "}
-            {"Description: "}
-            <Box sx={{ fontWeight: "regular", fontSize: 15 }}>
-              {" "}
-              {job.Description}{" "}
-            </Box>
+          <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Description: "} 
+            <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Description} </Box>
           </Box>
 
-          <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-            {" "}
-            {"Requirements: "}
-            <Box sx={{ fontWeight: "regular", fontSize: 15 }}>
-              {" "}
-              {job.Requirements}{" "}
-            </Box>
+          <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Requirements: "} 
+            <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Requirements} </Box>
           </Box>
 
-          <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-            {" "}
-            {"Benefits: "}
-            <Box sx={{ fontWeight: "regular", fontSize: 15 }}>
-              {" "}
-              {job.Benefits}{" "}
-            </Box>
+          <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Benefits: "} 
+            <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Benefits} </Box>
           </Box>
 
-          <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-            {" "}
-            {"Salary: "}
-            <Box sx={{ fontWeight: "regular", fontSize: 15 }}>
-              {" "}
-              {job.Salary}{" "}
-            </Box>
+          <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Salary: "} 
+            <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Salary} </Box>
           </Box>
+      
+    
         </CardContent>
       </CardActionArea>
     </Card>

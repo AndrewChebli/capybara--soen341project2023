@@ -14,8 +14,14 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
+import { useEffect } from "react";
+import { useState } from "react";
+import Dashboard from "../pages/DashboardPage";
+import Divider from "@mui/material/Divider";
+import SignInPage from "./SignIn";
+import SignUpPage from "./SignUp";
 
-let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HeaderBar() {
