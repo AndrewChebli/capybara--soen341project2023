@@ -125,26 +125,25 @@ export default function SignUpForm() {
       >
         <Grid container spacing={3} sm={12} alignContent="center">
           <Grid item xs={12}>
-            <Grid item xs={12}>
-              <Grid item xs={4}>
-                <label htmlFor="photoInput">
-                  <input
-                    id="photoInput"
-                    name="photo"
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    onChange={handlePhotoChange}
-                  />
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
+            <Grid sx={{ display: "flex", justifyContent: "center" }}>
+                  <Avatar
+                    sx={{
+                      m: 5,
+                      mr: 3,
+                      bgcolor: "secondary.main",
+                      justifyContent: "center",
+                      display: "flex",
+                    }}
                   >
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
-              </Grid>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                </Grid>
+                <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
+                  Sign up
+                </Typography>
+              
+            </Grid>
+            <Grid item xs={12}>
               <Grid
                 item
                 xs={4}
@@ -157,24 +156,7 @@ export default function SignUpForm() {
                 />
               </Grid>
 
-              <Grid sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar
-                  sx={{
-                    m: 5,
-                    mr: 3,
-                    bgcolor: "secondary.main",
-                    justifyContent: "center",
-                    display: "flex",
-                  }}
-                >
-                  <LockOutlinedIcon />
-                </Avatar>
-
-                <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
-                  Sign up
-                </Typography>
-              </Grid>
-            </Grid>
+              
             <Grid item xs={12}>
               <PersonalInformationBox />
               <Grid item xs={12} sx={{m:3}}>
