@@ -21,7 +21,7 @@ import Divider from "@mui/material/Divider";
 import SignInPage from "./SignIn";
 import SignUpPage from "./SignUp";
 
-const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HeaderBar() {
