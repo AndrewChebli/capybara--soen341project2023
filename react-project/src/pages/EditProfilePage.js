@@ -21,19 +21,6 @@ import { InputLabel } from '@mui/material';
 function EditProfilePage() {
   const theme = createTheme();
 
-  const handlePersonalInfoSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-      city: data.get('city'),
-      country: data.get('country'),
-    });
-  };
-
   const [photo, setPhoto] = useState(null);
 
   const handlePhotoChange = (event) => {
@@ -79,11 +66,51 @@ function EditProfilePage() {
     });
   };
 
+  async function updateService(event) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    const response = await fetch("http://localhost:8080/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: data.get("firstName"),
+          lastName: data.get("lastName"),
+          email: data.get("email"),
+          password: data.get("password"),
+
+          companyName: data.get("companyName"),
+          jobTitle: data.get("jobTitle"),
+          dateStartedWork: data.get("dateStartedWork"),
+          dateCompletedWork: data.get("dateCompletedWork"),
+          Description: data.get("Description"),
+
+          school: data.get("school"),
+          academicProgram: data.get("academicProgram"),
+          dateStartedSchool: data.get("dateStartedSchool"),
+          dateCompletedSchool: data.get("dateCompletedSchool"),
+        }),
+      });
+      console.log(response);
+
+      if (response.status === 200) {
+      alert("Update Successful");
+      window.location.href = "/Profile";
+      } else {
+      alert("Update Failed");
+      }
+    }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
+          component="form"
+          noValidate
+          onSubmit={updateService}
           sx={{
             marginTop: 8,
             display: 'flex',
@@ -97,7 +124,7 @@ function EditProfilePage() {
           <Typography component="h1" variant="h5">
             Edit Profile
           </Typography>
-          <form onSubmit={handlePersonalInfoSubmit} noValidate sx={{ mt: 3 }}>
+          
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <label htmlFor="photoInput">
@@ -224,7 +251,6 @@ function EditProfilePage() {
             >
               Save Personal Info
             </Button>
-          </form>
 
           <form onSubmit={handleEducationSubmit} noValidate sx={{ mt: 3 }}>
             <Typography component="h2" variant="h6">

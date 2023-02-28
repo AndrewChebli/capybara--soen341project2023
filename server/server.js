@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRegisterModel = require("./models/registerUser.model.js");
 const UserLoginModel = require("./models/loginUser.model.js");
+const UpdateProfileModel = require("./models/updateProfile.model.js");
 app.use(cors());
 app.use(express.json());
 let db;
@@ -93,7 +94,53 @@ app.post("/login", async (req, res) => {
 });
 
 //=====================EDIT PROFILE ENDPOINT==================
+app.post("/update", async (req, res) => {
+  console.log("update attempt from " + req.body.email);
+  console.log("BODY  : " + JSON.stringify(req.body));
 
+  const { firstName, lastName, email, password } = req.body;
+  const { dateStartedSchool, dateCompletedSchool, school, academicProgram } =
+    req.body;
+  const {
+    dateStartedWork,
+    dateCompletedWork,
+    companyName,
+    jobTitle,
+    Description,
+  } = req.body;
+  const {photo, resume} = req.body;
+
+  console.log("lastName " + lastName)
+
+  try {
+    await UpdateProfileModel.create({
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      password: password,
+      photo: photo,
+      resume: resume,
+      education: {
+        Start: dateStartedSchool,
+        End: dateCompletedSchool,
+        School: school,
+        Degree: academicProgram,
+      },
+      previousExperience: [
+        {
+          Start: dateStartedWork,
+          End: dateCompletedWork,
+          Company: companyName,
+          Position: jobTitle,
+          Description: Description,
+        },
+      ],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  res.json({ status: "success" });
+});
 //=====================END OF ENDPOINTS=======================
 //====================LISTENING PORT==========================
 app.listen(8080, () => {
