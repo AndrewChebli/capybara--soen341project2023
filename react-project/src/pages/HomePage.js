@@ -44,7 +44,7 @@ function Home() {
           easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
         }}
       >
-        <CardActionArea>
+        <CardActionArea href="SignInPage">
           <CardMedia style={{easing: "cube-bezier(0.075, 0.82, 0.165, 1)"}}
             component="img"
             height="250"
@@ -74,7 +74,7 @@ function Home() {
           easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
         }}
       >
-        <CardActionArea>
+        <CardActionArea href="SignUpPage">
           <CardMedia
             component="img"
             height="250"

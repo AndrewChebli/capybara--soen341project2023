@@ -29,14 +29,43 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    // ================START OF FRONT-END ENDPOINT=====================
+      async function loginService(event){
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+    
+        const response = await fetch("http://localhost:8080/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: data.get('email'),
+              password: data.get('password'),
+            })
+        });
+
+    
+        const resp = await response.json();
+        console.log(resp);
+        if (resp.status === "success") {
+          console.log(resp.status);
+          console.log(JSON.stringify(resp.data.firstname));
+          localStorage.setItem("firstName", resp.data.firstname);
+          localStorage.setItem("lastName", resp.data.lastname);
+          localStorage.setItem("email", resp.data.email);
+          localStorage.setItem("response", JSON.stringify(resp.data));
+          localStorage.setItem("loginStatus", "true");
+          localStorage.setItem("loginType", "user");
+          alert("Login Successful");
+          window.location.href = "http://localhost:3000/Dashboard";
+        }else{
+          alert("Invalid Credentials");
+        }
+      }
+
+
+    // ================END OF FRONT-END ENDPOINT=====================
 
   return (
     <ThemeProvider theme={theme}>
@@ -47,7 +76,7 @@ export default function SignIn() {
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'stretch',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -56,7 +85,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={loginService} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
