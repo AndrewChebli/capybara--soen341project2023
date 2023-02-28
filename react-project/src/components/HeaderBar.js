@@ -21,34 +21,25 @@ import Divider from "@mui/material/Divider";
 import SignInPage from "./SignIn";
 import SignUpPage from "./SignUp";
 
-const pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
-const pages_names = ["HomePage", "DashboardPage", "OffersPage", "AboutPage", "SignUpPage", "SignUpPage"]
+let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-let current_component = null;
 function HeaderBar() {
+
+  if(localStorage.getItem("loginStatus") === "true"){
+    if(localStorage.loginType === "user"){
+    pages = ["Home", "Dashboard", "Offers", "About","Profile","EditProfile", "Logout"];
+    }else if (localStorage.loginType === "employer"){
+      pages = ["Home", "Dashboard", "Applications", "About","ProfilePageEmployer","EditProfileEmployer"];
+    }else{
+      pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+    }
+  }else{
+    pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+  }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [current_view, set_current_view] = React.useState("Home");
-
-  useEffect(() => {
-   
-    console.log("HeaderBar: useEffect");
-    console.log("current_view: ", current_view);
-    if(current_view === "Home"){
-      current_component =  <Dashboard/>;
-    }else if(current_view === "Dashboard"){
-      current_component =  <Dashboard />;
-    }else if(current_view === "Offers"){
-      current_component =  <Dashboard />;
-    }else if(current_view === "About"){
-      current_component =  <Dashboard />;
-    }else if(current_view === "SignIn"){
-      current_component =  <SignInPage />;
-    }else if(current_view === "SignUp"){
-      current_component =  <SignUpPage />;
-    }
-  }, [current_view]);
 
   const handleOpenNavMenu = (event) => {
   };
@@ -67,7 +58,7 @@ function HeaderBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" style={{ background: '#746e62' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* JobHive Logo */}
@@ -77,10 +68,9 @@ function HeaderBar() {
             component="a"
             href="HomePage"
             sx={{
-              mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
-              fontWeight: 700,
+              fontWeight: 900,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
