@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { InputLabel } from '@mui/material';
 
 function EditProfilePage() {
   const theme = createTheme();
@@ -55,8 +56,8 @@ function EditProfilePage() {
     console.log({
       school: data.get('school'),
       academicProgram: data.get('academicProgram'),
-      dateStarted: data.get('dateStarted'),
-      dateCompleted: data.get('dateCompleted'),
+      dateStartedEdu: data.get('dateStartedEdu'),
+      dateCompletedEdu: data.get('dateCompletedEdu'),
     });
   };
 
@@ -65,8 +66,8 @@ function EditProfilePage() {
     const data = new FormData(event.currentTarget);
     console.log({
       workExperience: data.get('workExperience'),
-      dateStarted: data.get('dateStarted'),
-      dateCompleted: data.get('dateCompleted'),
+      dateStartedWork: data.get('dateStartedWork'),
+      dateCompletedWork: data.get('dateCompletedWork'),
     });
   };
 
@@ -249,32 +250,25 @@ function EditProfilePage() {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
+                <InputLabel htmlFor="dateStartedEdu" shrink>
+                  Date Started *
+                </InputLabel>
                 <TextField
-                  name="dateStarted"
+                  name="dateStartedEdu"
                   required
                   fullWidth
-                  id="dateStarted"
-                  label="Date Started"
-                  type="date"
-                />
-              </Grid>
-              <
-Grid item xs={12} sm={6}>
-                <TextField
-                  name="dateStarted"
-                  required
-                  fullWidth
-                  id="dateStarted"
-                  label="Date Started"
+                  id="dateStartedEdu"
                   type="date"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
+                <InputLabel htmlFor="dateCompletedEd" shrink>
+                  Date Completed
+                </InputLabel>
                 <TextField
-                  name="dateCompleted"
+                  name="dateCompletedEdu"
                   fullWidth
-                  id="dateCompleted"
-                  label="Date Completed"
+                  id="dateCompletedEdu"
                   type="date"
                 />
               </Grid>
@@ -304,21 +298,25 @@ Grid item xs={12} sm={6}>
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
+                <InputLabel htmlFor="dateStartedWork" shrink>
+                  Date Started *
+                </InputLabel>
                 <TextField
-                  name="dateStarted"
+                  name="dateStartedWork"
                   required
                   fullWidth
-                  id="dateStarted"
-                  label="Date Started"
+                  id="dateStartedWork"
                   type="date"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
+                <InputLabel htmlFor="dateCompletedWork" shrink>
+                  Date Completed
+                </InputLabel>
                 <TextField
-                  name="dateCompleted"
+                  name="dateCompletedWork"
                   fullWidth
-                  id="dateCompleted"
-                  label="Date Completed"
+                  id="dateCompletedWork"
                   type="date"
                 />
               </Grid>

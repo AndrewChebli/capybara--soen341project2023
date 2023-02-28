@@ -85,8 +85,6 @@ export default function SignUpForm() {
         lastName: data.get("lastName"),
         email: data.get("email"),
         password: data.get("password"),
-        photo: photo,
-        resume: resume,
 
         companyName: data.get("companyName"),
         jobTitle: data.get("jobTitle"),
@@ -204,14 +202,14 @@ export default function SignUpForm() {
             <EducationBox />
           </Grid>
         </Grid>
-      </Box>
-      <Button
+        <Button
         type="submit"
         variant="contained"
         sx={{ mt: 3, mb: 2, alignContent: "center" }}
       >
         Sign Up
       </Button>
+      </Box>
       <Copyright marginTop={4} />
     </Container>
   );

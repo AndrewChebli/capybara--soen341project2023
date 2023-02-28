@@ -33,7 +33,9 @@ function App() {
       <BrowserRouter>
         <Routes>
         <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/Profile" element={<ProfilePage />} />
+         <Route path="/Profile" element={<ProfilePage />} />
+          <Route path="/SignUp" element={<SignUpPageEmployee />} />
+          <Route path="/SignIn" element={<SignInPageEmployee />} />
           <Route path="/EditProfile" element={<EditProfilePage />} />
           <Route path="/ProfilePageEmployer" element={<ProfilePageEmployer />} />
           <Route path="/EditProfileEmployer" element={<EditProfilePageEmployer />} />
