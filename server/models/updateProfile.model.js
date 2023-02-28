@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ProfileUpdate = new mongoose.Schema(
+const UpdateProfile = new mongoose.Schema(
     {
       firstname: { type: String, unique: false},
       lastname: { type: String, unique: false},
@@ -21,17 +21,17 @@ const ProfileUpdate = new mongoose.Schema(
           End: { type: String, unique: false},
           Company: { type: String, unique: false},
           Position: { type: String, unique: false},
-          Description: { type: String, unique: false },
+          Skills: { type: String, unique: false },
       }
       ],
     },
     { collection: "users" }
   );
   
-  const ProfileUpdateModel = mongoose.model(
-    "ProfileUpdateModel",
-    ProfileUpdate,
+  const UpdateProfileModel = mongoose.model(
+    "UpdateProfileModel",
+    UpdateProfile,
     "users"
   );
   
-  module.exports = ProfileUpdateModel;
+  module.exports = UpdateProfileModel;

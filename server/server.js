@@ -132,7 +132,7 @@ app.post("/update", async (req, res) => {
           End: dateCompletedWork,
           Company: companyName,
           Position: jobTitle,
-          Description: Description,
+          Skills: skills,
         },
       ],
     });

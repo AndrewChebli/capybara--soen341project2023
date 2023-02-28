@@ -37,35 +37,6 @@ function EditProfilePage() {
 
   let resume_name = resume ? resumeName : "No file chosen";
 
-  const handleEducationSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      school: data.get('school'),
-      academicProgram: data.get('academicProgram'),
-      dateStartedEdu: data.get('dateStartedEdu'),
-      dateCompletedEdu: data.get('dateCompletedEdu'),
-    });
-  };
-
-  const handleWorkExperienceSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      workExperience: data.get('workExperience'),
-      dateStartedWork: data.get('dateStartedWork'),
-      dateCompletedWork: data.get('dateCompletedWork'),
-    });
-  };
-
-  const handleSkillsSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      skills: data.get('skills'),
-    });
-  };
-
   async function updateService(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -85,7 +56,7 @@ function EditProfilePage() {
           jobTitle: data.get("jobTitle"),
           dateStartedWork: data.get("dateStartedWork"),
           dateCompletedWork: data.get("dateCompletedWork"),
-          Description: data.get("Description"),
+          skills: data.get("skills"),
 
           school: data.get("school"),
           academicProgram: data.get("academicProgram"),
@@ -182,78 +153,74 @@ function EditProfilePage() {
                 </label>
                 {resume && <iframe src={resume} width="50%" height="250px" />}
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
+              <Typography component="h2" variant="h6" sx={{ marginTop: 4}}>
+                Personal Information
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="given-name"
+                    name="firstName"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="family-name"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="address-level2"
+                    name="city"
+                    required
+                    fullWidth
+                    id="city"
+                    label="City"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                   required
+                    fullWidth
+                    name="country"
+                    label="Country"
+                    id="country"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="address-level2"
-                  name="city"
-                  required
-                  fullWidth
-                  id="city"
-                  label="City"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  name="country"
-                  label="Country"
-                  id="country"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Save Personal Info
-            </Button>
 
-          <form onSubmit={handleEducationSubmit} noValidate sx={{ mt: 3 }}>
-            <Typography component="h2" variant="h6">
+            <Typography component="h2" variant="h6" sx={{ marginTop: 5}}>
               Education
             </Typography>
             <Grid container spacing={2}>
@@ -276,51 +243,50 @@ function EditProfilePage() {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <InputLabel htmlFor="dateStartedEdu" shrink>
+                <InputLabel htmlFor="dateStartedSchool" shrink>
                   Date Started *
                 </InputLabel>
                 <TextField
-                  name="dateStartedEdu"
+                  name="dateStartedSchool"
                   required
                   fullWidth
-                  id="dateStartedEdu"
+                  id="dateStartedSchool"
                   type="date"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <InputLabel htmlFor="dateCompletedEd" shrink>
-                  Date Completed
+                <InputLabel htmlFor="dateCompletedSchool" shrink>
+                  Date Completed (or expected)
                 </InputLabel>
                 <TextField
-                  name="dateCompletedEdu"
+                  name="dateCompletedSchool"
                   fullWidth
-                  id="dateCompletedEdu"
+                  id="dateCompletedSchool"
                   type="date"
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Save Education
-            </Button>
-          </form>
 
-          <form onSubmit={handleWorkExperienceSubmit} noValidate sx={{ mt: 3 }}>
-            <Typography component="h2" variant="h6">
-              Work Experience
+            <Typography component="h2" variant="h6" sx={{ marginTop: 5}}>
+              Work Experience 
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+            <Grid item xs={12}>
                 <TextField
-                  name="workExperience"
+                  name="jobTitle"
                   required
                   fullWidth
-                  id="workExperience"
-                  label="Work Experience"
+                  id="jobTitle"
+                  label="Job Title"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="companyName"
+                  required
+                  fullWidth
+                  id="companyName"
+                  label="Company"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -347,18 +313,8 @@ function EditProfilePage() {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Save Work Experience
-            </Button>
-          </form>
 
-          <form onSubmit={handleSkillsSubmit} noValidate sx={{ mt: 3 }}>
-            <Typography component="h2" variant="h6">
+            <Typography component="h2" variant="h6" sx={{ marginTop: 5}}>
               Skills
             </Typography>
             <Grid container spacing={2}>
@@ -378,9 +334,8 @@ function EditProfilePage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Save Skills
+              Submit Changes
             </Button>
-          </form>
         </Box>
       </Container>
     </ThemeProvider>
