@@ -40,7 +40,7 @@ export default function SignUpForm() {
   const [resume, setResume] = useState(null);
 
   const handleResumeChange = (event) => {
-
+    
     console.log("click");
     let file = event.target.files[0],
       reader = new FileReader();
@@ -51,7 +51,6 @@ export default function SignUpForm() {
       console.log(b64);
     };
     reader.readAsDataURL(file);
-    
     setResume(event.target.files[0]);
   };
 
@@ -131,7 +130,6 @@ export default function SignUpForm() {
       >
         <Grid container spacing={3} sm={12} alignContent="center">
           <Grid item xs={12}>
-
             <Grid item xs={12}>
               <Grid item xs={4}>
                 {/* <label htmlFor="photoInput">
@@ -152,26 +150,6 @@ export default function SignUpForm() {
                   </IconButton>
                 </label> */}
               </Grid>
-
-            <Grid sx={{ display: "flex", justifyContent: "center" }}>
-                  <Avatar
-                    sx={{
-                      m: 5,
-                      mr: 3,
-                      bgcolor: "secondary.main",
-                      justifyContent: "center",
-                      display: "flex",
-                    }}
-                  >
-                    <LockOutlinedIcon />
-                  </Avatar>
-                </Grid>
-                <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
-                  Sign up
-                </Typography>
-              
-            </Grid>
-            <Grid item xs={12}>
               <Grid
                 item
                 xs={4}
@@ -183,7 +161,24 @@ export default function SignUpForm() {
                 />
               </Grid>
 
-              
+              <Grid sx={{ display: "flex", justifyContent: "center" }}>
+                <Avatar
+                  sx={{
+                    m: 5,
+                    mr: 3,
+                    bgcolor: "secondary.main",
+                    justifyContent: "center",
+                    display: "flex",
+                  }}
+                >
+                  <LockOutlinedIcon />
+                </Avatar>
+
+                <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
+                  Sign up
+                </Typography>
+              </Grid>
+            </Grid>
             <Grid item xs={12}>
               <PersonalInformationBox />
               <Grid item xs={12} sx={{ m: 3 }}>
