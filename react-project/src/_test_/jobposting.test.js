@@ -6,6 +6,6 @@ let jobposting = jobpostings[0];
 describe("JobPosting", () => {
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<JobPosting data = {jobposting} />, div);
+    ReactDOM.render(<JobPosting data={jobposting} />, div);
   });
-  });
+});
