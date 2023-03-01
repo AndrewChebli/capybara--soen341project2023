@@ -1,4 +1,7 @@
 # capybara--soen341project2023
+
+BEFORE GRADING: Please see wiki entry "PLEASE READ : Before grading individual contributions"
+
 Github Repository for the SOEN341 W2023 - By 
 - Samuel Lopez-Ferrada (SamuelLopezF)
 - Gabriel Frenette (gabogab)
