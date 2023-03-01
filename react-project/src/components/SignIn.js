@@ -48,12 +48,7 @@ export default function SignIn() {
 
         console.log(response);
         const resp = await response.json();
-        console.log(resp);
-        console.log(resp.data);
-        console.log(resp.data.firstname);
-        console.log(resp.data.lastname);
-        console.log(resp.data.email);
-        console.log(resp.data.resume);
+
         
 
         if (resp.status === "success") {

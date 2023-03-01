@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRegisterModel = require("./models/registerUser.model.js");
+const UserUpdateModel = require("./models/updateUser.model.js");
 const UserLoginModel = require("./models/loginUser.model.js");
 app.use(express.json({ limit: "50mb", extended: true }));
 app.use(
@@ -98,6 +99,51 @@ app.post("/login", async (req, res) => {
   }
 });
 
+
+//=====================UPDATE ENDPOINT=======================
+app.post("/update", async (req, res) => {
+  console.log("update attempt from " + req.body.email);
+  console.log("BODY  : " + JSON.stringify(req.body));
+  const { firstName, lastName, email, password } = req.body;
+  const { dateStartedSchool, dateCompletedSchool, school, academicProgram } = req.body;
+  const { dateStartedWork, dateCompletedWork, companyName, jobTitle, Description } = req.body;
+  const {_id} = req.body;
+  console.log(_id);
+  
+  let response_from_database = await UserUpdateModel.findOneAndUpdate({email},
+        {
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          password: password,
+          education: {
+            Start: dateStartedSchool,
+            End: dateCompletedSchool,
+            School: school,
+            Degree: academicProgram,
+          },
+          previousExperience: [
+            {
+              Start: dateStartedWork,
+              End: dateCompletedWork,
+              Company: companyName,
+              Position: jobTitle,
+              Description: Description,
+            },
+          ],
+        },
+        { new: true } //new true is to return the updated document
+      );
+  console.log("response_from_database : " + response_from_database);
+  if (response_from_database) {
+    res.send({ status: "success", db_response: response_from_database });
+  }else{
+    res.send({ status: "failed" });
+  }
+
+
+
+});
 //=====================END OF ENDPOINTS=======================
 //====================LISTENING PORT==========================
 app.listen(8080, () => {
