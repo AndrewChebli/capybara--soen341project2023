@@ -1,7 +1,7 @@
 import React, { userState } from "react";
 import { useState } from "react";
 
-// import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -18,7 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 
-export const SignUpPage = (props) => {
+export const Register = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, set_firstname] = useState("");
@@ -54,7 +54,7 @@ export const SignUpPage = (props) => {
 
         <Box
           sx={{
-            marginTop: 5,
+            marginTop: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -70,7 +70,6 @@ export const SignUpPage = (props) => {
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
-            
             <Grid container spacing={3}>
               <Grid item xs={6}>
                 <TextField
@@ -92,28 +91,6 @@ export const SignUpPage = (props) => {
                   label="Last Name"
                   name="lastname"
                   autoComplete="family-name"
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  // control={control}
-                  required
-                  fullWidth
-                  id="job_title"
-                  label="Job Title"
-                  name="job_title"
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  // control={control}
-                  required
-                  fullWidth
-                  id="company"
-                  label="Company"
-                  name="company"
                 />
               </Grid>
 
@@ -199,6 +176,4 @@ export const SignUpPage = (props) => {
       </Container>
     </ThemeProvider>
   );
-}
-
-export default SignUpPage;
+};
