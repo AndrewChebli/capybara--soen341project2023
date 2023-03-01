@@ -5,12 +5,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Card from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+// import { CardActionArea } from "@mui/material";
+// import CardContent from '@mui/material';
 
 function EditProfilePage() {
   const theme = createTheme();
@@ -61,6 +64,19 @@ const handlePhotoChange = (event) => {
     });
   };
 
+  
+
+  let firstName = localStorage.getItem('firstName');
+  let lastName = localStorage.getItem('lastName');
+  let email = localStorage.getItem('email');
+  let educ_non_parsed = localStorage.getItem('education');
+  let educ = JSON.parse(educ_non_parsed);
+  let work_non_parsed = localStorage.getItem('experience');
+  let work = JSON.parse(work_non_parsed);
+  console.log("HERE DUMBFUCK")
+  console.log(work[0].Start)
+
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="md">
@@ -108,6 +124,7 @@ const handlePhotoChange = (event) => {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  defaultValue={firstName}
                   autoFocus
                 />
               </Grid>
@@ -118,6 +135,7 @@ const handlePhotoChange = (event) => {
                   id="lastName"
                   label="Last Name"
                   name="lastName"
+                  defaultValue={lastName}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -128,6 +146,7 @@ const handlePhotoChange = (event) => {
                   id="email"
                   label="Email Address"
                   name="email"
+                  defaultValue={email}
                   autoComplete="email"
                 />
               </Grid>
@@ -138,10 +157,11 @@ const handlePhotoChange = (event) => {
                   name="password"
                   label="Password"
                   type="password"
+                  defaultValue = "********"
                   id="password"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="address-level2"
                   name="city"
@@ -159,7 +179,7 @@ const handlePhotoChange = (event) => {
                   label="Country"
                   id="country"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -183,6 +203,7 @@ const handlePhotoChange = (event) => {
                   fullWidth
                   id="school"
                   label="School Name"
+                  defaultValue={educ.School}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -192,6 +213,7 @@ const handlePhotoChange = (event) => {
                   name="academicProgram"
                   label="Academic Program"
                   id="academicProgram"
+                  defaultValue={educ.Degree}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -202,19 +224,10 @@ const handlePhotoChange = (event) => {
                   id="dateStarted"
                   label="Date Started"
                   type="date"
+                  defaultValue={educ.Start}
                 />
               </Grid>
-              <
-Grid item xs={12} sm={6}>
-                <TextField
-                  name="dateStarted"
-                  required
-                  fullWidth
-                  id="dateStarted"
-                  label="Date Started"
-                  type="date"
-                />
-              </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   name="dateCompleted"
@@ -222,6 +235,7 @@ Grid item xs={12} sm={6}>
                   id="dateCompleted"
                   label="Date Completed"
                   type="date"
+                  defaultValue={educ.End}
                 />
               </Grid>
             </Grid>
@@ -234,11 +248,17 @@ Grid item xs={12} sm={6}>
               Save Education
             </Button>
           </form>
-
+          
           <form onSubmit={handleWorkExperienceSubmit} noValidate sx={{ mt: 3 }}>
             <Typography component="h2" variant="h6">
               Work Experience
+            
             </Typography>
+            {/* Work experience start */}
+            {/* Insert map */}
+            {/* {{work.map((work) => (
+            <work />
+          ))} } */}
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -247,6 +267,7 @@ Grid item xs={12} sm={6}>
                   fullWidth
                   id="workExperience"
                   label="Work Experience"
+                  defaultValue={work[0].Company}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -257,6 +278,7 @@ Grid item xs={12} sm={6}>
                   id="dateStarted"
                   label="Date Started"
                   type="date"
+                  defaultValue={work[0].Start}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -266,9 +288,12 @@ Grid item xs={12} sm={6}>
                   id="dateCompleted"
                   label="Date Completed"
                   type="date"
+                  defaultValue={work[0].End}
                 />
               </Grid>
             </Grid>
+            {/* Work Experience end */}
+            
             <Button
               type="submit"
               fullWidth

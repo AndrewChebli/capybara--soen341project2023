@@ -33,18 +33,25 @@ function Copyright(props) {
   );
 }
 
-export default function SignUpForm() {
-  const [photo, setPhoto] = useState(null);
+let b64;
 
-  const handlePhotoChange = (event) => {
-    console.log("photo change")
-    setPhoto(URL.createObjectURL(event.target.files[0]));
-  };
+export default function SignUpForm() {
 
   const [resume, setResume] = useState(null);
 
   const handleResumeChange = (event) => {
+
     console.log("click");
+    let file = event.target.files[0],
+      reader = new FileReader();
+
+    reader.onloadend = function () {
+      b64 = reader.result.replace(/^data:.+;base64,/, "");
+      console.log("triggered");
+      console.log(b64);
+    };
+    reader.readAsDataURL(file);
+    
     setResume(event.target.files[0]);
   };
 
@@ -60,20 +67,21 @@ export default function SignUpForm() {
     console.log(data.get(`lastName`));
     console.log(data.get(`email`));
     console.log(data.get(`password`));
-    console.log(data.get(`confirmPassword`));
 
-    //Experience Block
-    console.log(data.get(`companyName`));
-    console.log(data.get(`jobTitle`));
-    console.log(data.get(`Description`));
-    console.log(data.get(`dateStartedWork`));
-    console.log(data.get(`dateCompletedWork`));
+    console.log(data.get(`resume`));
 
-    //Education Block
-    console.log(data.get(`school`));
-    console.log(data.get(`academicProgram`));
-    console.log(data.get(`dateStartedSchool`));
-    console.log(data.get(`dateCompletedSchool`));
+    // //Experience Block
+    // console.log(data.get(`companyName`));
+    // console.log(data.get(`jobTitle`));
+    // console.log(data.get(`Description`));
+    // console.log(data.get(`dateStartedWork`));
+    // console.log(data.get(`dateCompletedWork`));
+
+    // //Education Block
+    // console.log(data.get(`school`));
+    // console.log(data.get(`academicProgram`));
+    // console.log(data.get(`dateStartedSchool`));
+    // console.log(data.get(`dateCompletedSchool`));
 
     const response = await fetch("http://localhost:8080/register", {
       method: "POST",
@@ -85,9 +93,7 @@ export default function SignUpForm() {
         lastName: data.get("lastName"),
         email: data.get("email"),
         password: data.get("password"),
-        photo: photo,
-        resume: resume,
-
+        resume: b64,
         companyName: data.get("companyName"),
         jobTitle: data.get("jobTitle"),
         dateStartedWork: data.get("dateStartedWork"),
@@ -127,7 +133,7 @@ export default function SignUpForm() {
           <Grid item xs={12}>
             <Grid item xs={12}>
               <Grid item xs={4}>
-                <label htmlFor="photoInput">
+                {/* <label htmlFor="photoInput">
                   <input
                     id="photoInput"
                     name="photo"
@@ -143,7 +149,7 @@ export default function SignUpForm() {
                   >
                     <PhotoCamera />
                   </IconButton>
-                </label>
+                </label> */}
               </Grid>
               <Grid
                 item
@@ -152,7 +158,6 @@ export default function SignUpForm() {
               >
                 <Avatar
                   sx={{ width: 128, height: 128, marginBottom: 2 }}
-                  src={photo}
                   alt="Profile picture"
                 />
               </Grid>
@@ -177,10 +182,11 @@ export default function SignUpForm() {
             </Grid>
             <Grid item xs={12}>
               <PersonalInformationBox />
-              <Grid item xs={12} sx={{m:3}}>
+              <Grid item xs={12} sx={{ m: 3 }}>
                 <label htmlFor="resumeInput">
-                <Typography component="h4" variant="h6">
-                    {`${resume_name}`} </Typography>
+                  <Typography component="h4" variant="h6">
+                    {`${resume_name}`}{" "}
+                  </Typography>
                   <input
                     id="resumeInput"
                     name="resume"
@@ -203,15 +209,12 @@ export default function SignUpForm() {
           <Grid item xs={12}>
             <EducationBox />
           </Grid>
+          <Button type="submit" variant="contained">
+            Sign Up
+          </Button>
         </Grid>
       </Box>
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{ mt: 3, mb: 2, alignContent: "center" }}
-      >
-        Sign Up
-      </Button>
+
       <Copyright marginTop={4} />
     </Container>
   );

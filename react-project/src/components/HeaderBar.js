@@ -42,18 +42,22 @@ function HeaderBar() {
   const [current_view, set_current_view] = React.useState("Home");
 
   const handleOpenNavMenu = (event) => {
+
   };
   const handleOpenUserMenu = (event) => {
+    console.log(event.currentTarget.textContent)
+    
+    setAnchorElNav(null);
   };
 
   const handleCloseNavMenu = (event) => {
     console.log(event.currentTarget.textContent);
     set_current_view(event.currentTarget.textContent);
 
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = (event) => {
+
     setAnchorElUser(null);
   };
 

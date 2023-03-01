@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Buffer } from 'buffer';
 
 function Copyright(props) {
   return (
@@ -45,18 +46,32 @@ export default function SignIn() {
             })
         });
 
-    
+        console.log(response);
         const resp = await response.json();
         console.log(resp);
+        console.log(resp.data);
+        console.log(resp.data.firstname);
+        console.log(resp.data.lastname);
+        console.log(resp.data.email);
+        console.log(resp.data.resume);
+        
+
         if (resp.status === "success") {
           console.log(resp.status);
           console.log(JSON.stringify(resp.data.firstname));
           localStorage.setItem("firstName", resp.data.firstname);
           localStorage.setItem("lastName", resp.data.lastname);
           localStorage.setItem("email", resp.data.email);
+          localStorage.setItem("education", JSON.stringify(resp.data.education));
+          console.log(localStorage.getItem("education"));
+
+          localStorage.setItem("experience", JSON.stringify(resp.data.previousExperience));
           localStorage.setItem("response", JSON.stringify(resp.data));
           localStorage.setItem("loginStatus", "true");
           localStorage.setItem("loginType", "user");
+          localStorage.setItem("resume", resp.data.resume);
+          console.log(resp.data.resume);
+
           alert("Login Successful");
           window.location.href = "http://localhost:3000/Dashboard";
         }else{

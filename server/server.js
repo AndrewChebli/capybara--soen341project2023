@@ -5,13 +5,19 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRegisterModel = require("./models/registerUser.model.js");
 const UserLoginModel = require("./models/loginUser.model.js");
+app.use(express.json({ limit: "50mb", extended: true }));
+app.use(
+  express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
+);
 app.use(cors());
+
 app.use(express.json());
 let db;
+
 //============================================================
 
 //=============CONECTION BLOCK TO MONGO DB ATLAS==============
-mongoose.connect("mongodb+srv://root:1234@soen341.4bcqb8l.mongodb.net/SOEN341");
+mongoose.connect("mongodb+srv://root:1234@soen341.4bcqb8l.mongodb.net/SOEN341"); // we have access to all the collections in SOEN 341 database
 mongoose.connection.once("open", () => {
   console.log("connected to database");
   db = mongoose.connection.db;
@@ -36,9 +42,10 @@ app.post("/register", async (req, res) => {
     jobTitle,
     Description,
   } = req.body;
-  const {photo, resume} = req.body;
+  const { resume } = req.body;
 
-  console.log("lastName " + lastName)
+  console.log("lastName " + lastName);
+  console.log("RESUME " + resume);
 
   try {
     await UserRegisterModel.create({
@@ -46,7 +53,6 @@ app.post("/register", async (req, res) => {
       lastname: lastName,
       email: email,
       password: password,
-      photo: photo,
       resume: resume,
       education: {
         Start: dateStartedSchool,
@@ -76,15 +82,15 @@ app.post("/login", async (req, res) => {
   console.log("BODY  : " + JSON.stringify(req.body));
 
   const { email, password } = req.body;
-  const database_response = await UserLoginModel.findOne({
-    email: email,
-    password: password,
-  }, {
-
-  }
+  const database_response = await UserLoginModel.findOne(
+    {
+      email: email,
+      password: password,
+    },
+    {}
   );
-  console.log(JSON.stringify(database_response))
-  console.log("database_response : " + database_response)
+  console.log(JSON.stringify(database_response));
+  console.log("database_response : " + database_response);
   if (database_response) {
     res.send({ status: "success", data: database_response });
   } else {
