@@ -11,16 +11,17 @@ function EducationBox(props) {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="stretch">
-        <Typography component="h1" variant="h4" margin={2} marginTop={6}>
+        <Typography component="h1" variant="h4" margin={2} marginTop={1}>
           Education
         </Typography>
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             mt: 3,
+            mb: 3,
           }}
         >
           <Grid item xs={"auto"}>
