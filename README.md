@@ -1,6 +1,7 @@
 # capybara--soen341project2023
 
 BEFORE GRADING: Please see wiki entry "PLEASE READ : Before grading individual contributions"
+VIDEO LINK FOR SPRINT 2: https://drive.google.com/file/d/1bIyb2LoG8iC1YakJIkBM99fg1-rp24CV/view
 
 Github Repository for the SOEN341 W2023 - By 
 - Samuel Lopez-Ferrada (SamuelLopezF)
