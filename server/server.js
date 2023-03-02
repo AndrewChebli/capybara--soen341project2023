@@ -18,7 +18,7 @@ let db;
 //============================================================
 
 //=============CONECTION BLOCK TO MONGO DB ATLAS==============
-mongoose.connect("mongodb+srv://root:1234@soen341.4bcqb8l.mongodb.net/SOEN341"); // we have access to all the collections in SOEN 341 database
+mongoose.connect("mongodb+srv://root:1234@soen341.xywwhkp.mongodb.net/SOEN341"); // we have access to all the collections in SOEN 341 database
 mongoose.connection.once("open", () => {
   console.log("connected to database");
   db = mongoose.connection.db;

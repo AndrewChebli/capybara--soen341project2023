@@ -30,7 +30,7 @@ function PersonalInformationBox(registerService) {
           }}
         >
           <Box sx={{ mt: 3 }}>
-            <Typography component="h1" variant="h4" margin={3} marginTop={6}>
+            <Typography component="h1" variant="h4" marginBottom={3} marginTop={6} marginLeft={4}>
               Personal Information
             </Typography>
             <Grid container spacing={3}>
