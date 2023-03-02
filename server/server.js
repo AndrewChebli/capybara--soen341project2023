@@ -43,10 +43,8 @@ app.post("/register", async (req, res) => {
     jobTitle,
     Description,
   } = req.body;
-  const { resume } = req.body;
+  const { resume, resumeName } = req.body;
 
-  console.log("lastName " + lastName);
-  console.log("RESUME " + resume);
 
   try {
     await UserRegisterModel.create({
@@ -55,6 +53,7 @@ app.post("/register", async (req, res) => {
       email: email,
       password: password,
       resume: resume,
+      resumeName: resumeName,
       education: {
         Start: dateStartedSchool,
         End: dateCompletedSchool,
@@ -104,7 +103,7 @@ app.post("/login", async (req, res) => {
 app.post("/update", async (req, res) => {
   console.log("update attempt from " + req.body.email);
   console.log("BODY  : " + JSON.stringify(req.body));
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, resume, resumeName } = req.body;
   const { dateStartedSchool, dateCompletedSchool, school, academicProgram } = req.body;
   const { dateStartedWork, dateCompletedWork, companyName, jobTitle, Description } = req.body;
   const {_id} = req.body;
@@ -116,6 +115,8 @@ app.post("/update", async (req, res) => {
           lastname: lastName,
           email: email,
           password: password,
+          resume: resume,
+          resumeName: resumeName,
           education: {
             Start: dateStartedSchool,
             End: dateCompletedSchool,

@@ -35,7 +35,7 @@ function LogoutPage() {
   };
   if (query === "success") {
     localStorage.setItem("loginStatus", "out");
-    window.location.href = "/Home";
+    window.location.href = "/HomePage";
   }
   return (
     <Box

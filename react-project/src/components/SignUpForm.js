@@ -92,6 +92,7 @@ export default function SignUpForm() {
         lastName: data.get("lastName"),
         email: data.get("email"),
         password: data.get("password"),
+        resumeName: resume_name,
         resume: b64,
         companyName: data.get("companyName"),
         jobTitle: data.get("jobTitle"),

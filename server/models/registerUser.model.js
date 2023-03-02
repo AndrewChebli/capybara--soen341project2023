@@ -9,7 +9,7 @@ const UserRegister = new mongoose.Schema(
     email: { type: String, unique: false, required: true },
     password: { type: String, unique: false, required: true },
     resume: { type: String, unique: false },
-
+    resuneName: { type: String, unique: false },
     education: {
       Start: { type: String, unique: false },
       End: { type: String, unique: false },

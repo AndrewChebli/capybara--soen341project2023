@@ -1,35 +1,28 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Buffer } from 'buffer';
 
-function Copyright(props) { 
+function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
@@ -37,31 +30,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [values, setValues] = React.useState({
-    email: "",
-    password: "",
-    showPassword: false,
-  });
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailHelperText, setEmailHelperText] = React.useState("");
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
     // ================START OF FRONT-END ENDPOINT=====================
       async function loginService(event){
         event.preventDefault();
@@ -81,8 +49,6 @@ export default function SignIn() {
         console.log(response);
         const resp = await response.json();
 
-        
-
         if (resp.status === "success") {
           console.log(resp.status);
           console.log(JSON.stringify(resp.data.firstname));
@@ -97,10 +63,11 @@ export default function SignIn() {
           localStorage.setItem("loginStatus", "true");
           localStorage.setItem("loginType", "user");
           localStorage.setItem("resume", resp.data.resume);
-          console.log(resp.data.resume);
+          console.log(resp.data.resumeName)
+          localStorage.setItem("resumeName", resp.data.resumeName);
 
           alert("Login Successful");
-          window.location.href = "http://localhost:3000/Dashboard";
+          window.location.href = "http://localhost:3000/DashboardPage";
         }else{
           alert("Invalid Credentials");
         }
@@ -108,22 +75,6 @@ export default function SignIn() {
 
 
     // ================END OF FRONT-END ENDPOINT=====================
-
-  const validateEmail = (email) => {
-    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return regex.test(email);
-  };
-  const handleEmailBlur = (event) => {
-    const email = event.target.value;
-    const isValid = validateEmail(email);
-    if (!isValid) {
-      setEmailError(true);
-      setEmailHelperText("Please enter a valid email address");
-    } else {
-      setEmailError(false);
-      setEmailHelperText("");
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -137,7 +88,7 @@ export default function SignIn() {
             alignItems: 'stretch',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -150,11 +101,6 @@ export default function SignIn() {
               fullWidth
               id="email"
               label="Email Address"
-              value={values.email}
-              onChange={handleChange("email")}
-              onBlur={handleEmailBlur}
-              error={emailError}
-              helperText={emailHelperText}
               name="email"
               autoComplete="email"
               autoFocus
@@ -165,23 +111,10 @@ export default function SignIn() {
               fullWidth
               name="password"
               label="Password"
-              // type="password"
+              type="password"
               id="password"
               autoComplete="current-password"
-              type={showPassword ? "text" : "password"}
-              InputProps={{
-                endAdornment: (
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                ),
-              }}
             />
-            
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -191,22 +124,17 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={!validateEmail(values.email)}
             >
               Sign In
             </Button>
-            <Grid container sx={{ justifyContent: "center" }}>
+            <Grid container sx={{justifyContent:'center'}}>
               {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid> */}
               <Grid item>
-                <Link
-                  href="../SignUpPage"
-                  variant="body2"
-                  sx={{ justifyContent: "center" }}
-                >
+                <Link href="../SignUpPage" variant="body2" sx={{justifyContent:'center'}}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
