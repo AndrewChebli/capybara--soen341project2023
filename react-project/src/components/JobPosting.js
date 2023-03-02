@@ -27,6 +27,8 @@ function stringToColor(string) { // assigns a color to the icon of a job posting
   return color;
 }
 
+
+
 function stringAvatar(name) {
   if (name.split(" ").length === 1) {
     return {
@@ -45,38 +47,48 @@ function stringAvatar(name) {
   }
 }
 
+
+    
+    
+
 function JobPosting(job_posting) {
+
+  
   let job = job_posting.data;
-  console.log(job.CompanyName);
+  //console.log(job.CompanyName);
   let title = job.CompanyName;
   let spacing = 2;
+
+  localStorage.setItem("company", job.company);
+  console.log(localStorage.getItem("company"));
   return (
     <div>
       <Card sx={{ width: 1000, maxWidth: 1000 , flexDirection: 2, justifyContent: 'center'} }>
         <CardActionArea>
           <CardContent>
+          {console.log("bruh" + job.title)}
           <Avatar {...stringAvatar(title)} />
             <Typography gutterBottom variant="h4" component="div">
-              {job.CompanyName}
+              {job.company}
             </Typography>
             <Typography gutterBottom variant="h5" component="div">
-              {job.JobTitle}
+              {job.title}
             </Typography>
 
             <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Description: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Description} </Box>
+              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.description} </Box>
             </Box>
 
             <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Requirements: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Requirements} </Box>
+              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.requirements} </Box>
             </Box>
 
             <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Benefits: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Benefits} </Box>
+              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.benefits} </Box>
             </Box>
 
             <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Salary: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.Salary} </Box>
+              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {job.salary} </Box>
             </Box>
         
       

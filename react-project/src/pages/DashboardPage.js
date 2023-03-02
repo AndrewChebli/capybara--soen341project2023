@@ -1,7 +1,8 @@
-import job_postings from "../job_postings.json";
+//import job_postings from "../job_postings.json";
 import JobPosting from "../components/JobPosting";
 import Box from "@mui/material/Box";
 import PropTypes from 'prop-types';
+import React from "react";
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -37,15 +38,55 @@ Item.propTypes = {
 };
 
 
-function Dashboard() {
+let job_postings ;
 
+function Dashboard() {
+  
+  // let [data, setData] = React.useState([]);
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/getAllJobs")
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data));
+  // }, []);
+  
+  
+  // ================START OF FRONT-END ENDPOINT=====================
+  async function get_all_jobs_json(event){
+    //event.preventDefault();
+    const response = await fetch("http://localhost:8080/getAllJobs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        
+        })
+    });
+
+    // console.log(response);
+    // console.log("here");
+    const resp = await response.json();
+
+    
+
+    if (resp.status === "success") {
+      //console.log(resp.status);
+      job_postings = (JSON.stringify(resp.data));
+      console.log(job_postings);
+      //console.log(job_postings);
+    }else{
+      alert("Invalid Credentials");
+    }
+  }
+  // ================END OF FRONT-END ENDPOINT=====================
 
   return (
     <div>
+      {get_all_jobs_json()}
       <h1>Dashboard</h1>
       <h4>
         This is the dashboard page. It will display a list of job postings that
-        a user has applied to.
+        a user can apply to.
       </h4>
       <div style={{ width: "100%" }}>
         <Box
@@ -62,9 +103,12 @@ function Dashboard() {
             justifyContent: 'center' 
           }}
         >
+          {console.log(job_postings)}
           {job_postings.map((job_posting) => (
-            <JobPosting data={job_posting} key={job_posting.id} />
+            <JobPosting data={job_posting} key={job_posting._id} />
+            
           ))}
+          {console.log("Bruh")}
         </Box>
       </div>
     </div>
