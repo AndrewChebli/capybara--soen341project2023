@@ -7,7 +7,7 @@ function WorkExperienceBox(registerService) {
   return (
     <Box
       sx={{
-        marginTop: 8,
+        marginTop: 0,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -66,9 +66,17 @@ function WorkExperienceBox(registerService) {
             />
 
           </Grid>
-          <Fab color="primary" aria-label="add" sx={{mt :2, mr: 5}}>
-              <AddIcon />
+          
+          <Grid
+  container
+  direction="row"
+  justifyContent="center"
+  alignItems="center"
+>
+            <Fab color="primary" aria-label="add" sx={{mt:3, ml: 4, mr:2}}>
+                <AddIcon />
             </Fab>
+          </Grid>
         </Grid>
       </Grid>
     </Box>
