@@ -1,53 +1,44 @@
-import job_postings from "../job_postings.json";
+//import job_postings from "../job_postings.json";
 import JobPosting from "../components/JobPosting";
 import Box from "@mui/material/Box";
-import PropTypes from 'prop-types';
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import Typography from "@mui/material/Typography";
 
-function Item(props) {
-  const { sx, ...other } = props;
-  return (
-    <Box
-      sx={{
-        p: 1,
-        m: 1,
-        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : 'grey.100'),
-        color: (theme) => (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800'),
-        border: '1px solid',
-        borderColor: (theme) =>
-          theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-        borderRadius: 2,
-        fontSize: '0.875rem',
-        fontWeight: '700',
-        ...sx,
-      }}
-      {...other}
-    />
-  );
-}
-
-Item.propTypes = {
-
-  sx: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool]),
-    ),
-    PropTypes.func,
-    PropTypes.object,
-  ]),
-};
-
+let job_postings;
 
 function Dashboard() {
+  const [data, setData] = React.useState([]);
+  useEffect(() => {
+    // ================START OF FRONT-END ENDPOINT=====================
+    fetch("http://localhost:8080/getAllJobs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    })
+      .then((response) => response.json())
+      .then((resp) => {
+        if (resp.status === "success") {
+          setData(resp.data);
+          job_postings = JSON.stringify(resp.data);
+          console.log(job_postings);
+          setData(resp.data);
+        } else {
+          alert("Failed to get jobs");
+        }
+      });
+    // ================END OF FRONT-END ENDPOINT=====================
+  }, []);
 
 
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      <h4>
-        This is the dashboard page. It will display a list of job postings that
-        a user has applied to.
-      </h4>
+    return (
       <div style={{ width: "100%" }}>
+        <Typography variant="h2" component="h1" gutterBottom sx={{p: 5}}>
+          Job Postings
+        </Typography>
         <Box
           sx={{
             display: "inline-flex",
@@ -62,13 +53,12 @@ function Dashboard() {
             justifyContent: 'center' 
           }}
         >
-          {job_postings.map((job_posting) => (
-            <JobPosting data={job_posting} key={job_posting.id} />
+        {data.map((job_posting) => (
+            <JobPosting data={job_posting} key={job_posting._id} />
           ))}
-        </Box>
+      </Box>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
 export default Dashboard;

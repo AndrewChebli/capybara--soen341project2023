@@ -113,6 +113,7 @@ function EditProfilePage() {
   let firstName = localStorage.getItem("firstName");
   let lastName = localStorage.getItem("lastName");
   let email = localStorage.getItem("email");
+  let resumeName = localStorage.getItem("resumeName");
   let educ_non_parsed = localStorage.getItem("education");
   let educ = JSON.parse(educ_non_parsed);
   let work_non_parsed = localStorage.getItem("experience");

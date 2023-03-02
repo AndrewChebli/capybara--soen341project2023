@@ -110,7 +110,7 @@ export default function SignUpForm() {
 
     if (response.status === 200) {
       alert("Registration Successful");
-      window.location.href = "/SignIn";
+      window.location.href = "/SignInPage";
     } else {
       alert("Registration Failed");
     }

@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRegisterModel = require("./models/registerUser.model.js");
+const AddJobModel = require("./models/addJob.model.js");
 const UserUpdateModel = require("./models/updateUser.model.js");
 const UserLoginModel = require("./models/loginUser.model.js");
 app.use(express.json({ limit: "50mb", extended: true }));
@@ -18,7 +19,8 @@ let db;
 //============================================================
 
 //=============CONECTION BLOCK TO MONGO DB ATLAS==============
-mongoose.connect("mongodb+srv://root:1234@soen341.4bcqb8l.mongodb.net/SOEN341"); // we have access to all the collections in SOEN 341 database
+mongoose.connect("mongodb+srv://root:1234@soen341.xywwhkp.mongodb.net/SOEN341"); // we have access to all the collections in SOEN 341 database
+
 mongoose.connection.once("open", () => {
   console.log("connected to database");
   db = mongoose.connection.db;
@@ -43,8 +45,10 @@ app.post("/register", async (req, res) => {
     jobTitle,
     Description,
   } = req.body;
-  const { resume, resumeName } = req.body;
+  const { resume } = req.body;
 
+  console.log("lastName " + lastName);
+  console.log("RESUME " + resume);
 
   try {
     await UserRegisterModel.create({
@@ -53,7 +57,6 @@ app.post("/register", async (req, res) => {
       email: email,
       password: password,
       resume: resume,
-      resumeName: resumeName,
       education: {
         Start: dateStartedSchool,
         End: dateCompletedSchool,
@@ -99,14 +102,17 @@ app.post("/login", async (req, res) => {
 });
 
 
+
+
 //=====================UPDATE ENDPOINT=======================
 app.post("/update", async (req, res) => {
   console.log("update attempt from " + req.body.email);
   console.log("BODY  : " + JSON.stringify(req.body));
-  const { firstName, lastName, email, password, resume, resumeName } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   const { dateStartedSchool, dateCompletedSchool, school, academicProgram } = req.body;
   const { dateStartedWork, dateCompletedWork, companyName, jobTitle, Description } = req.body;
   const {_id} = req.body;
+  const {resume, resuneName} = req.body;
   console.log(_id);
   
   let response_from_database = await UserUpdateModel.findOneAndUpdate({email},
@@ -116,7 +122,7 @@ app.post("/update", async (req, res) => {
           email: email,
           password: password,
           resume: resume,
-          resumeName: resumeName,
+          resuneName: resuneName,
           education: {
             Start: dateStartedSchool,
             End: dateCompletedSchool,
@@ -145,6 +151,45 @@ app.post("/update", async (req, res) => {
 
 
 });
+
+// ========== GET JOBS =========
+
+app.post("/getAllJobs", async (req, res) => {
+  const all_jobs = await AddJobModel.find({});
+  console.log("from mongo all_jobs : " + all_jobs);
+
+  res.send({ status: "success", data: all_jobs });
+
+});
+
+// =========================== ADD JOB =========================
+
+app.post("/addJob", async (req, res) => {
+  console.log("add job attemmpt " + req.body.email);
+  console.log("BODY  : " + JSON.stringify(req.body));
+  const {jobTitle, companyName, deadlineDay, deadlineMonth, deadlineYear, jobDescription, jobRequirements, jobSalary, jobBenefits} = req.body;
+  try {
+    await AddJobModel.create({     // .create sends the creation of the document described below to the database
+    title: jobTitle,
+    company: companyName,
+    description: jobDescription,
+    Dday:  deadlineDay,
+    Dmonth: deadlineMonth,
+    Dyear: deadlineYear,
+    salary: jobSalary,
+    benefits: jobBenefits,
+    requirements: jobRequirements,
+
+      
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  res.json({ status: "success" });
+});
+
+
+
 //=====================END OF ENDPOINTS=======================
 //====================LISTENING PORT==========================
 app.listen(8080, () => {
