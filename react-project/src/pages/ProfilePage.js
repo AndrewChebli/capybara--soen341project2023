@@ -3,35 +3,38 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-
 import ProfileSidebar from "../components/ProfileSidebar";
-
+import ResumeViewer from "../components/ResumeViewer";
+import { Work } from "@mui/icons-material";
 
 
 function ProfilePage() {
+
   const user = {
     name:
       localStorage.getItem("firstName") +
-      " " +
+      "      " +
       localStorage.getItem("lastName"),
     email: localStorage.getItem("email"),
-    profilePicture: "https://via.placeholder.com/150",
   };
 
-  const base64_resume = localStorage.getItem("resume");
-  
-  console.log(base64_resume)
-  var bin = atob(base64_resume);
-  console.log('File Size:', Math.round(bin.length / 1024), 'KB');
-  
-  // Embed the PDF into the HTML page and show it to the user
-  var obj = document.createElement('object');
-  obj.style.width = '80%';
-  obj.style.height = '842pt';
-  obj.type = 'application/pdf';
-  obj.data = 'data:application/pdf;base64,' + base64_resume;
-  document.body.appendChild(obj);
-
+  let parsed_ed = JSON.parse(localStorage.getItem("education"));
+  const education = {
+    school: parsed_ed.School,
+    degree: parsed_ed.Degree,
+    start: "Start   " + parsed_ed.Start,
+    end: "End    " + parsed_ed.End,
+  };
+  console.log(education);
+  let parsed_work = JSON.parse(localStorage.getItem("experience"));
+  const experience = {
+    company: parsed_work[0].Company,
+    position: parsed_work[0].Position,
+    description: parsed_work[0].Description,
+    start: "Start" +parsed_work[0].Start,
+    end: "End  " + parsed_work[0].End,
+  };
+  console.log(experience);
   return (
     <Box
       sx={{
@@ -44,33 +47,24 @@ function ProfilePage() {
     >
       <ProfileSidebar user={user} />
       <Box sx={{ marginTop: 2 }}>
-        <Avatar
-          sx={{ width: 128, height: 128, marginBottom: 2 }}
-          src={user.profilePicture}
-          alt="Profile picture"
-        />
         <Typography
           component="h1"
           variant="h4"
           sx={{ fontWeight: "bold", marginBottom: 2 }}
         >
-          {user.name}
-        </Typography>
-        <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          {user.email}
-        </Typography>
-      </Box>
-      <Box sx={{ marginTop: 4 }}>
-        <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-        <a download= "wontwork.pdf" href={base64_resume} title='Download pdf document' />
+          Your Profile
+          <Divider
+          sx={{ background: "#746e62", height: "3px", marginBottom: 2 }}
+        />
         </Typography>
       </Box>
+
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2 }}>
           Personal Info
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          New York, USA
+        {user.name}
         </Typography>
         <Divider
           sx={{ background: "#746e62", height: "3px", marginBottom: 2 }}
@@ -81,10 +75,12 @@ function ProfilePage() {
           Education
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          University of Oxford - Computer Science
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          Started: 2010-09-01 | Completed: 2014-06-30
+          {education.school}  {education.degree}
+        </Typography>
+        <Typography variant="body1" sx={{ marginBottom: 2 }}>
+          {education.start}{' '}  {education.end}
         </Typography>
         <Divider
           sx={{ background: "#746e62", height: "3px", marginBottom: 2 }}
@@ -95,7 +91,10 @@ function ProfilePage() {
           Work Experience
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          Software Engineer at Google
+          {experience.company}{' '}{experience.position}
+        </Typography>
+        <Typography variant="body1" sx={{ marginBottom: 2 }}>
+          {experience.start}     {experience.end}
         </Typography>
         <Divider
           sx={{ background: "#746e62", height: "3px", marginBottom: 2 }}
@@ -109,6 +108,12 @@ function ProfilePage() {
           React, Node.js, JavaScript
         </Typography>
       </Box>
+      <Box sx={{ marginTop: 4 }}>
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          Resume
+        </Typography>
+        <ResumeViewer></ResumeViewer>
+        </Box>
     </Box>
   );
 }

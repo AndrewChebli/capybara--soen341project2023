@@ -12,6 +12,7 @@ import OffersPage from "./pages/OffersPage";
 import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";  
 import CreateJobPostingPage from "./pages/CreateJobPostingPage";
+import HeaderBar from "./components/HeaderBar";
 
 
 
@@ -32,6 +33,7 @@ function App() {
   }
   return (
     <div className="App" >
+    <HeaderBar></HeaderBar>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />

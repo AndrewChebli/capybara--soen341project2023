@@ -6,7 +6,8 @@ const UpdateUser = new mongoose.Schema({
     
     email: { type: String, unique: false },
     password: { type: String, unique: false },
-
+    resume: { type: String, unique: false },
+    resumeName: { type: String, unique: false },
     education:{
         Start: { type: String, unique: false },
         End: { type: String, unique: false },

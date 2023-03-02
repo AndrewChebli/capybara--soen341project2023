@@ -1,49 +1,68 @@
-import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Card from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import WorkExperienceBox from '../components/WorkExperienceBox';
-import EducationBox from '../components/EducationBox';
+import React, { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Card from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 // import { CardActionArea } from "@mui/material";
 // import CardContent from '@mui/material';
+
+let b64;
 
 function EditProfilePage() {
   const theme = createTheme();
 
+  const [resume, setResume] = useState(null);
 
-  const [photo, setPhoto] = useState(null);
+  const handleResumeChange = (event) => {
+    
+    console.log("click");
+    let file = event.target.files[0],
+      reader = new FileReader();
 
-const handlePhotoChange = (event) => {
-  setPhoto(URL.createObjectURL(event.target.files[0]));
-};
+    reader.onloadend = function () {
+      b64 = reader.result.replace(/^data:.+;base64,/, "");
+      console.log("triggered");
+      console.log(b64);
+    };
+    reader.readAsDataURL(file);
+    setResume(event.target.files[0]);
+  };
 
-function updateLocalStorage(resp) {
+  let resume_name = resume ? resume.name : "No file chosen";
+
+  function updateLocalStorage(resp) {
     localStorage.setItem("response", JSON.stringify(resp));
     localStorage.setItem("firstName", resp.db_response.firstname);
     localStorage.setItem("lastName", resp.db_response.lastname);
-    if(resp.education === undefined){
+    localStorage.setItem("resume", resp.db_response.resume);
+    localStorage.setItem("resumeName", resp.db_response.resumeName);
+    if (resp.education === undefined) {
       resp.education = [];
-    }else{
-      localStorage.setItem("education", JSON.stringify(resp.db_resonse.education));
+    } else {
+      localStorage.setItem(
+        "education",
+        JSON.stringify(resp.db_resonse.education)
+      );
     }
-    if(resp.experience === undefined){
+    if (resp.experience === undefined) {
       resp.experience = [];
-    }else{
-      localStorage.setItem("experience", JSON.stringify(resp.db_resonse.experience));
+    } else {
+      localStorage.setItem(
+        "experience",
+        JSON.stringify(resp.db_resonse.experience)
+      );
     }
-}
+  }
 
-async function updateService (event){
+  async function updateService(event) {
     console.log("clicked");
     console.log(event.currentTarget);
     event.preventDefault();
@@ -63,8 +82,9 @@ async function updateService (event){
         _id: _id,
         firstName: data.get("firstName"),
         lastName: data.get("lastName"),
-        email: data.get("email"),
-        password: data.get("password"),
+        email: localStorage.getItem("email"),
+        resume: b64,
+        resumeName: resume_name,
         companyName: data.get("companyName"),
         jobTitle: data.get("jobTitle"),
         dateStartedWork: data.get("dateStartedWork"),
@@ -77,115 +97,219 @@ async function updateService (event){
         dateCompletedSchool: data.get("dateCompletedSchool"),
       }),
     });
-    console.log(response)
+    console.log(response);
     const resp = await response.json();
-    
+
     // console.log("Test result: " + )
     console.log("data: " + JSON.stringify(resp.db_response));
-    if(response.status === 200){
+    if (response.status === 200) {
       updateLocalStorage(resp);
-      alert("Updated the profile!")
-    }else{
-      alert("Something went wrong! please try again!")
+      alert("Updated the profile!");
+    } else {
+      alert("Something went wrong! please try again!");
     }
   }
-  
 
-  let firstName = localStorage.getItem('firstName');
-  let lastName = localStorage.getItem('lastName');
-  let email = localStorage.getItem('email');
-  let educ_non_parsed = localStorage.getItem('education');
+  let firstName = localStorage.getItem("firstName");
+  let lastName = localStorage.getItem("lastName");
+  let email = localStorage.getItem("email");
+  let educ_non_parsed = localStorage.getItem("education");
   let educ = JSON.parse(educ_non_parsed);
-  let work_non_parsed = localStorage.getItem('experience');
+  let work_non_parsed = localStorage.getItem("experience");
   let work = JSON.parse(work_non_parsed);
-  console.log(work[0].Start)
-
+  console.log(work[0].Start);
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
-          component= "form"
+          component="form"
           noValidate
           onSubmit={updateService}
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{p: 2}}>
             Edit Profile
           </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <label htmlFor="photoInput">
+          <Grid container spacing={2} >
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="given-name"
+                name="firstName"
+                fullWidth
+                id="firstName"
+                label="First Name"
+                defaultValue={firstName}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                defaultValue={lastName}
+                autoComplete="family-name"
+              />
+            </Grid>
+            <Grid item xs={12} sx={{ m: 3 }}>
+                <label htmlFor="resumeInput">
+                  <Typography component="h4" variant="h6">
+                    {`${resume_name}`}{" "}
+                  </Typography>
                   <input
-                    id="photoInput"
-                    name="photo"
+                    id="resumeInput"
+                    name="resume"
                     type="file"
-                    accept="image/*"
+                    accept=".pdf, .docx"
                     hidden
+                    onChange={handleResumeChange}
                   />
-                  <IconButton
+                  <AttachFileOutlinedIcon
+                    fontSize="large"
                     color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera />
-                  </IconButton>
+                  ></AttachFileOutlinedIcon>
                 </label>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  defaultValue={firstName}
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  defaultValue={lastName}
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  defaultValue={email}
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  defaultValue = "********"
-                  id="password"
-                />
-              </Grid>
-
             <Grid item xs={12}>
-            <EducationBox />
-          </Grid>
+              <Box
+                sx={{
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Grid item xs={"auto"}>
+                  <Typography component="h1" variant="h4" marginBottom={2}>
+                    Work Experience
+                  </Typography>
+
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        name="jobTitle"
+                        required
+                        fullWidth
+                        id="jobTitle"
+                        label="Job Title"
+                        defaultValue={work[0].Position}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={20}>
+                      <TextField
+                        name="companyName"
+                        required
+                        fullWidth
+                        id="companyName"
+                        label="Company Name"
+                        defaultValue={work[0].Company}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        name="dateStartedWork"
+                        required
+                        fullWidth
+                        id="dateStartedWork"
+                        type="date"
+                        defaultValue={work[0].Start}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        name="dateCompletedWork"
+                        fullWidth
+                        id="dateCompletedWork"
+                        type="date"
+                        defaultValue={work[0].End}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={20}>
+                      <TextField
+                        multiline={true}
+                        defaultValue={work[0].Description}
+                        rows={4}
+                        name="Description"
+                        fullWidth
+                        id="Description"
+                        label="Description"
+                        type="text"
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component="h1" variant="h4" margin={2} marginTop={6}>
+                Education
+              </Typography>
+              <Box
+                sx={{
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  mt: 3,
+                }}
+              >
+                <Grid item xs={"auto"}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={"auto"} sm={6}>
+                      <TextField
+                        name="school"
+                        required
+                        fullWidth
+                        id="school"
+                        label="School Name"
+                        defaultValue={educ.School}
+                      />
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        name="academicProgram"
+                        label="Academic Program"
+                        id="academicProgram"
+                        defaultValue={educ.Degree}
+                      />
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <TextField
+                        name="dateStartedSchool"
+                        required
+                        fullWidth
+                        id="dateStartedSchool"
+                        type="date"
+                        defaultValue = {educ.Start}
+                      />
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <TextField
+                        name="dateCompletedSchool"
+                        fullWidth
+                        id="dateCompletedSchool"
+                        type="date"
+                        defaultValue = {educ.End}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -194,7 +318,7 @@ async function updateService (event){
             >
               Update Profile
             </Button>
-            </Grid>
+          </Grid>
         </Box>
       </Container>
     </ThemeProvider>

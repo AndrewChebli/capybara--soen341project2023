@@ -25,6 +25,7 @@ let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HeaderBar() {
+  
 
   if(localStorage.getItem("loginStatus") === "true"){
     if(localStorage.loginType === "user"){
