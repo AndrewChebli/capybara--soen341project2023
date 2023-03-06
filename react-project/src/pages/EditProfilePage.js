@@ -5,7 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Card from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -22,7 +21,6 @@ function EditProfilePage() {
   const [resume, setResume] = useState(null);
 
   const handleResumeChange = (event) => {
-    
     console.log("click");
     let file = event.target.files[0],
       reader = new FileReader();
@@ -44,22 +42,8 @@ function EditProfilePage() {
     localStorage.setItem("lastName", resp.db_response.lastname);
     localStorage.setItem("resume", resp.db_response.resume);
     localStorage.setItem("resumeName", resp.db_response.resumeName);
-    if (resp.education === undefined) {
-      resp.education = [];
-    } else {
-      localStorage.setItem(
-        "education",
-        JSON.stringify(resp.db_resonse.education)
-      );
-    }
-    if (resp.experience === undefined) {
-      resp.experience = [];
-    } else {
-      localStorage.setItem(
-        "experience",
-        JSON.stringify(resp.db_resonse.experience)
-      );
-    }
+    localStorage.setItem("education",JSON.stringify(resp.db_response.education));
+    localStorage.setItem("experience",JSON.stringify(resp.db_response.previousExperience));
   }
 
   async function updateService(event) {
@@ -68,9 +52,7 @@ function EditProfilePage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    console.log(data.get("firstName"));
     const temp = JSON.parse(localStorage.getItem("response"));
-    console.log(temp);
     const _id = temp._id;
 
     const response = await fetch("http://localhost:8080/update", {
@@ -97,11 +79,12 @@ function EditProfilePage() {
         dateCompletedSchool: data.get("dateCompletedSchool"),
       }),
     });
-    console.log(response);
     const resp = await response.json();
-
+    console.log("response");
+    console.log(resp);
+    console.log(resp.db_response)
+    console.log(resp.db_response.education)
     // console.log("Test result: " + )
-    console.log("data: " + JSON.stringify(resp.db_response));
     if (response.status === 200) {
       updateLocalStorage(resp);
       alert("Updated the profile!");
@@ -138,11 +121,10 @@ function EditProfilePage() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{p: 2}}>
+          <Typography component="h1" variant="h5" sx={{ p: 2 }}>
             Edit Profile
           </Typography>
-          <Grid container spacing={2} >
-
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
@@ -165,24 +147,24 @@ function EditProfilePage() {
               />
             </Grid>
             <Grid item xs={12} sx={{ m: 3 }}>
-                <label htmlFor="resumeInput">
-                  <Typography component="h4" variant="h6">
-                    {`${resume_name}`}{" "}
-                  </Typography>
-                  <input
-                    id="resumeInput"
-                    name="resume"
-                    type="file"
-                    accept=".pdf, .docx"
-                    hidden
-                    onChange={handleResumeChange}
-                  />
-                  <AttachFileOutlinedIcon
-                    fontSize="large"
-                    color="primary"
-                  ></AttachFileOutlinedIcon>
-                </label>
-              </Grid>
+              <label htmlFor="resumeInput">
+                <Typography component="h4" variant="h6">
+                  {`${resume_name}`}{" "}
+                </Typography>
+                <input
+                  id="resumeInput"
+                  name="resume"
+                  type="file"
+                  accept=".pdf, .docx"
+                  hidden
+                  onChange={handleResumeChange}
+                />
+                <AttachFileOutlinedIcon
+                  fontSize="large"
+                  color="primary"
+                ></AttachFileOutlinedIcon>
+              </label>
+            </Grid>
             <Grid item xs={12}>
               <Box
                 sx={{
@@ -295,7 +277,7 @@ function EditProfilePage() {
                         fullWidth
                         id="dateStartedSchool"
                         type="date"
-                        defaultValue = {educ.Start}
+                        defaultValue={educ.Start}
                       />
                     </Grid>
                     <Grid item xs={6} sm={6}>
@@ -304,7 +286,7 @@ function EditProfilePage() {
                         fullWidth
                         id="dateCompletedSchool"
                         type="date"
-                        defaultValue = {educ.End}
+                        defaultValue={educ.End}
                       />
                     </Grid>
                   </Grid>

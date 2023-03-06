@@ -8,8 +8,6 @@ import EducationBox from "./EducationBox";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";

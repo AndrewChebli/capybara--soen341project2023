@@ -36,7 +36,7 @@ function App() {
     <HeaderBar></HeaderBar>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/DashboardPage" element={<Dashboard />} />
           <Route path="/SignInPage" element={<SignInPage />} />
           <Route path="/SignUpPage" element={<SignUpPage />} />

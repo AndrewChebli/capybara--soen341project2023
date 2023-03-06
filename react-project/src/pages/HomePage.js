@@ -1,27 +1,19 @@
-
-import job_postings from "../job_postings.json";
-import JobPosting from "../components/JobPosting";
-import Box from "@mui/material/Box";
-import PropTypes from "prop-types";
 import React from "react";
-import ReactDOM from "react-dom/client";
 import Image from "mui-image";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Typography } from "@mui/material";
-import handshake_image from "../images/download.jpeg";
-import register_image from "../images/register_image.jpeg";
-
-
-import { style } from "@mui/system";
+import register_image from "../images/download.jpeg";
+import backgroundImage from "../images/homePageBackground.jpg";
+import keyboard_image from "../images/keyboard_typing.jpg";
 
 function Home() {
   return (
     <div>
       <Image
-        src="https://picsum.photos/id/492/2000"
+        src={backgroundImage}
         style={{
           height: "100%",
           width: "100%",
@@ -29,8 +21,8 @@ function Home() {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           position: "absolute",
-          top: 70,
-          opacity: 0.8,
+          top: 0,
+          opacity: 0.9,
           easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
         }}
       ></Image>
@@ -39,26 +31,43 @@ function Home() {
           maxWidth: 400,
           display: "inline-flex",
           alignContent: "center",
-          marginTop: 10,
-          opacity: 0.8,
+          backgroundColor: "transparent",
+          marginTop: 30,
+          opacity: 0.9,
           easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
+          "&:hover": {
+            boxShadow: 20,
+          },
         }}
       >
         <CardActionArea href="SignInPage">
-          <CardMedia style={{easing: "cube-bezier(0.075, 0.82, 0.165, 1)"}}
-            component="img"
-            height="250"
-            image={handshake_image}
-            alt="handshake"
-            
-          />
+          <CardMedia>
+            <Image
+              src={keyboard_image}
+              sx={{
+                height: 300,
+                width: 400,
+                easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
+              }}
+            ></Image>
+          </CardMedia>
           <CardContent>
-            <Typography gutterBottom variant="h3" component="div">
+            <Typography
+              gutterBottom
+              variant="h3"
+              component="div"
+              color="common.white"
+              fontFamily={"Helvetica"}
+            >
               Log in
             </Typography>
-            <Typography variant="h6" color="text.primary">
-              Connect, collaborate and grow with us!
-              Welcome back! You are one step closer to your next adventure.
+            <Typography
+              variant="h5"
+              color="common.white"
+              fontFamily={"Helvetica"}
+            >
+              Connect, collaborate and grow with us! You are one step closer to
+              your next adventure.
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -67,35 +76,44 @@ function Home() {
         sx={{
           maxWidth: 400,
           display: "inline-flex",
+          marginLeft: 15,
           alignContent: "center",
-          marginTop: 10,
-          marginLeft: 10,
-          opacity: 0.8,
+          backgroundColor: "transparent",
+          marginTop: 30,
+          opacity: 0.9,
           easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
+          "&:hover": {
+            boxShadow: 20,
+          },
         }}
       >
         <CardActionArea href="SignUpPage">
-          <CardMedia
-            component="img"
-            height="250"
-            image={register_image}
-            alt="handshake"
-          />
+          <CardMedia>
+            <Image src={register_image}></Image>
+          </CardMedia>
           <CardContent>
-            <Typography gutterBottom variant="h3" component="div">
+            <Typography
+              gutterBottom
+              variant="h3"
+              component="div"
+              color="common.white"
+              fontFamily={"Helvetica"}
+            >
               Register
             </Typography>
-            <Typography variant="h6" color="text.primary">
-              Join a worldwide community, full of opportunities!
-              Your next adventure awaits you.. 
+            <Typography
+              variant="h5"
+              color="common.white"
+              fontFamily={"Helvetica"}
+            >
+              Join a worldwide community, full of opportunities! Your next
+              adventure awaits you..
             </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
-
     </div>
   );
 }
-
 
 export default Home;

@@ -18,30 +18,8 @@ const ProfileSidebar = ({ user }) => {
     window.location.href = "/EditProfilePage";
   }
   return (
-<AppBar position="fixed" sx={{ width: 250, zIndex: (theme) => theme.zIndex.drawer +1, left: 0, top: '69px',height:'100%', backgroundColor: "746e62" }}>
-      <Toolbar sx={{ bgcolor: '#fff' }}>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          sx={{ mr: 2, display: { md: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Box sx={{ flexGrow: 1 }} />
-        <IconButton color="746e62">
-          <Avatar
-            src={file ? URL.createObjectURL(file) : user.photo}
-            onClick={handlePictureClick}
-          />
-          <input
-            type="file"
-            id="file-input"
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
-          />
-        </IconButton>
-      </Toolbar>
+<AppBar style={{ background: '#427a87'}}  position="fixed" sx={{ width: 250, zIndex: (theme) => theme.zIndex.drawer +1, left: 0, top: '69px',height:'100%'}}>
+  
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: 'calc(100% - 64px)', padding: 2 , backgroundColor: "746e62" }}>
         <Avatar sx={{ width: 80, height: 80, mb: 2 }} src={user.photo} alt="Profile picture" />
         <Typography variant="h6" component="div">
@@ -62,7 +40,7 @@ const ProfileSidebar = ({ user }) => {
         <Button fullWidth variant="outlined" sx={{ marginBottom: 2 }} color="inherit">
           Skills
         </Button>
-        <Button fullWidth variant="outlined" color="primary" sx={{ color: '#000' }} onClick ={handleEditClick}>
+        <Button fullWidth variant="outlined" color="primary" sx={{ color: '#FFFF' }} onClick ={handleEditClick}>
           Edit Profile
         </Button>
       </Box>

@@ -63,9 +63,9 @@ function HeaderBar() {
   };
 
   return (
-    <AppBar position="static" style={{ background: '#746e62' }}>
+    <AppBar position="fixed" style={{ background: '#427a87', opacity: "0.8"}}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar >
           {/* JobHive Logo */}
           <Typography
             variant="h5"
@@ -74,7 +74,7 @@ function HeaderBar() {
             href="HomePage"
             sx={{
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              fontFamily: "Helvetica",
               fontWeight: 900,
               letterSpacing: ".3rem",
               color: "inherit",

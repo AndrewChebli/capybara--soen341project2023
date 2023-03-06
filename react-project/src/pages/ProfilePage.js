@@ -5,7 +5,6 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import ProfileSidebar from "../components/ProfileSidebar";
 import ResumeViewer from "../components/ResumeViewer";
-import { Work } from "@mui/icons-material";
 
 
 function ProfilePage() {
