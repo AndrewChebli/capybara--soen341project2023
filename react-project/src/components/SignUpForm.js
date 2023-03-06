@@ -13,23 +13,23 @@ import { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 let b64;
 
@@ -149,22 +149,17 @@ export default function SignUpForm() {
                   </IconButton>
                 </label> */}
               </Grid>
-              <Grid
-                item
-                xs={4}
-                sx={{ pl: 20, justifyContent: "center", display: "flex" }}
-              >
-                <Avatar
-                  sx={{ width: 128, height: 128, marginBottom: 2 }}
-                  alt="Profile picture"
-                />
-              </Grid>
+              
 
-              <Grid sx={{ display: "flex", justifyContent: "center" }}>
+              <Box sx={{ display: 'flex', justifyContent: "center" }}> 
+
+              {/* <Grid sx={{ display: "flex", justifyContent: "center" }}> */}
                 <Avatar
                   sx={{
-                    m: 5,
-                    mr: 3,
+                    mt: 0.85,
+                    ml: 4,
+                    mb: 3,
+                    mr: 1,
                     bgcolor: "secondary.main",
                     justifyContent: "center",
                     display: "flex",
@@ -173,10 +168,24 @@ export default function SignUpForm() {
                   <LockOutlinedIcon />
                 </Avatar>
 
-                <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
-                  Sign up
+                <Typography component="h3" variant="h3" sx={{ mb: 2, mr: 2 }}>
+                  Join the Hive! 
                 </Typography>
-              </Grid>
+              {/* </Grid> */}
+              </Box>
+
+
+              <Box sx={{ display: 'flex', justifyContent: "center" }}> 
+                <Grid 
+                  item
+                  xs={1}
+                >
+                <Avatar
+                  sx={{ width: 128, height: 128, marginBottom: -5 }}
+                  alt="Profile picture"
+                />
+                </Grid>
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <PersonalInformationBox />
@@ -207,13 +216,22 @@ export default function SignUpForm() {
           <Grid item xs={12}>
             <EducationBox />
           </Grid>
+
+          <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ mb: 5, ml: 2 }}
+          >
           <Button type="submit" variant="contained">
             Sign Up
           </Button>
+          </Grid>
         </Grid>
       </Box>
 
-      <Copyright marginTop={4} />
+      {/* <Copyright marginTop={4} /> */}
     </Container>
   );
 }
