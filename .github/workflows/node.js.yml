@@ -9,9 +9,15 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Install Dependencies 
-        run: npm install
-      - name: Install Cypress 
-        run: npm install cypress --save-dev
-      - name: Cypress.io
-        uses: cypress-io/github-action@v5.1.0
+        uses: npi ci
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with: 
+          browser: chrome
+          headless: true
+          star: npm run dev
+          wait-on: http://localhost:3000
+        env:
+          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

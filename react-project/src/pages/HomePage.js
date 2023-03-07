@@ -6,14 +6,14 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Typography } from "@mui/material";
 import register_image from "../images/download.jpeg";
-import backgroundImage from "../images/homePageBackground.jpg";
 import keyboard_image from "../images/keyboard_typing.jpg";
+import windows_xp_background from "../images/background_xp.jpg";
 
 function Home() {
   return (
     <div>
       <Image
-        src={backgroundImage}
+        src={windows_xp_background}
         style={{
           height: "100%",
           width: "100%",
