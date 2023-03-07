@@ -63,7 +63,7 @@ function HeaderBar() {
   };
 
   return (
-    <AppBar position="fixed" style={{ background: '#394727', opacity: "0.8"}}>
+    <AppBar position="fixed" style={{ background: '#394727l', opacity: "0.8"}}>
       <Container maxWidth="xl">
         <Toolbar >
           {/* JobHive Logo */}
