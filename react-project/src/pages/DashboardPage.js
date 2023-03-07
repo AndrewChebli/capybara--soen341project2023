@@ -3,7 +3,6 @@ import JobPosting from "../components/JobPosting";
 import Box from "@mui/material/Box";
 import React from "react";
 import { useEffect } from "react";
-import { useState } from "react";
 import Typography from "@mui/material/Typography";
 
 let job_postings;
