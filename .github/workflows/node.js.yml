@@ -6,18 +6,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Install Dependencies 
+      - name: Install Dependencies
         uses: npi ci
       - name: Cypress run
         uses: cypress-io/github-action@v5
-        with: 
+        with:
           browser: chrome
           headless: true
           star: npm run dev
           wait-on: http://localhost:3000
-        env:
-          CI: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
