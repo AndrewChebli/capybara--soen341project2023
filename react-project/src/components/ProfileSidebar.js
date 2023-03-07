@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Avatar, Box, IconButton, Toolbar, Typography, Button } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { AppBar, Avatar, Box,  Typography, Button } from '@mui/material';
 
 const ProfileSidebar = ({ user }) => {
   const [file, setFile] = useState(null);

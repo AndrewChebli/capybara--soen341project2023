@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
+import React from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { createTheme} from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 
@@ -24,7 +18,6 @@ function CreateJobPostingPage() {
     color: theme.palette.text.secondary,
   }));
 
-  const theme = createTheme();
 
   const handlePersonalInfoSubmit = (event) => {
     event.preventDefault();
