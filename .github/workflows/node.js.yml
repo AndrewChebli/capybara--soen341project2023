@@ -6,13 +6,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install Dependencies
-        uses: npi ci
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          browser: chrome
-          headless: true
-          star: npm run dev
-          wait-on: http://localhost:3000
+          working-directory: react-project
+          install-commandd: npm install
+          build: npm run build
+          start: npm start
 
