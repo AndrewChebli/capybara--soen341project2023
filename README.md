@@ -1,3 +1,5 @@
+https://github.com/AndrewChebli/capybara--soen341project2023/actions/workflows/ci/badge.svg
+
 # capybara--soen341project2023
 
 BEFORE GRADING: Please see wiki entry "PLEASE READ : Before grading individual contributions"
