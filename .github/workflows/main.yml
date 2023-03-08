@@ -2,7 +2,7 @@ name: ci
 on: [push]
 defaults:
   run:
-    working-directory: react-project
+    working-directory: ./react-project
 jobs:
   test:
     # use the reusable workflow to check out the code, install dependencies
@@ -11,5 +11,3 @@ jobs:
     uses: bahmutov/cypress-workflows/.github/workflows/standard.yml@v1
     with:
       start: 'npm start'
-
-
