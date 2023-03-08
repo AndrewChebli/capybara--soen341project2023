@@ -3,18 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm start",
-    "build": "npm build",
+    "install:frontend": "cd react-project && npm install",
+    "install:backend": "cd server && npm install",
+    "start:frontend": "cd react-project && npm start",
+    "start:backend": "cd server && npm start",
     "eject": "npm eject",
     "test": "cypress run",
     "cy:run": "cypress run",
     "run-cypress-tests": "cypress run --spec \"cypress/e2e/*.spec.cy.js\"",
-    "dev": "start-server-and-test start http://localhost:3000 cy:open",
     "cy:open": "cypress open",
-    "start:frontend": "cd react-project && npm start",
-    "start:backend": "cd server && npm start",
-    "start:all": "npm run start:frontend && npm run start:backend "
+
+    "start:all": "npm run start:frontend && npm run start:backend ",
+    "cy:open:with:servers": "start-server-and-test start:frontend 3000 start:backend 3000 cy:open",
+    "test:api:with:servers": "start-server-and-test  start:frontend 3000 start:backend 3000 run-cypress-tests"
     },
+
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
