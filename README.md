@@ -1,4 +1,4 @@
-https://github.com/AndrewChebli/capybara--soen341project2023/actions/workflows/ci/badge.svg
+https://github.com/AndrewChebli/capybara--soen341project2023/actions/workflows/main.yml/badge.svg
 
 # capybara--soen341project2023
 
