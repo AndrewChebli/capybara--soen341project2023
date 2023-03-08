@@ -7,7 +7,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install frontend modules 
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v2
+        with:
+          install-command: npm run install:backend
+          runTests: false
+      - name: Install frontend modules 
+        uses: cypress-io/github-action@v2
         with:
           install-command: npm run install:frontend
           runTests: false
