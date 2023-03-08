@@ -1,5 +1,5 @@
-https://github.com/AndrewChebli/capybara--soen341project2023/actions/workflows/main.yml/badge.svg
-
+![example workflow](https://github.com/AndrewChebli/capybara--soen341project2023/actions/workflows/main.yml/badge.svg
+)
 # capybara--soen341project2023
 
 BEFORE GRADING: Please see wiki entry "PLEASE READ : Before grading individual contributions"
