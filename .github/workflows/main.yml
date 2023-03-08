@@ -1,11 +1,11 @@
 name: ci
 on: [push]
-defaults:
-  run:
-    working-directory: ./react-project
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./react-project
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -14,5 +14,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          project: ./react-project
+          working-directory: ./react-project
           start: npm start
