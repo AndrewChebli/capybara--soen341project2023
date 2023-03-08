@@ -3,16 +3,21 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    defaults:
-      run:
-        working-directory: ./react-project
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
+      - name: Install backend modules
         uses: cypress-io/github-action@v5
         with:
-          working-directory: ./react-project
-          start: npm start
+          install-command: npm run install:backend
+          runTests: false
+      - name: Install frontend modules 
+        uses: cypress-io/github-actios@v5
+        with:
+          install-command: npm run install:frontend
+          runTests: false
+      - name: Cypress E2E tests 🧪
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run start:frontend, npm run start:backend
+          command: npm run run-cypress-tests
