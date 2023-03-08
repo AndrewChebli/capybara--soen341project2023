@@ -47,7 +47,6 @@
     "start-server-and-test": "^2.0.0"
   },
   "description": "Completed part of the Dashboard Page",
-  "main": "cypress.config.js",
   "author": "",
   "license": "ISC"
 }
