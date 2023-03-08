@@ -13,3 +13,5 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v5
+        with:
+          env: host=api.dev.local,port=3000
