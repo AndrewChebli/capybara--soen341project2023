@@ -6,12 +6,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install frontend modules 
+      - name: Install Backend modules 
         uses: cypress-io/github-action@v2
         with:
           install-command: npm run install:backend
           runTests: false
-      - name: Install frontend modules 
+      - name: Install Frontend modules 
         uses: cypress-io/github-action@v2
         with:
           install-command: npm run install:frontend
@@ -20,4 +20,4 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           start: npm run start:frontend, npm run start:backend
-          command: npm run run-cypress-tests
+          command: npm run run:cypress:tests
