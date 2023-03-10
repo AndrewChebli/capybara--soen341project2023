@@ -28,7 +28,7 @@ Employees:
 - Browse for postings (with perhaps the ability to search/filter postings)
 - View a posting:
   - Apply to a posting:
-     - Upload cover letter
+     - Upload cover letter  
      - Upload CV
   - Report postings (innapropriate, malicious, etc.)
  
