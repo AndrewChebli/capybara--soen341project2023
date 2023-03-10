@@ -77,22 +77,24 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 15,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'stretch',
           }}
         >
+          <Box sx={{ display: 'flex', justifyContent: "center" }}> 
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h3" variant="h3" sx={{ mb: 2, mr: 2 , ml : 2}}>
             Sign in
           </Typography>
+          </Box>
           <Box component="form" onSubmit={loginService} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"

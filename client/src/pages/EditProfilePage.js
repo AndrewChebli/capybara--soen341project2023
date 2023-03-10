@@ -10,13 +10,30 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
-// import { CardActionArea } from "@mui/material";
-// import CardContent from '@mui/material';
 
 let b64;
 
 function EditProfilePage() {
-  const theme = createTheme();
+  const theme = createTheme(
+    {
+      palette: {
+        primary: {
+          main: "#394727",
+        },
+      },
+      typography: {
+        fontFamily: "Roboto",
+      },transitions: {
+        easing: {
+          easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+          easeIn: "cubic-bezier(0.4, 0, 1, 1)",
+          easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
+          sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
+      },
+    }
+    },
+  );
+
 
   const [resume, setResume] = useState(null);
 
@@ -105,17 +122,18 @@ function EditProfilePage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="md">
+      <Container component="main" maxWidth="md" >
         <CssBaseline />
         <Box
           component="form"
           noValidate
           onSubmit={updateService}
           sx={{
-            marginTop: 8,
+            marginTop: 15,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

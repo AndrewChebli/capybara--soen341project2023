@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { spacing } from '@mui/system';
 
 function stringToColor(string) { // assigns a color to the icon of a job posting card.
   let hash = 0;

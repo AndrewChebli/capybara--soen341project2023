@@ -15,6 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 
+
 let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -40,13 +41,11 @@ function HeaderBar() {
 
   };
   const handleOpenUserMenu = (event) => {
-    console.log(event.currentTarget.textContent)
     
     setAnchorElNav(null);
   };
 
   const handleCloseNavMenu = (event) => {
-    console.log(event.currentTarget.textContent);
     set_current_view(event.currentTarget.textContent);
 
   };
@@ -57,9 +56,9 @@ function HeaderBar() {
   };
 
   return (
-    <AppBar position="fixed" style={{ background: '#394727l', opacity: "0.8"}}>
+    <AppBar position="absolute" style={{ marginTop: "10px", borderRadius:"25px", background: '#394727l', opacity: "1" , maxWidth: "80%", marginRight: "10%", alignContent: "center"}}>
       <Container maxWidth="xl">
-        <Toolbar >
+        <Toolbar  variant= "dense">
           {/* JobHive Logo */}
           <Typography
             variant="h5"
@@ -68,12 +67,12 @@ function HeaderBar() {
             href="HomePage"
             sx={{
               display: { xs: "none", md: "flex" },
-              fontFamily: "Helvetica",
+              fontFamily: "Roboto",
               fontWeight: 900,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
-              mr: 10
+              mr: 5
             }}
           >
             JOB HIVE
@@ -120,26 +119,6 @@ function HeaderBar() {
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           
           
-          {/* <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            JOB HIVE
-          </Typography> */}
-
-          {/* Elements of navbar */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'Center',justifyContent: 'Center' }}>
             
             {pages.map((page) => (
@@ -198,7 +177,6 @@ function HeaderBar() {
           </Box>
         </Toolbar>
       </Container>
-     
       </AppBar>
   );
 }

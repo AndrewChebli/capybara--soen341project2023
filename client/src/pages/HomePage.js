@@ -7,80 +7,79 @@ import CardMedia from "@mui/material/CardMedia";
 import { Typography } from "@mui/material";
 import register_image from "../images/download.jpeg";
 import keyboard_image from "../images/keyboard_typing.jpg";
-import windows_xp_background from "../images/background_xp.jpg";
+import Grow from "@mui/material/Grow";
 
 function Home() {
   return (
     <div>
-      <Image
-        src={windows_xp_background}
-        style={{
-          height: "100%",
-          width: "100%",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          position: "absolute",
-          top: 0,
-          opacity: 0.9,
-          easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
-        }}
-      ></Image>
-      <Card
-        sx={{
-          maxWidth: 400,
-          display: "inline-flex",
-          alignContent: "center",
-          backgroundColor: "transparent",
-          marginTop: 30,
-          opacity: 0.9,
-          easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
-          "&:hover": {
-            boxShadow: 20,
-          },
-        }}
+            <Grow in={true} timeout={3000}>
+      <Typography
+        marginTop="140px"
+        marginBottom="50px"
+        variant="h2"
+        fontFamily={"Roboto"}
       >
-        <CardActionArea href="SignInPage">
-          <CardMedia>
-            <Image
-              src={keyboard_image}
-              sx={{
-                height: 300,
-                width: 400,
-                easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
-              }}
-            ></Image>
-          </CardMedia>
-          <CardContent>
-            <Typography
-              gutterBottom
-              variant="h3"
-              component="div"
-              color="common.white"
-              fontFamily={"Helvetica"}
-            >
-              Log in
-            </Typography>
-            <Typography
-              variant="h5"
-              color="common.white"
-              fontFamily={"Helvetica"}
-            >
-              Connect, collaborate and grow with us! You are one step closer to
-              your next adventure.
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+      
+        Welcome to JobHive!
+      </Typography>
+        </Grow>
+      <Grow in={true} timeout={4000}>
+        <Card
+          sx={{
+            maxWidth: 400,
+            display: "inline-flex",
+            alignContent: "center",
+            transition: "max-height 1s ease-in",
+            backgroundColor: "#1d8bf8",
+            opacity: 0.9,
+            borderRadius: 5,
+            boxShadow: 5,
+            easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
+            "&:hover": {
+              boxShadow: 20,
+            },
+          }}
+        >
+          <CardActionArea href="SignInPage">
+            <CardMedia>
+              <Image
+                src={keyboard_image}
+                sx={{
+                  height: 300,
+                  width: 400,
+                  easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
+                }}
+              ></Image>
+            </CardMedia>
+            <CardContent>
+              <Typography
+                gutterBottom
+                variant="h3"
+                component="div"
+                color={"white"}
+                fontFamily={"Roboto"}
+              >
+                Log in
+              </Typography>
+              <Typography variant="h5" color={"white"} fontFamily={"Roboto"}>
+                Connect, collaborate and grow with us! You are one step closer
+                to your next adventure.
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Grow>
+      <Grow in={true} timeout={4000}>
       <Card
         sx={{
           maxWidth: 400,
           display: "inline-flex",
           marginLeft: 15,
           alignContent: "center",
-          backgroundColor: "transparent",
-          marginTop: 30,
+          borderRadius: 5,
           opacity: 0.9,
+          boxShadow: 5,
+          backgroundColor: "#1d8bf8",
           easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
           "&:hover": {
             boxShadow: 20,
@@ -96,22 +95,19 @@ function Home() {
               gutterBottom
               variant="h3"
               component="div"
-              color="common.white"
-              fontFamily={"Helvetica"}
+              color={"white"}
+              fontFamily={"Roboto"}
             >
               Register
             </Typography>
-            <Typography
-              variant="h5"
-              color="common.white"
-              fontFamily={"Helvetica"}
-            >
+            <Typography variant="h5" color={"white"} fontFamily={"Roboto"}>
               Join a worldwide community, full of opportunities! Your next
               adventure awaits you..
             </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
+      </Grow>
     </div>
   );
 }

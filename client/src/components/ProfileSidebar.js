@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppBar, Avatar, Box,  Typography, Button } from '@mui/material';
 
 const ProfileSidebar = ({ user }) => {
-  const [file, setFile] = useState(null);
 
-  const handlePictureClick = () => {
-    document.getElementById('file-input').click();
-  };
-
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-    // Upload file here
-  };
   function handleEditClick()
   {
     window.location.href = "/EditProfilePage";
   }
   return (
-<AppBar style={{ background: '#427a87'}}  position="fixed" sx={{ width: 250, zIndex: (theme) => theme.zIndex.drawer +1, left: 0, top: '69px',height:'100%'}}>
+<AppBar style={{ background: '#394727l'}}  position="fixed" sx={{ borderRadius: "20px", marginTop: "30px" , width: 250, zIndex: (theme) => theme.zIndex.drawer +1, left: 0, top: '69px',height:'85%'}}>
   
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: 'calc(100% - 64px)', padding: 2 , backgroundColor: "746e62" }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: 'calc(100% - 64px)', padding: 2 , backgroundColor: "#394727l" }}>
         <Avatar sx={{ width: 80, height: 80, mb: 2 }} src={user.photo} alt="Profile picture" />
         <Typography variant="h6" component="div">
           {`${user.name}`}

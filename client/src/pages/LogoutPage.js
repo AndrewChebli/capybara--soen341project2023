@@ -41,7 +41,7 @@ function LogoutPage() {
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <Box sx={{ height: 40 }}>
+      <Box sx={{ mt: 20, height: 50 }}>
         {query === "success" ? (
           <Typography component="h1" variant="h5" >Success!</Typography>
         ) : (
@@ -60,10 +60,8 @@ function LogoutPage() {
         onClick={handleClickQuery}
         variant="contained"
         component="h1"
-        minWidth="100px"
-        minHeight="200px"
 
-        sx={{ mt: 3, mb: 2, alignContent: "center" }}
+        sx={{ mb: 2, alignContent: "center" }}
       >
         {query !== "idle" ? "Logout" : "Logout"}
       </Button>
