@@ -5,6 +5,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+
+
 
 function stringToColor(string) { // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -51,8 +54,28 @@ function stringAvatar(name) {
     
 
 function JobPosting(job_posting) {
-  console.log("JobPosting.js");
-  console.log(job_posting.data)
+  const [applied, setApplied] = React.useState(false);
+  async function applyToJob() {
+    console.log("apply to job");
+    console.log(job_posting.data._id)
+    console.log(localStorage.getItem("_id"))
+    
+    const reponse = await fetch(`http://localhost:8080/api/job/add/applicant/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        job_id: job_posting.data._id,
+        applicant_id: localStorage.getItem("_id"),
+      }),
+    });
+    console.log(reponse)
+    const data = await reponse.json();
+    console.log(data);  
+    setApplied(true);
+  }
+
 
   let title = job_posting.data.title;
   let company = job_posting.data.company;
@@ -69,12 +92,23 @@ function JobPosting(job_posting) {
         <CardActionArea>
           <CardContent>
           <Avatar {...stringAvatar(company)} />
+          <Button 
+              type="submit"
+              halfWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick= {applyToJob}
+              disabled={applied}
+            >
+              Apply
+            </Button>
             <Typography gutterBottom variant="h4" component="div">
               {company}
             </Typography>
             <Typography gutterBottom variant="h5" component="div">
               {title}
             </Typography>
+
 
             <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Description: "} 
               <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {description} </Box>
