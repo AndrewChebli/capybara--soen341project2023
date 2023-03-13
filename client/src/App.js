@@ -13,7 +13,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import CreateJobPostingPage from "./pages/CreateJobPostingPage";
 import HeaderBar from "./components/HeaderBar";
 
-
+ 
 
 function App() {
 
