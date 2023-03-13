@@ -2,6 +2,18 @@ const express = require("express");
 const router = express.Router();
 const companyController = require("../controllers/company-controllers");
 
+
+router.post("/register", (req, res, next) => {
+  console.log("POST request to /company/register");
+  companyController.registerCompany(req, res, next);
+});
+
+router.post("/login", (req, res, next) => {
+  console.log("POST request to /company/login");
+  companyController.loginCompany(req, res, next);
+});
+
+
 router.get("/getall", (req, res, next) => {
   console.log("GET request to /company/getall");
   companyController.getAllCompanies(req, res, next);

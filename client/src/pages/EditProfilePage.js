@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
+import {useState , useEffect} from 'react';
 
 let b64;
 
@@ -34,6 +35,25 @@ function EditProfilePage() {
     },
   );
 
+  const [employeeInfo, setEmployeeInfo] = useState({});
+
+  useEffect(() => {
+    async function getEmployeeInfo() {
+      await fetch("http://localhost:8080/api/employee/getone/" + localStorage.getItem("_id"), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => response.json())
+      .then((response) => {
+        console.log(response.employee)
+        setEmployeeInfo(response.employee);
+      }
+      );
+    }
+    getEmployeeInfo();
+  },[]);
+
 
   const [resume, setResume] = useState(null);
 
@@ -53,72 +73,15 @@ function EditProfilePage() {
 
   let resume_name = resume ? resume.name : "No file chosen";
 
-  function updateLocalStorage(resp) {
-    localStorage.setItem("response", JSON.stringify(resp));
-    localStorage.setItem("firstName", resp.db_response.firstname);
-    localStorage.setItem("lastName", resp.db_response.lastname);
-    localStorage.setItem("resume", resp.db_response.resume);
-    localStorage.setItem("resumeName", resp.db_response.resumeName);
-    localStorage.setItem("education",JSON.stringify(resp.db_response.education));
-    localStorage.setItem("experience",JSON.stringify(resp.db_response.previousExperience));
-  }
 
   async function updateService(event) {
     console.log("clicked");
     console.log(event.currentTarget);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    const temp = JSON.parse(localStorage.getItem("response"));
-    const _id = temp._id;
-
-    const response = await fetch("http://localhost:8080/update", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: _id,
-        firstName: data.get("firstName"),
-        lastName: data.get("lastName"),
-        email: localStorage.getItem("email"),
-        resume: b64,
-        resumeName: resume_name,
-        companyName: data.get("companyName"),
-        jobTitle: data.get("jobTitle"),
-        dateStartedWork: data.get("dateStartedWork"),
-        dateCompletedWork: data.get("dateCompletedWork"),
-        Description: data.get("Description"),
-
-        school: data.get("school"),
-        academicProgram: data.get("academicProgram"),
-        dateStartedSchool: data.get("dateStartedSchool"),
-        dateCompletedSchool: data.get("dateCompletedSchool"),
-      }),
-    });
-    const resp = await response.json();
-    console.log("response");
-    console.log(resp);
-    console.log(resp.db_response)
-    console.log(resp.db_response.education)
-    // console.log("Test result: " + )
-    if (response.status === 200) {
-      updateLocalStorage(resp);
-      alert("Updated the profile!");
-    } else {
-      alert("Something went wrong! please try again!");
-    }
   }
 
-  let firstName = localStorage.getItem("firstName");
-  let lastName = localStorage.getItem("lastName");
-  let email = localStorage.getItem("email");
-  let resumeName = localStorage.getItem("resumeName");
-  let educ_non_parsed = localStorage.getItem("education");
-  let educ = JSON.parse(educ_non_parsed);
-  let work_non_parsed = localStorage.getItem("experience");
-  let work = JSON.parse(work_non_parsed);
-  console.log(work[0].Start);
+ 
 
   return (
     <ThemeProvider theme={theme}>
@@ -150,7 +113,7 @@ function EditProfilePage() {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                defaultValue={firstName}
+                defaultValue={employeeInfo.firstName}
                 autoFocus
               />
             </Grid>
@@ -160,7 +123,7 @@ function EditProfilePage() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                defaultValue={lastName}
+                defaultValue={employeeInfo.lastName}
                 autoComplete="family-name"
               />
             </Grid>
@@ -205,7 +168,7 @@ function EditProfilePage() {
                         fullWidth
                         id="jobTitle"
                         label="Job Title"
-                        defaultValue={work[0].Position}
+                        // defaultValue={employeeInfo.employee.experience.position}
                       />
                     </Grid>
                     <Grid item xs={12} sm={20}>
@@ -215,7 +178,7 @@ function EditProfilePage() {
                         fullWidth
                         id="companyName"
                         label="Company Name"
-                        defaultValue={work[0].Company}
+                        // defaultValue={employeeInfo.employee.experience.company}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -225,7 +188,7 @@ function EditProfilePage() {
                         fullWidth
                         id="dateStartedWork"
                         type="date"
-                        defaultValue={work[0].Start}
+                        // defaultValue={employeeInfo.employee.experience.start}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -234,13 +197,13 @@ function EditProfilePage() {
                         fullWidth
                         id="dateCompletedWork"
                         type="date"
-                        defaultValue={work[0].End}
+                        // defaultValue={employeeInfo.employee.experience.end}
                       />
                     </Grid>
                     <Grid item xs={12} sm={20}>
                       <TextField
                         multiline={true}
-                        defaultValue={work[0].Description}
+                        // defaultValue={employeeInfo.employee.experience.Description}
                         rows={4}
                         name="Description"
                         fullWidth
@@ -275,7 +238,7 @@ function EditProfilePage() {
                         fullWidth
                         id="school"
                         label="School Name"
-                        defaultValue={educ.School}
+                        // defaultValue={employeeInfo.employee.education.school}
                       />
                     </Grid>
                     <Grid item xs={6} sm={6}>
@@ -285,7 +248,7 @@ function EditProfilePage() {
                         name="academicProgram"
                         label="Academic Program"
                         id="academicProgram"
-                        defaultValue={educ.Degree}
+                        // defaultValue={employeeInfo.employee.degree}
                       />
                     </Grid>
                     <Grid item xs={6} sm={6}>
@@ -295,7 +258,7 @@ function EditProfilePage() {
                         fullWidth
                         id="dateStartedSchool"
                         type="date"
-                        defaultValue={educ.Start}
+                        // defaultValue={employeeInfo.employee.education.start}
                       />
                     </Grid>
                     <Grid item xs={6} sm={6}>
@@ -304,7 +267,7 @@ function EditProfilePage() {
                         fullWidth
                         id="dateCompletedSchool"
                         type="date"
-                        defaultValue={educ.End}
+                        // defaultValue={employeeInfo.employee.education.end}
                       />
                     </Grid>
                   </Grid>

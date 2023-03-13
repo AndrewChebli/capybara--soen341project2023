@@ -5,35 +5,35 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import ProfileSidebar from "../components/ProfileSidebar";
 import ResumeViewer from "../components/ResumeViewer";
+import { useState, useEffect } from "react";
 
 
-function ProfilePage() {
 
-  const user = {
-    name:
-      localStorage.getItem("firstName") +
-      "      " +
-      localStorage.getItem("lastName"),
-    email: localStorage.getItem("email"),
-  };
+function  ProfilePage() {
 
-  let parsed_ed = JSON.parse(localStorage.getItem("education"));
-  const education = {
-    school: parsed_ed.School,
-    degree: parsed_ed.Degree,
-    start: "Start   " + parsed_ed.Start,
-    end: "End    " + parsed_ed.End,
-  };
-  console.log(education);
-  let parsed_work = JSON.parse(localStorage.getItem("experience"));
-  const experience = {
-    company: parsed_work[0].Company,
-    position: parsed_work[0].Position,
-    description: parsed_work[0].Description,
-    start: "Start" +parsed_work[0].Start,
-    end: "End  " + parsed_work[0].End,
-  };
-  console.log(experience);
+  const [resume, setResume] = useState(null);
+  const [employeeInfo, setEmployeeInfo] = useState({});
+  
+  useEffect(() => {
+    async function getEmployeeInfo() {
+      await fetch("http://localhost:8080/api/employee/getone/" + localStorage.getItem("_id"), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => response.json())
+      .then((response) => {
+        setEmployeeInfo(response.employee);
+        console.log(response.employee.resume)
+        setResume(response.employee.resume);
+        localStorage.setItem("resume", response.employee.resume);
+      }
+      );
+    }
+    getEmployeeInfo();
+  },[]);
+
+  let resume_name = resume ? resume.name : "No file chosen";
   return (
     <Box
       sx={{
@@ -44,7 +44,7 @@ function ProfilePage() {
         marginBottom: 8,
       }}
     >
-      <ProfileSidebar user={user} />
+      <ProfileSidebar user={employeeInfo} />
       <Box sx={{ marginTop: 2 }}>
         <Typography
           component="h1"
@@ -63,7 +63,7 @@ function ProfilePage() {
           Personal Info
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-        {user.name}
+        {employeeInfo.firstName} {employeeInfo.lastName}
         </Typography>
         <Divider
           sx={{ background: "#746e62", height: "3px", marginBottom: 2 }}
@@ -76,10 +76,10 @@ function ProfilePage() {
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          {education.school}  {education.degree}
+          {/* {employeeInfo.education.school}  {employeeInfo.degree} */}
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          {education.start}{' '}  {education.end}
+          {/* {employeeInfo.education.start}{' '}  {employeeInfo.education.end} */}
         </Typography>
         <Divider
           sx={{ background: "#746e62", height: "3px", marginBottom: 2 }}
@@ -90,10 +90,10 @@ function ProfilePage() {
           Work Experience
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          {experience.company}{' '}{experience.position}
+          {/* {employeeInfo.experience.company}{' '}{employeeInfo.experience.position} */}
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
-          {experience.start}     {experience.end}
+          {/* {employeeInfo.experience.start}     {employeeInfo.experience.end} */}
         </Typography>
         <Divider
           sx={{ background: "#746e62", height: "3px", marginBottom: 2 }}
@@ -111,7 +111,7 @@ function ProfilePage() {
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           Resume
         </Typography>
-        <ResumeViewer></ResumeViewer>
+        <ResumeViewer ></ResumeViewer>
         </Box>
     </Box>
   );

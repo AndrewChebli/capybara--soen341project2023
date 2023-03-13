@@ -11,26 +11,20 @@ let job_postings;
 function Dashboard() {
   const [data, setData] = React.useState([]);
   useEffect(() => {
-    // ================START OF FRONT-END ENDPOINT=====================
-    fetch("http://localhost:8080/getAllJobs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    })
-      .then((response) => response.json())
-      .then((resp) => {
-        if (resp.status === "success") {
-          setData(resp.data);
-          job_postings = JSON.stringify(resp.data);
-          console.log(job_postings);
-          setData(resp.data);
-        } else {
-          alert("Failed to get jobs");
-        }
-      });
-    // ================END OF FRONT-END ENDPOINT=====================
+    async function getAllJobs() {
+      await fetch("http://localhost:8080/api/job/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => response.json())
+      .then((response) => {
+        console.log(response)
+        setData(response);
+      }
+      );
+    }
+    getAllJobs();
   }, []);
     if(localStorage.getItem("loginStatus") === "false"){
       window.location.href = "/SignInPage";

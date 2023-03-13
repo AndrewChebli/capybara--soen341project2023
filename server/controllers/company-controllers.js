@@ -11,6 +11,31 @@ const getAllCompanies = (req, res, next) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+const loginCompany = async (req, res, next) => {
+  const { email, password } = req.body;
+  let existingCompany;
+  try {
+    existingCompany = await Company.find({ email: email, password: password });
+  } catch (err) {
+    const error = new HttpError(
+      "Logging in failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+  if (!existingCompany) {
+    const error = new HttpError(
+      "Invalid credentials, could not log you in.",
+      401
+    );
+    return next(error);
+  }
+  const _id = existingCompany[0]._id;
+  console.log(_id);
+  res.status(201).json({ message: "Logged in!", _id: _id });
+};
+
+
 const getCompanyById = (req, res, next) => {
 
   console.log("GET request to /company/getone/:_id");
@@ -21,7 +46,7 @@ const getCompanyById = (req, res, next) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-const addCompany = async (req, res, next) => {
+const registerCompany = async (req, res, next) => {
 
   const createdCompany = new Company({ 
     companyName: req.body.companyName,
@@ -96,6 +121,7 @@ const updateCompany = (req, res, next) => {
 
 exports.getAllCompanies = getAllCompanies;
 exports.getCompanyById = getCompanyById;
-exports.addCompany = addCompany;
+exports.registerCompany = registerCompany;
+exports.loginCompany = loginCompany;
 exports.removeCompany = removeCompany;
 exports.updateCompany = updateCompany;

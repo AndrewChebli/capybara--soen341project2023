@@ -23,7 +23,7 @@ function HeaderBar() {
   
 
   if(localStorage.getItem("loginStatus") === "true"){
-    if(localStorage.loginType === "user"){
+    if(localStorage.loginType === "employee"){
     pages = ["Home", "Dashboard", "Offers", "About","Profile","EditProfile", "Logout"];
     }else if (localStorage.loginType === "employer"){
       pages = ["Home", "Dashboard", "Applications", "About","ProfilePageEmployer","EditProfileEmployer"];
@@ -38,16 +38,13 @@ function HeaderBar() {
   const [current_view, set_current_view] = React.useState("Home");
 
   const handleOpenNavMenu = (event) => {
-
   };
   const handleOpenUserMenu = (event) => {
-    
     setAnchorElNav(null);
   };
 
   const handleCloseNavMenu = (event) => {
     set_current_view(event.currentTarget.textContent);
-
   };
 
   const handleCloseUserMenu = (event) => {
@@ -131,7 +128,7 @@ function HeaderBar() {
                 
               >
                 {page}
-                {console.log(page+"Page")}
+                {/* {console.log(page+"Page")} */}
               </Button>
             ))}
           </Box>

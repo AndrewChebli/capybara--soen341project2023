@@ -51,7 +51,7 @@ export default function SignUpForm() {
 
 
 
-    const response = await fetch("http://localhost:8080/register", {
+    const response = await fetch("http://localhost:8080/api/employee/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default function SignUpForm() {
     });
     console.log(response);
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       alert("Registration Successful");
       window.location.href = "/SignInPage";
     } else {

@@ -1,5 +1,4 @@
 import "./App.css";
-
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import  Dashboard  from "./pages/DashboardPage";
@@ -19,10 +18,6 @@ import HeaderBar from "./components/HeaderBar";
 function App() {
 
   function setDefaultState() {
-    localStorage.setItem("firstName", JSON.stringify());
-    localStorage.setItem("lastName", JSON.stringify());
-    localStorage.setItem("email", JSON.stringify());
-    localStorage.setItem("response", JSON.stringify());
     localStorage.setItem("loginStatus", "false");
     localStorage.setItem("loginType", JSON.stringify());
   }

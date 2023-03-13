@@ -34,7 +34,7 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
     
-        const response = await fetch("http://localhost:8080/login", {
+        const response = await fetch("http://localhost:8080/api/employee/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -46,25 +46,13 @@ export default function SignIn() {
         });
 
         console.log(response);
-        const resp = await response.json();
-
-        if (resp.status === "success") {
-          console.log(resp.status);
-          console.log(JSON.stringify(resp.data.firstname));
-          localStorage.setItem("firstName", resp.data.firstname);
-          localStorage.setItem("lastName", resp.data.lastname);
-          localStorage.setItem("email", resp.data.email);
-          localStorage.setItem("education", JSON.stringify(resp.data.education));
-          console.log(localStorage.getItem("education"));
-
-          localStorage.setItem("experience", JSON.stringify(resp.data.previousExperience));
-          localStorage.setItem("response", JSON.stringify(resp.data));
+        if (response.status === 201) {
+          const res = await response.json();
+          console.log(res)
+          console.log(res._id);
+          localStorage.setItem("_id", res._id);
           localStorage.setItem("loginStatus", "true");
-          localStorage.setItem("loginType", "user");
-          localStorage.setItem("resume", resp.data.resume);
-          console.log(resp.data.resumeName)
-          localStorage.setItem("resumeName", resp.data.resumeName);
-
+          localStorage.setItem("loginType", "employee");
           alert("Login Successful");
           window.location.href = "http://localhost:3000/DashboardPage";
         }else{

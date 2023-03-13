@@ -8,6 +8,12 @@ router.post("/register", (req, res, next) => {
   employeeController.registerEmployee(req, res, next);
 });
 
+router.post("/login", (req, res, next) => {
+  console.log("POST request to /employee/login");
+  console.log(req.body);
+  employeeController.loginEmployee(req, res, next);
+});
+
 
 router.get("/getall", (req, res, next) => {
   console.log("GET request to /employee/getall");

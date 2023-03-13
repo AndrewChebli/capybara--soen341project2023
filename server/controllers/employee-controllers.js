@@ -1,6 +1,6 @@
 const HttpError = require("../models/http-error");
 const Employee = require('../models/EmployeeRegister.model.js')
-
+const UserLogin = require('../models/UserLogin.model.js')
 
 
 const getAllEmployess = async (req, res, next) => {
@@ -11,8 +11,32 @@ const getAllEmployess = async (req, res, next) => {
     })
     .catch(err => res.status(400).json('Error: ' + err));
 
-  console.log("GET request to /users/getall");
 };
+
+const loginEmployee = async (req, res, next) => {
+  const { email, password } = req.body;
+  let existingEmployee;
+  try {
+      existingEmployee = await Employee.find({email: email, password: password});
+      } catch (err) {
+      const error = new HttpError(
+      'Logging in failed, please try again later.',
+      500
+      );
+      return next(error);
+  }
+  if (!existingEmployee) {
+      const error = new HttpError(
+      'Invalid credentials, could not log you in.',
+      401
+      );
+      return next(error);
+  }
+  const _id =existingEmployee[0]._id;
+  console.log(_id);
+  res.status(201).json({message: 'Logged in!', _id: _id});
+};
+
 
 const getEmployeeById = async (req, res, next) => {
   const employeeId = req.params._id;
@@ -106,5 +130,4 @@ exports.getEmployeeById = getEmployeeById;
 exports.registerEmployee = registerEmployee;
 exports.updateEmployee = updateEmployee;
 exports.deleteEmployee = deleteEmployee;
-
-//rat
+exports.loginEmployee = loginEmployee;
