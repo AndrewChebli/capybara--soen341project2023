@@ -1,8 +1,9 @@
 const HttpError = require("../models/http-error");
 const Job = require("../models/addJob.model.js");
+const Company = require("../models/CompanyRegister.model.js");
 
 const getAllJobs = async (req, res, next) => {
-  let allJobs = await Job.find();
+  let allJobs = await Job.find().exec();
   res.json(allJobs);
 };
 
@@ -25,8 +26,9 @@ const getJobById = async (req, res, next) => {
 };
 
 const addJob = async (req, res, next) => {
-  const { title, description, location, salary, company, Dday, Dmonth, Dyear, benefits, requirements} = req.body;
+  const { title, description, location, salary, company, Dday, Dmonth, Dyear, benefits, requirements, company_id} = req.body;
   let applicants = [];
+  let selected_applicants = [];
   const createdJob = new Job({
     title,
     description,
@@ -38,7 +40,9 @@ const addJob = async (req, res, next) => {
     Dmonth,
     Dyear,
     benefits,
-    requirements
+    requirements,
+    company_id,
+    selected_applicants
   });
 
   try {
@@ -51,6 +55,21 @@ const addJob = async (req, res, next) => {
     return next(err);
   }
 
+  let job_id = createdJob._id;
+  let existingCompany ;
+  try {
+      existingCompany = await Company.findById(company_id).exec();
+  } catch (err) {
+      const error = new HttpError(
+          'Adding job failed, cannot find related company.',  500   );
+      return next(error);
+  }
+  if (!existingCompany) {
+
+      const error = new HttpError('Could not find company for this id.', 404);
+      return next(error);
+  }
+  existingCompany.jobs.push(job_id);
   res.status(201).json({ job: createdJob });
 };
 
@@ -62,7 +81,6 @@ const addApplicant = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       "Adding applicant failed, please try again later.",
-
       500
     );
     return next(error);
@@ -72,6 +90,11 @@ const addApplicant = async (req, res, next) => {
     return next(error);
   }
   console.log(existingJob);
+  if(existingJob.applicants.find(applicant => applicant === applicant_id)){
+    const error = new HttpError("Applicant already applied to this job.", 500);
+    return next(error);
+  }
+
   existingJob.applicants.push(applicant_id);
 
   try {
