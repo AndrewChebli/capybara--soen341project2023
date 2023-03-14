@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 const companyController = require("../controllers/company-controllers");
 
+router.post("/register", (req, res, next) => {
+  console.log("POST request to /company/register");
+  companyController.registerCompany(req, res, next);
+});
+
 router.get("/getall", (req, res, next) => {
   console.log("GET request to /company/getall");
   companyController.getAllCompanies(req, res, next);
@@ -22,10 +27,7 @@ router.patch("/:_id", (req, res, next) => {
   companyController.updateCompany(req, res, next);
 });
 
-router.post("/", (req, res, next) => {
-  console.log("POST request to /company/register");
-  companyController.addCompany(req, res, next);
-});
+
 
 module.exports = router;
 

@@ -21,8 +21,9 @@ const getCompanyById = (req, res, next) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-const addCompany = async (req, res, next) => {
-
+const registerCompany = async (req, res, next) => {
+  console.log("POST request to /company/register");
+  console.log(req.body);
   const createdCompany = new Company({ 
     companyName: req.body.companyName,
     email: req.body.email,
@@ -31,7 +32,7 @@ const addCompany = async (req, res, next) => {
     website: req.body.website,
     address: req.body.address,
     phone: req.body.phone,
-    logo: req.body.logo,
+    // logo: req.body.logo,
     logoName: req.body.logoName,
     jobs: req.body.jobs,
   });
@@ -46,7 +47,7 @@ const addCompany = async (req, res, next) => {
     );
     return next(err);
   }
-    res.status(201).json({company: createdCompany});
+    res.status(200).json({company: createdCompany});
 
 };
 
@@ -96,6 +97,6 @@ const updateCompany = (req, res, next) => {
 
 exports.getAllCompanies = getAllCompanies;
 exports.getCompanyById = getCompanyById;
-exports.addCompany = addCompany;
+exports.registerCompany = registerCompany;
 exports.removeCompany = removeCompany;
 exports.updateCompany = updateCompany;

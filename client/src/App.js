@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";  
 import CreateJobPostingPage from "./pages/CreateJobPostingPage";
 import HeaderBar from "./components/HeaderBar";
+import SignUpPageCompany from "./pages/SignUpPageCompany";
 
 
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path = "/LogoutPage" element = {<LogoutPage></LogoutPage>} />
           <Route path = "/CreateJobPostingPage" element={<CreateJobPostingPage />} />
+          <Route path="/SignUpPageCompany" element={<SignUpPageCompany />} />
         </Routes>
       </BrowserRouter>
     </div>
