@@ -25,6 +25,7 @@ const EmployeeRegisterModel = new mongoose.Schema(
         description: { type: String, unique: false },
       },
     ],
+    offers: { type: Array, unique: false },
   },
   { collection: "users" }
 );
