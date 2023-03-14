@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const {check , validationResult} = require('express-validator');
+//const {check , validationResult} = require('express-validator');
 const HttpError = require("./models/http-error");
 
 app.use(express.json({ limit: "50mb", extended: true }));
