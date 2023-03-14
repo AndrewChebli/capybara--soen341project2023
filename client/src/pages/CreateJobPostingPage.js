@@ -38,14 +38,16 @@ function CreateJobPostingPage() {
   return (
     <Box
           sx={{
-            marginTop: 8,
+            marginTop: 20,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: '70%',
+            margin: 'auto',
           }}
         >
          
-          <Typography component="h1" variant="h5" sx={{pb: 10}}>
+          <Typography component="h1" variant="h2" sx={{mt : 20, pb: 10}}>
             Create Job Posting:
           </Typography>
           <form onSubmit={handlePersonalInfoSubmit} noValidate sx={{ mt: 3 }}>
@@ -62,13 +64,9 @@ function CreateJobPostingPage() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="company"
-                  label="Company Name"
-                  name="company"
-                />
+                <Typography component="h1" variant="h6" >
+                  Deadline:
+                </Typography>
               </Grid>
               <Grid item xs={2}>
                 <TextField

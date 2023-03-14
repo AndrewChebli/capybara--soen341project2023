@@ -34,15 +34,15 @@ const ApplicantBox = (applicant_id , job_id) => {
 
   async function selectApplicant() {
     const response = await fetch(
-      "http://localhost:3000/api/jobs/selectApplicant/",
+      "http://localhost:8080/api/company/selectApplicant/",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          job_id: job_id,
-          applicant_id: applicant_id,
+          job_id: applicant_id.job_id,
+          applicant_id: applicant_id.applicant_id,
         }),
       }
     );

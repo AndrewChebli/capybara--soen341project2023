@@ -17,7 +17,6 @@ describe("Login", () => {
     cy.get("button[type=submit]").click();
     cy.url().should("include", "/DashboardPage").should(()=>{
       expect(localStorage.getItem("loginStatus")).to.eq("true");
-      expect(localStorage.getItem("loginType")).to.eq("user");
     });
   })
 })

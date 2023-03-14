@@ -25,8 +25,8 @@ function HeaderBar() {
   if(localStorage.getItem("loginStatus") === "true"){
     if(localStorage.loginType === "employee"){
     pages = ["Home", "Dashboard", "Offers", "About","Profile","EditProfile", "Logout"];
-    }else if (localStorage.loginType === "employer"){
-      pages = ["Home", "Dashboard", "Applications", "About","ProfilePageEmployer","EditProfileEmployer"];
+    }else if (localStorage.loginType === "company"){
+      pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer"];
     }else{
       pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
     }

@@ -43,7 +43,7 @@ function App() {
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path = "/LogoutPage" element = {<LogoutPage></LogoutPage>} />
           <Route path = "/CreateJobPostingPage" element={<CreateJobPostingPage />} />
-          <Route path = "/CompanyJobApplicants" element={<CompanyJobApplicants />} />
+          <Route path = "/CompanyJobApplicantsPage" element={<CompanyJobApplicants />} />
         </Routes>
       </BrowserRouter>
     </div>
