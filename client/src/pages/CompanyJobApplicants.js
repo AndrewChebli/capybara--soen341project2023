@@ -8,8 +8,7 @@ const CompanyJobApplicants = () => {
   const [jobs, setJobs] = useState([]);
 
 
-  let company_id = localStorage.getItem("company_id");
-  company_id = "640fb1afb7dbeb2f1be570ff";
+  let company_id = localStorage.getItem("_id");
   useEffect(() => {
     const fetchJobs = async () => {
       const response = await fetch(
@@ -26,6 +25,7 @@ const CompanyJobApplicants = () => {
       if (response.status === 500) {
         window.alert("Trouble fetching the jobs");
       } else if (response.status === 200) {
+        localStorage.setItem("company_id", responseData._id);
         setJobs(responseData.jobs);
       } else {
         if (responseData.jobs.length === 0) {

@@ -22,9 +22,6 @@ const AddJob = new mongoose.Schema(
     applicants: { type: Array, unique: false, required: false },
 
     company_id: { type: String, unique: false, required: true },
-
-    selected_applicants: { type: Array, unique: false, required: false },
-    
   },
   { collection: "job_postings" }
 );
@@ -35,4 +32,4 @@ const AddJobModel = mongoose.model(
   "job_postings"
 );
 
-module.exports = AddJobModel;
+module.exports = AddJobModel; 
