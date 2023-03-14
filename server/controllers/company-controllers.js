@@ -16,6 +16,7 @@ const getAllCompanies = (req, res, next) => {
 
 const getCompanyJobs = async (req, res, next) => {
   const company_id = req.params._id;
+  console.log(company_id)
   let allCompanyJobs;
   try {
     allCompanyJobs = await Job.find({ company_id: company_id }).exec();
@@ -49,9 +50,18 @@ const loginCompany = async (req, res, next) => {
     );
     return next(error);
   }
+  if(existingCompany.length === 0)
+  {
+    const error = new HttpError(
+      "Invalid credentials, could not log you in.",
+      401
+    ); 
+    return next(error);
+  }
   const _id = existingCompany[0]._id;
+  const companyName = existingCompany[0].companyName;
   console.log(_id);
-  res.status(201).json({ message: "Logged in!", _id: _id });
+  res.status(201).json({ message: "Logged in!", _id: _id , companyName: companyName});
 };
 
 
@@ -66,7 +76,7 @@ const getCompanyById = (req, res, next) => {
 };
 
 const registerCompany = async (req, res, next) => {
-
+  const jobs = [];
   const createdCompany = new Company({ 
     companyName: req.body.companyName,
     email: req.body.email,
@@ -77,7 +87,7 @@ const registerCompany = async (req, res, next) => {
     phone: req.body.phone,
     logo: req.body.logo,
     logoName: req.body.logoName,
-    jobs: req.body.jobs,
+    jobs: jobs
   });
 
   try{

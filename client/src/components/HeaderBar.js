@@ -12,8 +12,6 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Badge } from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail";
 
 
 let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
@@ -26,7 +24,7 @@ function HeaderBar() {
     if(localStorage.loginType === "employee"){
     pages = ["Home", "Dashboard", "Offers", "About","Profile","EditProfile", "Logout"];
     }else if (localStorage.loginType === "company"){
-      pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer"];
+      pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
     }else{
       pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
     }
@@ -35,7 +33,6 @@ function HeaderBar() {
   }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [current_view, set_current_view] = React.useState("Home");
 
   const handleOpenNavMenu = (event) => {
   };
@@ -44,7 +41,6 @@ function HeaderBar() {
   };
 
   const handleCloseNavMenu = (event) => {
-    set_current_view(event.currentTarget.textContent);
   };
 
   const handleCloseUserMenu = (event) => {
@@ -135,11 +131,7 @@ function HeaderBar() {
           
           
           {/* Mail icon */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}> 
-            <Badge badgeContent={9} color="secondary">
-              <MailIcon color="action" />
-            </Badge>
-          </Box>
+
           
 
           {/* User Icon */}

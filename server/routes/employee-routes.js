@@ -37,5 +37,10 @@ router.patch("/:_id", (req, res, next) => {
   console.log(_id);
   employeeController.updateEmployee(req, res, next);
 });
+router.get("/getAllOffers/:_id" ,(req,res,next) =>
+{
+  console.log("GET request to /employee/getAllOffers");
+  employeeController.getAllOffers(req,res,next);
+})
 
 module.exports = router;

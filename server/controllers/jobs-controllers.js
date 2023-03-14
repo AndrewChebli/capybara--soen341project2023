@@ -37,13 +37,13 @@ const addJob = async (req, res, next) => {
     location,
     salary,
     company,
-    applicants,
     Dday,
     Dmonth,
     Dyear,
     benefits,
     requirements,
     company_id,
+    applicants,
     selected_applicants
   });
 
@@ -67,10 +67,11 @@ const addJob = async (req, res, next) => {
       return next(error);
   }
   if (!existingCompany) {
-
       const error = new HttpError('Could not find company for this id.', 404);
       return next(error);
   }
+  console.log("existingCompany.companyName: " + existingCompany.companyName);
+  console.log("job_id: " + job_id)
   existingCompany.jobs.push(job_id);
   res.status(201).json({ job: createdJob });
 };
@@ -96,8 +97,12 @@ const addApplicant = async (req, res, next) => {
     const error = new HttpError("Applicant already applied to this job.", 500);
     return next(error);
   }
-
-  existingJob.applicants.push(applicant_id);
+  const new_Applicant = {
+    applicant : applicant_id,
+    new : true
+  }
+  
+  existingJob.applicants.push(new_Applicant);
 
   try {
     await existingJob.save();
