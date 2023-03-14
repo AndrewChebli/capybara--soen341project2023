@@ -49,6 +49,14 @@ const loginCompany = async (req, res, next) => {
     );
     return next(error);
   }
+  if(existingCompany.length === 0)
+  {
+    const error = new HttpError(
+      "Invalid credentials, could not log you in.",
+      401
+    ); 
+    return next(error);
+  }
   const _id = existingCompany[0]._id;
   console.log(_id);
   res.status(201).json({ message: "Logged in!", _id: _id });

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// const previousExperienceUserModel = mongoose.model("PreviousExperienceUserModel");
 
 const EmployeeRegisterModel = new mongoose.Schema(
   {

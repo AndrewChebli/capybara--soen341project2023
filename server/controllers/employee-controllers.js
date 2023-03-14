@@ -2,9 +2,6 @@ const HttpError = require("../models/http-error");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
 
-
-
-
 const getAllEmployess = async (req, res, next) => {
   Employee.find()
     .then((employees) => {
@@ -29,6 +26,13 @@ const loginEmployee = async (req, res, next) => {
     return next(error);
   }
   if (!existingEmployee) {
+    const error = new HttpError(
+      "Invalid credentials, could not log you in.",
+      401
+    );
+    return next(error);
+  }
+  if (existingEmployee.length === 0) {
     const error = new HttpError(
       "Invalid credentials, could not log you in.",
       401
@@ -115,10 +119,40 @@ const deleteEmployee = async (req, res, next) => {
 };
 
 const updateEmployee = (req, res, next) => {
-  const { firstName, lastName, email, password } = req.body;
-  console.log(req.body);
   const employeeId = req.params._id;
-  console.log(employeeId);
+  let existingEmployee;
+  try {
+    existingEmployee = Employee.findById(employeeId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update employee.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!existingEmployee) {
+    const error = new HttpError("could not find employee for this id.", 404);
+    return next(error);
+  }
+
+  const filter = { _id: employeeId };
+  const update = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    resume: req.body.resume,
+    resunmeName: req.body.resumeName,
+    skills: req.body.skills,
+    experience: req.body.experience,
+    education: req.body.education,
+  };
+  existingEmployee.findOneAndUpdate(filter, update, {
+    new: true,
+  });
+
+  res.status(200).json({ employee: existingEmployee });
 };
 
 exports.getAllEmployess = getAllEmployess;

@@ -96,8 +96,12 @@ const addApplicant = async (req, res, next) => {
     const error = new HttpError("Applicant already applied to this job.", 500);
     return next(error);
   }
-
-  existingJob.applicants.push(applicant_id);
+  const new_Applicant = {
+    applicant : applicant_id,
+    new : true
+  }
+  
+  existingJob.applicants.push(new_Applicant);
 
   try {
     await existingJob.save();
