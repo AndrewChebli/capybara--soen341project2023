@@ -9,13 +9,9 @@ const CompanyRegisterModel = new mongoose.Schema(
     website: { type: String, unique: false },
     address: { type: String, unique: false },
     phone: { type: String, unique: false },
-    logo: { type: String, unique: false },
+    // logo: { type: String, unique: false },
     logoName: { type: String, unique: false },
-    jobs: [
-      {
-        jobId : {type: String, unique: false},
-      }
-    ],
+    jobs: { type: Array, unique: false },
   },
   { collection: "companies" }
 );
