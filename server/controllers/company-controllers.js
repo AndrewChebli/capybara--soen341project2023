@@ -3,6 +3,7 @@ const Company = require("../models/CompanyRegister.model.js");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
 
+
 const getAllCompanies = (req, res, next) => {
   console.log("GET request to /company/getall");
   Company.find()
