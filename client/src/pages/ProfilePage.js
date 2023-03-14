@@ -24,8 +24,8 @@ function  ProfilePage() {
       }).then((response) => response.json())
       .then((response) => {
         setEmployeeInfo(response.employee);
-        console.log(response.employee.resume)
         setResume(response.employee.resume);
+        console.log(response.employee.firstName)
         localStorage.setItem("resume", response.employee.resume);
       }
       );

@@ -10,50 +10,53 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
-import {useState , useEffect} from 'react';
+import { useState, useEffect } from "react";
 
 let b64;
 
 function EditProfilePage() {
-  const theme = createTheme(
-    {
-      palette: {
-        primary: {
-          main: "#394727",
-        },
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#394727",
       },
-      typography: {
-        fontFamily: "Roboto",
-      },transitions: {
-        easing: {
-          easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
-          easeIn: "cubic-bezier(0.4, 0, 1, 1)",
-          easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
-          sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
-      },
-    }
     },
-  );
+    typography: {
+      fontFamily: "Roboto",
+    },
+    transitions: {
+      easing: {
+        easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+        easeIn: "cubic-bezier(0.4, 0, 1, 1)",
+        easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
+        sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
+      },
+    },
+  });
 
   const [employeeInfo, setEmployeeInfo] = useState({});
 
   useEffect(() => {
     async function getEmployeeInfo() {
-      await fetch("http://localhost:8080/api/employee/getone/" + localStorage.getItem("_id"), {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => response.json())
-      .then((response) => {
-        console.log(response.employee)
-        setEmployeeInfo(response.employee);
-      }
-      );
+      await fetch(
+        "http://localhost:8080/api/employee/getone/" +
+          localStorage.getItem("_id"),
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response.employee);
+          setEmployeeInfo(response.employee);
+        });
     }
     getEmployeeInfo();
-  },[]);
-
+    console.log(employeeInfo);
+  }, []);
 
   const [resume, setResume] = useState(null);
 
@@ -73,7 +76,6 @@ function EditProfilePage() {
 
   let resume_name = resume ? resume.name : "No file chosen";
 
-
   async function updateService(event) {
     console.log("clicked");
     console.log(event.currentTarget);
@@ -81,11 +83,10 @@ function EditProfilePage() {
     const data = new FormData(event.currentTarget);
   }
 
- 
-
+  console.log(employeeInfo.firstName);
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="md" >
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
           component="form"
@@ -96,7 +97,6 @@ function EditProfilePage() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

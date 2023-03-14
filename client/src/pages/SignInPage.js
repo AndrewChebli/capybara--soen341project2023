@@ -1,13 +1,11 @@
 import React from "react";
 import SignInForm from "../components/SignInForm";
-import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
 import { Typography } from "@mui/material";
 import SignInFormCompany from "../components/SignInFormCompany";
 
 function SignIn() {
   const [checked, setChecked] = React.useState(true);
-
   const handleChange = (event) => {
     setChecked(event.target.checked);
     console.log(checked);

@@ -35,6 +35,7 @@ function LogoutPage() {
   };
   if (query === "success") {
     localStorage.setItem("loginStatus", "out");
+    localStorage.setItem("_id", "");
     window.location.href = "/HomePage";
   }
   return (
