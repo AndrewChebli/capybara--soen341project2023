@@ -3,6 +3,17 @@ const router = express.Router();
 const companyController = require("../controllers/company-controllers");
 
 
+
+router.post("/selectApplicant", (req, res, next) => {
+  console.log("POST request to /company/selectApplicant");
+  companyController.selectApplicant(req, res, next);
+});
+
+router.post("/notifyApplicant", (req, res, next) => {
+  console.log("POST request to /company/notifyApplicant");
+  companyController.notifyApplicant(req, res, next);
+});
+
 router.post("/register", (req, res, next) => {
   console.log("POST request to /company/register");
   companyController.registerCompany(req, res, next);
@@ -13,6 +24,10 @@ router.post("/login", (req, res, next) => {
   companyController.loginCompany(req, res, next);
 });
 
+router.get("/getCompanyJobs/:_id", (req, res, next) => {
+  console.log("POST request to /company/getCompanyJobs");
+  companyController.getCompanyJobs(req, res, next);
+});
 
 router.get("/getall", (req, res, next) => {
   console.log("GET request to /company/getall");

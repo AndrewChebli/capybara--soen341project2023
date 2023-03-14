@@ -54,6 +54,7 @@ function stringAvatar(name) {
     
 
 function JobPosting(job_posting) {
+
   const [applied, setApplied] = React.useState(false);
   async function applyToJob() {
     console.log("apply to job");
@@ -72,6 +73,11 @@ function JobPosting(job_posting) {
     });
     console.log(reponse)
     const data = await reponse.json();
+    if(reponse.status === 500)
+    {
+      window.alert("You have already applied to this job");
+      setApplied(true);
+    }
     console.log(data);  
     setApplied(true);
   }

@@ -20,6 +20,10 @@ const AddJob = new mongoose.Schema(
     location: { type: String, unique: false, required: true },
 
     applicants: { type: Array, unique: false, required: false },
+
+    company_id: { type: String, unique: false, required: true },
+
+    selected_applicants: { type: Array, unique: false, required: false },
     
   },
   { collection: "job_postings" }

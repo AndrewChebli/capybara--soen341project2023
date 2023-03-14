@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grow from "@mui/material/Grow";
 
-let job_postings;
 
 function Dashboard() {
   const [data, setData] = React.useState([]);
