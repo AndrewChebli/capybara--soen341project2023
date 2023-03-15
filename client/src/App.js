@@ -13,6 +13,8 @@ import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";  
 import CreateJobPostingPage from "./pages/CreateJobPostingPage";
 import HeaderBar from "./components/HeaderBar";
+import JobPosting from "./components/JobPosting";
+import JobPostingPage from "./pages/JobPostingPage"
 
 
 
@@ -47,6 +49,7 @@ function App() {
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path = "/LogoutPage" element = {<LogoutPage></LogoutPage>} />
           <Route path = "/CreateJobPostingPage" element={<CreateJobPostingPage />} />
+          <Route path = "/JobPostingPage" element={<JobPostingPage /> } />
         </Routes>
       </BrowserRouter>
     </div>
