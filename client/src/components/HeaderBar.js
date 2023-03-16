@@ -126,12 +126,10 @@ function HeaderBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block", mr:3 }}
-                
-                href={page+"Page"} //Page name MUST BE the same as page variable
-                
+                href={ "../" + page+"Page"} //Page name MUST BE the same as page variable
               >
                 {page}
-                {console.log(page+"Page")}
+                {console.log("HELLLOOOOOOO" + page+"Page")}
               </Button>
             ))}
           </Box>
