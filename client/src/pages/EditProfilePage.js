@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,32 +10,60 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
+import { useState, useEffect } from "react";
+import { Divider } from "@mui/material";
 
 let b64;
 
 function EditProfilePage() {
-  const theme = createTheme(
-    {
-      palette: {
-        primary: {
-          main: "#394727",
-        },
-      },
-      typography: {
-        fontFamily: "Roboto",
-      },transitions: {
-        easing: {
-          easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
-          easeIn: "cubic-bezier(0.4, 0, 1, 1)",
-          easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
-          sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
-      },
-    }
+  const [employeeInfo, setEmployeeInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    education: {
+      school: "",
+      degree: "",
+      start: "",
+      end: "",
     },
-  );
+    resumeName: "",
+    resume: "",
+    experience: [
+      {
+        company: "",
+        position: "",
+        description: "",
+        start: "",
+        end: "",
+      },
+    ],
+  });
+  useEffect(() => {
+    async function getEmployeeInfo() {
+      let response_from_backend;
+      response_from_backend = await fetch(
+        "http://localhost:8080/api/employee/getone/" +
+          localStorage.getItem("_id"),
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response_from_backend);
+      let response = await response_from_backend.json();
 
+      console.log(response);
+      setEmployeeInfo(response.employee);
+      setResume(response.employee.resume);
+      setResumeName(response.employee.resumeName);
+    }
+    getEmployeeInfo();
+  }, []);
 
   const [resume, setResume] = useState(null);
+  const [resumeName, setResumeName] = useState(null);
 
   const handleResumeChange = (event) => {
     console.log("click");
@@ -48,20 +76,11 @@ function EditProfilePage() {
       console.log(b64);
     };
     reader.readAsDataURL(file);
-    setResume(event.target.files[0]);
+    setResume(b64);
+    setResumeName(file.name);
   };
 
-  let resume_name = resume ? resume.name : "No file chosen";
-
-  function updateLocalStorage(resp) {
-    localStorage.setItem("response", JSON.stringify(resp));
-    localStorage.setItem("firstName", resp.db_response.firstname);
-    localStorage.setItem("lastName", resp.db_response.lastname);
-    localStorage.setItem("resume", resp.db_response.resume);
-    localStorage.setItem("resumeName", resp.db_response.resumeName);
-    localStorage.setItem("education",JSON.stringify(resp.db_response.education));
-    localStorage.setItem("experience",JSON.stringify(resp.db_response.previousExperience));
-  }
+  let resume_name = resumeName ? resumeName : "No file chosen";
 
   async function updateService(event) {
     console.log("clicked");
@@ -69,260 +88,253 @@ function EditProfilePage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const temp = JSON.parse(localStorage.getItem("response"));
-    const _id = temp._id;
-
-    const response = await fetch("http://localhost:8080/update", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: _id,
-        firstName: data.get("firstName"),
-        lastName: data.get("lastName"),
-        email: localStorage.getItem("email"),
-        resume: b64,
-        resumeName: resume_name,
-        companyName: data.get("companyName"),
-        jobTitle: data.get("jobTitle"),
-        dateStartedWork: data.get("dateStartedWork"),
-        dateCompletedWork: data.get("dateCompletedWork"),
-        Description: data.get("Description"),
-
-        school: data.get("school"),
-        academicProgram: data.get("academicProgram"),
-        dateStartedSchool: data.get("dateStartedSchool"),
-        dateCompletedSchool: data.get("dateCompletedSchool"),
-      }),
-    });
-    const resp = await response.json();
-    console.log("response");
-    console.log(resp);
-    console.log(resp.db_response)
-    console.log(resp.db_response.education)
-    // console.log("Test result: " + )
-    if (response.status === 200) {
-      updateLocalStorage(resp);
-      alert("Updated the profile!");
-    } else {
-      alert("Something went wrong! please try again!");
-    }
+    let response_from_backend = await fetch(
+      "http://localhost:8080/api/employee/" +
+        localStorage.getItem("_id"),
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: data.get("firstName"),
+          lastName: data.get("lastName"),
+          resume: resume,
+          resumeName:  resumeName,
+          education: {
+            school: data.get("school"),
+            degree: data.get("degree"),
+            start: data.get("dateStartedSchool"),
+            end: data.get("dateCompletedSchool"),
+          },
+          experience: [
+            {
+              company: data.get("companyName"),
+              position: data.get("position"),
+              description: data.get("description"),
+              start: data.get("dateStartedWork"),
+              end: data.get("dateCompletedWork"),
+            },
+          ],
+        }),
+      }
+    );
+    console.log(response_from_backend)
+    let response = await response_from_backend.json();
+    console.log(response);
   }
 
-  let firstName = localStorage.getItem("firstName");
-  let lastName = localStorage.getItem("lastName");
-  let email = localStorage.getItem("email");
-  let resumeName = localStorage.getItem("resumeName");
-  let educ_non_parsed = localStorage.getItem("education");
-  let educ = JSON.parse(educ_non_parsed);
-  let work_non_parsed = localStorage.getItem("experience");
-  let work = JSON.parse(work_non_parsed);
-  console.log(work[0].Start);
-
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="md" >
-        <CssBaseline />
-        <Box
-          component="form"
-          noValidate
-          onSubmit={updateService}
-          sx={{
-            marginTop: 15,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" sx={{ p: 2 }}>
-            Edit Profile
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                fullWidth
-                id="firstName"
-                label="First Name"
-                defaultValue={firstName}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                defaultValue={lastName}
-                autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12} sx={{ m: 3 }}>
-              <label htmlFor="resumeInput">
-                <Typography component="h4" variant="h6">
-                  {`${resume_name}`}{" "}
-                </Typography>
-                <input
-                  id="resumeInput"
-                  name="resume"
-                  type="file"
-                  accept=".pdf, .docx"
-                  hidden
-                  onChange={handleResumeChange}
-                />
-                <AttachFileOutlinedIcon
-                  fontSize="large"
-                  color="primary"
-                ></AttachFileOutlinedIcon>
-              </label>
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Grid item xs={"auto"}>
-                  <Typography component="h1" variant="h4" marginBottom={2}>
-                    Work Experience
-                  </Typography>
+    <Container component="main" maxWidth="md">
+      <CssBaseline />
+      <Box
+        component="form"
+        noValidate
+        onSubmit={updateService}
+        sx={{
+          marginTop: 15,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h4" sx={{ p: 2 }}>
+          Edit Profile
+        </Typography>
 
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <TextField
-                        name="jobTitle"
-                        required
-                        fullWidth
-                        id="jobTitle"
-                        label="Job Title"
-                        defaultValue={work[0].Position}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={20}>
-                      <TextField
-                        name="companyName"
-                        required
-                        fullWidth
-                        id="companyName"
-                        label="Company Name"
-                        defaultValue={work[0].Company}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        name="dateStartedWork"
-                        required
-                        fullWidth
-                        id="dateStartedWork"
-                        type="date"
-                        defaultValue={work[0].Start}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        name="dateCompletedWork"
-                        fullWidth
-                        id="dateCompletedWork"
-                        type="date"
-                        defaultValue={work[0].End}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={20}>
-                      <TextField
-                        multiline={true}
-                        defaultValue={work[0].Description}
-                        rows={4}
-                        name="Description"
-                        fullWidth
-                        id="Description"
-                        label="Description"
-                        type="text"
-                      />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h1" variant="h4" margin={2} marginTop={6}>
-                Education
-              </Typography>
-              <Box
-                sx={{
-                  marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  mt: 3,
-                }}
-              >
-                <Grid item xs={"auto"}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={"auto"} sm={6}>
-                      <TextField
-                        name="school"
-                        required
-                        fullWidth
-                        id="school"
-                        label="School Name"
-                        defaultValue={educ.School}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        required
-                        fullWidth
-                        name="academicProgram"
-                        label="Academic Program"
-                        id="academicProgram"
-                        defaultValue={educ.Degree}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        name="dateStartedSchool"
-                        required
-                        fullWidth
-                        id="dateStartedSchool"
-                        type="date"
-                        defaultValue={educ.Start}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        name="dateCompletedSchool"
-                        fullWidth
-                        id="dateCompletedSchool"
-                        type="date"
-                        defaultValue={educ.End}
-                      />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Button
-              type="submit"
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="firstName"
               fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Update Profile
-            </Button>
+              id="firstName"
+              label="First Name"
+              value={employeeInfo.firstName}
+              onChange={(e) => {setEmployeeInfo({...employeeInfo, firstName: e.target.value})}}
+              autoFocus
+            />
           </Grid>
-        </Box>
-      </Container>
-    </ThemeProvider>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              value={employeeInfo.lastName}
+              onChange={(e) => {setEmployeeInfo({...employeeInfo, lastName: e.target.value})}}
+            />
+          </Grid>
+          <Grid item xs={12} sx={{ m: 3 }}>
+            <label htmlFor="resumeInput">
+              <Typography component="h4" variant="h6">
+                {`${resume_name}`}{" "}
+              </Typography>
+              <input
+                id="resumeInput"
+                name="resume"
+                type="file"
+                accept=".pdf, .docx"
+                hidden
+                onChange={handleResumeChange}
+              />
+              <AttachFileOutlinedIcon
+                fontSize="large"
+                color="primary"
+              ></AttachFileOutlinedIcon>
+            </label>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Grid item xs={"auto"}>
+                <Typography component="h1" variant="h4" marginBottom={2}>
+                  Work Experience
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      name="position"
+                      required
+                      fullWidth
+                      id="position"
+                      label="Position"
+                      value={employeeInfo.experience[0].position}
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], position: e.target.value}]})}}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={20}>
+                    <TextField
+                      name="companyName"
+                      required
+                      fullWidth
+                      id="companyName"
+                      label="Company Name"
+                      value={employeeInfo.experience[0].company}
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], company: e.target.value}]})}}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="dateStartedWork"
+                      required
+                      fullWidth
+                      id="dateStartedWork"
+                      type="date"
+                      value={employeeInfo.experience[0].start}
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], start: e.target.value}]})}}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="dateCompletedWork"
+                      fullWidth
+                      id="dateCompletedWork"
+                      type="date"
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], end: e.target.value}]})}}
+                      value={employeeInfo.experience[0].end}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={20}>
+                    <TextField
+                      multiline={true}
+                      rows={4}
+                      name="description"
+                      fullWidth
+                      id="description"
+                      label="Description"
+                      type="text"
+                      onChange = {(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], description: e.target.value}]})}}
+                      value={employeeInfo.experience[0].description}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography component="h1" variant="h4" margin={2} marginTop={6}>
+              Education
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <Box
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                mt: 3,
+              }}
+            >
+              <Grid item xs={"auto"}>
+                <Grid container spacing={2}>
+                  <Grid item xs={"auto"} sm={6}>
+                    <TextField
+                      name="school"
+                      required
+                      fullWidth
+                      id="school"
+                      label="School Name"
+                      value={employeeInfo.education.school}
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, school: e.target.value}})}}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="degree"
+                      label="Degree"
+                      id="degree"
+                      value={employeeInfo.education.degree}
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, degree: e.target.value}})}}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <TextField
+                      name="dateStartedSchool"
+                      required
+                      fullWidth
+                      id="dateStartedSchool"
+                      type="date"
+                      value={employeeInfo.education.start}
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, start: e.target.value}})}}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <TextField
+                      name="dateCompletedSchool"
+                      fullWidth
+                      id="dateCompletedSchool"
+                      type="date"
+                      value={employeeInfo.education.end}
+                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, end: e.target.value}})}}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Update Profile
+          </Button>
+        </Grid>
+      </Box>
+    </Container>
   );
 }
 

@@ -1,27 +1,30 @@
+import { Typography } from "@mui/material";
 import React from "react";
 
-
-function ResumeViewer()
-{
+function ResumeViewer(base) {
   const base64_resume = localStorage.getItem("resume");
+  console.log("Resume Viewer");
   // console.log(base64_resume)
-  var bin = atob(base64_resume);
-  console.log('File Size:', Math.round(bin.length / 1024), 'KB');
-  
-  // Embed the PDF into the HTML page and show it to the user
-  var obj = document.createElement('object');
-  obj.style.width = '70%';
-  obj.style.height = '842pt';
-  obj.style.marginLeft = '220pt';
-  obj.type = 'application/pdf';
-  obj.data = 'data:application/pdf;base64,' + base64_resume;
-  document.body.append(obj)
-  return (
+  if (base64_resume === "undefined") {
+    return (
+      <Typography>
+        No resume uploaded, go to edit profile page to upload one.
+      </Typography>
+    );
+  } else {
+    var bin = atob(base64_resume);
+    console.log("File Size:", Math.round(bin.length / 1024), "KB");
 
-    <div className="resume-viewer">
+    var obj = document.createElement("object");
+    obj.style.width = "70%";
+    obj.style.height = "842pt";
+    obj.style.marginLeft = "220pt";
+    obj.type = "application/pdf";
+    obj.data = "data:application/pdf;base64," + base64_resume;
+    document.body.append(obj);
 
-      </div>
-  )
+    return <div className="resume-viewer"></div>;
+  }
 }
 
 export default ResumeViewer;

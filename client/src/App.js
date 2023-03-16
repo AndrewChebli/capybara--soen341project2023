@@ -1,37 +1,32 @@
 import "./App.css";
-
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import  Dashboard  from "./pages/DashboardPage";
-import SignInPage from "./pages/SignInPageEmployee";
-import SignUpPage from "./pages/SignUpPageEmployee";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 import LogoutPage from "./pages/LogoutPage";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import OffersPage from "./pages/OffersPage";
 import ProfilePage from "./pages/ProfilePage";
-import EditProfilePage from "./pages/EditProfilePage";  
+import EditProfilePage from "./pages/EditProfilePage";
 import CreateJobPostingPage from "./pages/CreateJobPostingPage";
 import HeaderBar from "./components/HeaderBar";
+import CompanyJobApplicants from "./pages/CompanyJobApplicants";
 import JobPosting from "./components/JobPosting";
 import JobPostingPage from "./pages/JobPostingPage"
 
-
+ 
 
 function App() {
-
   function setDefaultState() {
-    localStorage.setItem("firstName", JSON.stringify());
-    localStorage.setItem("lastName", JSON.stringify());
-    localStorage.setItem("email", JSON.stringify());
-    localStorage.setItem("response", JSON.stringify());
     localStorage.setItem("loginStatus", "false");
     localStorage.setItem("loginType", JSON.stringify());
   }
   if(localStorage.getItem("loginStatus") === null){
-    setDefaultState();
+    localStorage.clear();
   }if(localStorage.getItem("loginStatus") === "out"){
-    setDefaultState();
+    localStorage.clear();
   }
   return (
     <div className="App" >
@@ -49,6 +44,7 @@ function App() {
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path = "/LogoutPage" element = {<LogoutPage></LogoutPage>} />
           <Route path = "/CreateJobPostingPage" element={<CreateJobPostingPage />} />
+          <Route path = "/CompanyJobApplicantsPage" element={<CompanyJobApplicants />} />
           <Route path = "/JobPostingPage/:id" element={<JobPostingPage /> } />
         </Routes>
       </BrowserRouter>

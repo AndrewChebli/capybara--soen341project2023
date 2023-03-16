@@ -12,42 +12,35 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Badge } from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail";
 
 
-let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+let pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HeaderBar() {
   
 
   if(localStorage.getItem("loginStatus") === "true"){
-    if(localStorage.loginType === "user"){
-    pages = ["Home", "Dashboard", "Offers", "About","Profile","EditProfile", "Logout"];
-    }else if (localStorage.loginType === "employer"){
-      pages = ["Home", "Dashboard", "Applications", "About","ProfilePageEmployer","EditProfileEmployer"];
+    if(localStorage.loginType === "employee"){
+    pages = ["Home", "Dashboard", "Offers","Profile","EditProfile", "Logout"];
+    }else if (localStorage.loginType === "company"){
+      pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
     }else{
-      pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+      pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
     }
   }else{
-    pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+    pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
   }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [current_view, set_current_view] = React.useState("Home");
 
   const handleOpenNavMenu = (event) => {
-
   };
   const handleOpenUserMenu = (event) => {
-    
     setAnchorElNav(null);
   };
 
   const handleCloseNavMenu = (event) => {
-    set_current_view(event.currentTarget.textContent);
-
   };
 
   const handleCloseUserMenu = (event) => {
@@ -129,18 +122,14 @@ function HeaderBar() {
                 href={ "../" + page+"Page"} //Page name MUST BE the same as page variable
               >
                 {page}
-                {console.log("HELLLOOOOOOO" + page+"Page")}
+                {console.log(page+"Page")}
               </Button>
             ))}
           </Box>
           
           
           {/* Mail icon */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}> 
-            <Badge badgeContent={9} color="secondary">
-              <MailIcon color="action" />
-            </Badge>
-          </Box>
+
           
 
           {/* User Icon */}
