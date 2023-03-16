@@ -95,7 +95,8 @@ function JobPosting(job_posting) {
   let requirements = job_posting.data.requirements;
   let benefits = job_posting.data.benefits;
   let salary = job_posting.data.salary;
-  console.log("title" + title);
+  let id = job_posting.data._id;
+  console.log("title" + title)
   let spacing = 2;
 
   return (
@@ -214,6 +215,7 @@ function JobPosting(job_posting) {
               </Grid>
             </Grid>
           </CardContent>
+
         </CardActionArea>
       </Card>
 
