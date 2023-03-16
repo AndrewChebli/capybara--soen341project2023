@@ -17,15 +17,14 @@ import CompanyJobApplicants from "./pages/CompanyJobApplicants";
  
 
 function App() {
-
   function setDefaultState() {
     localStorage.setItem("loginStatus", "false");
     localStorage.setItem("loginType", JSON.stringify());
   }
   if(localStorage.getItem("loginStatus") === null){
-    setDefaultState();
+    localStorage.clear();
   }if(localStorage.getItem("loginStatus") === "out"){
-    setDefaultState();
+    localStorage.clear();
   }
   return (
     <div className="App" >

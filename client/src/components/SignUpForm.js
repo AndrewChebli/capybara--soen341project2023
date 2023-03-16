@@ -63,17 +63,20 @@ export default function SignUpForm() {
         password: data.get("password"),
         resumeName: resume_name,
         resume: b64,
-        companyName: data.get("companyName"),
-        jobTitle: data.get("jobTitle"),
-        dateStartedWork: data.get("dateStartedWork"),
-        dateCompletedWork: data.get("dateCompletedWork"),
-        Description: data.get("Description"),
-
+        experience: {
+          company: data.get("companyName"),
+          title: data.get("jobTitle"),
+          start: data.get("dateStartedWork"),
+          end: data.get("dateCompletedWork"),
+          description: data.get("Description"),
+        },
+        education : {
         school: data.get("school"),
-        academicProgram: data.get("academicProgram"),
-        dateStartedSchool: data.get("dateStartedSchool"),
-        dateCompletedSchool: data.get("dateCompletedSchool"),
-      }),
+        degree: data.get("academicProgram"),
+        start: data.get("dateStartedSchool"),
+        end: data.get("dateCompletedSchool"),
+        }
+        }),
     });
     console.log(response);
 

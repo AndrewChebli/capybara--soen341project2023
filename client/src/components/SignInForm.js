@@ -42,6 +42,7 @@ export default function SignIn() {
           localStorage.setItem("_id", res._id);
           localStorage.setItem("loginStatus", "true");
           localStorage.setItem("loginType", "employee");
+          localStorage.setItem("resume", res.resume);
           alert("Login Successful");
           window.location.href = "http://localhost:3000/DashboardPage";
         }else{

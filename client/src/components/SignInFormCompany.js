@@ -44,7 +44,6 @@ export default function SignInFormCompany() {
           localStorage.setItem("loginType", "company");
           localStorage.setItem("companyName", res.companyName);
           alert("Login Successful");
-
           window.location.href = "http://localhost:3000/CompanyJobApplicantsPage";
         }else{
           alert("Invalid Credentials");

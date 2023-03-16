@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const HttpError = require("../models/http-error");
 const employeeController = require("../controllers/employee-controllers");
 
 router.post("/register", (req, res, next) => {
@@ -32,10 +31,15 @@ router.delete("/:_id", (req, res,next) => {
 });
 
 router.patch("/:_id", (req, res, next) => {
-  console.log("POST request to /employee/update/:_id");
+  console.log("PATCH request to /employee/update/:_id");
   const _id = req.params._id;
   console.log(_id);
   employeeController.updateEmployee(req, res, next);
 });
+router.get("/getAllOffers/:_id" ,(req,res,next) =>
+{
+  console.log("GET request to /employee/getAllOffers");
+  employeeController.getAllOffers(req,res,next);
+})
 
 module.exports = router;

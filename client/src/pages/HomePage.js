@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import register_image from "../images/download.jpeg";
 import keyboard_image from "../images/keyboard_typing.jpg";
 import Grow from "@mui/material/Grow";
@@ -21,6 +21,7 @@ function Home() {
       >
       
         Welcome to JobHive!
+        
       </Typography>
         </Grow>
       <Grow in={true} timeout={4000}>
@@ -60,6 +61,7 @@ function Home() {
                 fontFamily={"Roboto"}
               >
                 Log in
+                <Divider variant="middle" color="white" sx={{m: 2}} />
               </Typography>
               <Typography variant="h5" color={"white"} fontFamily={"Roboto"}>
                 Connect, collaborate and grow with us! You are one step closer
@@ -69,7 +71,9 @@ function Home() {
           </CardActionArea>
         </Card>
       </Grow>
+      
       <Grow in={true} timeout={4000}>
+        
       <Card
         sx={{
           maxWidth: 400,
@@ -86,6 +90,7 @@ function Home() {
           },
         }}
       >
+   
         <CardActionArea href="SignUpPage">
           <CardMedia>
             <Image src={register_image}></Image>
@@ -99,6 +104,7 @@ function Home() {
               fontFamily={"Roboto"}
             >
               Register
+              <Divider variant="middle" color="white" sx={{m: 2}} />
             </Typography>
             <Typography variant="h5" color={"white"} fontFamily={"Roboto"}>
               Join a worldwide community, full of opportunities! Your next

@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
 
-let pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+let pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HeaderBar() {
@@ -22,14 +22,14 @@ function HeaderBar() {
 
   if(localStorage.getItem("loginStatus") === "true"){
     if(localStorage.loginType === "employee"){
-    pages = ["Home", "Dashboard", "Offers", "About","Profile","EditProfile", "Logout"];
+    pages = ["Home", "Dashboard", "Offers","Profile","EditProfile", "Logout"];
     }else if (localStorage.loginType === "company"){
       pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
     }else{
-      pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+      pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
     }
   }else{
-    pages = ["Home", "Dashboard", "Offers", "About","SignIn", "SignUp"];
+    pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
   }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

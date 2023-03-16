@@ -59,7 +59,7 @@ const loginCompany = async (req, res, next) => {
   }
   const _id = existingCompany[0]._id;
   console.log(_id);
-  res.status(201).json({ message: "Logged in!", _id: _id });
+  res.status(201).json({ message: "Logged in!", _id: _id , companyName: existingCompany[0].companyName});
 };
 
 

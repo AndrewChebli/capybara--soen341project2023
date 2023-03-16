@@ -3,11 +3,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, Divider } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
-
+import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
 function stringToColor(string) {
   // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -46,11 +47,16 @@ function stringAvatar(name) {
     };
   }
 }
+const handleClose = (event, reason) => {
+  if (reason === "clickaway") {
+    return;
+  }
+};
 
 function JobPosting(job_posting) {
   const [applied, setApplied] = React.useState(false);
-  const [openSuccess, setOpenSuccess] = React.useState(false);//////////////
-  const [openError, setOpenError] = React.useState(false);/////////////
+  const [openSuccess, setOpenSuccess] = React.useState(false); //////////////
+  const [openError, setOpenError] = React.useState(false); /////////////
 
   async function applyToJob() {
     console.log("apply to job");
@@ -72,7 +78,7 @@ function JobPosting(job_posting) {
     );
     console.log(reponse);
     const data = await reponse.json();
-    if (reponse.status === 500) {//////////////////
+    if (reponse.status === 500) {
       setOpenError(true);
       setApplied(true);
     } else {
@@ -80,7 +86,7 @@ function JobPosting(job_posting) {
       setApplied(true);
     }
     console.log(data);
-    setApplied(true);////////////////////////////
+    setApplied(true);
   }
 
   let title = job_posting.data.title;
@@ -96,66 +102,117 @@ function JobPosting(job_posting) {
     <div>
       <Card
         sx={{
-          width: 1000,
+          display: "flex",
+          flexDirection: "column",
+          minWidth: 1000,
           maxWidth: 1000,
-          flexDirection: 2,
           justifyContent: "center",
+          flexGrow: 4,
+          overflow: "hidden",
         }}
       >
         <CardActionArea>
           <CardContent>
-            <Avatar {...stringAvatar(company)} />
+            <Grid container wrap="nowrap" spacing={2} direction="row">
+              <Grid item sx={2}>
+                <Avatar {...stringAvatar(company)}></Avatar>
 
-            <Button
-              type="submit"
-              halfWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={applyToJob}
-              disabled={applied}
-            >
-              Apply
-            </Button>
-
-            <Typography gutterBottom variant="h4" component="div">
-              {company}
-            </Typography>
-            <Typography gutterBottom variant="h5" component="div">
-              {title}
-            </Typography>
-
-            <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-              {" "}
-              {"Description: "}
-              <Box sx={{ fontWeight: "regular", fontSize: 15 }}>
-                {" "}
-                {description}{" "}
-              </Box>
-            </Box>
-
-            <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-              {" "}
-              {"Requirements: "}
-              <Box sx={{ fontWeight: "regular", fontSize: 15 }}>
-                {" "}
-                {requirements}{" "}
-              </Box>
-            </Box>
-
-            <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-              {" "}
-              {"Benefits: "}
-              <Box sx={{ fontWeight: "regular", fontSize: 15 }}>
-                {" "}
-                {benefits}{" "}
-              </Box>
-            </Box>
-
-            <Box sx={{ fontWeight: "bold", fontSize: 15, pb: spacing }}>
-              {" "}
-              {"Salary: "}
-              <Box sx={{ fontWeight: "regular", fontSize: 15 }}> {salary} </Box>
-            </Box>
+                <Button
+                  type="submit"
+                  halfWidth
+                  variant="contained"
+                  sx={{  mt: 3, mb: 2, mr: 2 }}
+                  onClick={applyToJob}
+                  disabled={applied}
+                >
+                  Apply
+                </Button>
+              </Grid>
+              <Divider orientation="vertical" flexItem variant="middle" />
+              <Grid item xs zeroMinWidth>
+                <Grid
+                  container
+                  spacing={2}
+                  justifyContent="left"
+                  alignItem={"center"}
+                  paddingTop={2}
+                >
+                  <Grid item sx="auto">
+                    <Typography
+                      variant="h5"
+                      component="div"
+                      sx={{ fontWeight: "bold" }}
+                    >
+                      {title}
+                    </Typography>
+                  </Grid>
+                  <Grid item sx="auto">
+                    <Divider variant="middle">
+                      <Typography variant="h6">{"Description"}</Typography>
+                    </Divider>
+                    <Typography
+                      textOverflow="ellipsis"
+                      gutterBottom
+                      component={"div"}
+                      variant="body"
+                      sx={{
+                        "& .MuiInputBase-input": {
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        },
+                        maxHeight: 75,
+                      }}
+                    >
+                      {description}
+                    </Typography>
+                  </Grid>
+                  <Grid item sx={4}>
+                    <Divider variant="middle">
+                      <Typography variant="h6" component="div">
+                        {"Requirements"}
+                      </Typography>
+                    </Divider>
+                    <Typography
+                      textOverflow={"ellipsis"}
+                      gutterBottom
+                      variant="body"
+                      component="div"
+                      sx={{
+                        "& .MuiInputBase-input": {
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        },
+                        maxHeight: 200,
+                      }}
+                    >
+                      {requirements}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item sx={4}>
+                    <Divider variant="middle">
+                      <Typography variant="h6" component="div">
+                        {"Benefits"}
+                      </Typography>
+                    </Divider>
+                    <Typography
+                      textOverflow={"ellipsis"}
+                      gutterBottom
+                      variant="body"
+                      component="div"
+                      sx={{
+                        "& .MuiInputBase-input": {
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        },
+                        maxHeight: 90,
+                      }}
+                    >
+                      {benefits}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </CardContent>
         </CardActionArea>
       </Card>
@@ -164,60 +221,22 @@ function JobPosting(job_posting) {
         open={openSuccess}
         autoHideDuration={6000}
         onClose={() => setOpenSuccess(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        sx={{
-          width: "15%",
-          borderRadius: 5,
-          backgroundColor: "#2e7d32", // green color
-          color: "#ffffff", // white text
-          "& .MuiSnackbarContent-root": {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "16px", // larger padding
-            textAlign: "center",
-            margin: "16px 8px 8px 8px", // added margin
-          },
-          "& .MuiTypography-root": {
-            fontSize: "1.2rem", // larger font size
-            fontWeight: "bold",
-            margin: "0 auto", // center text horizontally
-          },
-        }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <Typography variant="body1">Application successful!</Typography>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Application Successful!
+        </Alert>
       </Snackbar>
-
       <Snackbar
         open={openError}
         autoHideDuration={6000}
         onClose={() => setOpenError(false)}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        sx={{
-          width: "15%",
-          borderRadius: 5,
-          backgroundColor: "#ff9800", // orange color
-          color: "#ffffff", // white text
-          "& .MuiSnackbarContent-root": {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "16px", // larger padding
-            textAlign: "center",
-            margin: "16px 8px 8px 8px", // added margin
-          },
-          "& .MuiTypography-root": {
-            fontSize: "1.2rem", // larger font size
-            fontWeight: "bold",
-            margin: "0 auto", // center text horizontally
-          },
-        }}
       >
-        <Typography variant="body1">
-          You have already applied to this job
-        </Typography>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          You already Applied to this Job!
+        </Alert>
       </Snackbar>
-
       <Box sx={{ pb: 5 }}></Box>
     </div>
   );
