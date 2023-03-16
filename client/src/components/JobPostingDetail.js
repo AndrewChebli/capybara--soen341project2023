@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Item from "@mui/material/Grid"
+import Button from "@mui/material/Button"
 
 function stringToColor(string) { // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -63,6 +64,10 @@ function JobPostingDetail(job_posting) {
   let salary = job_posting.data.salary;
   console.log("title" + title)
   let spacing = 2;
+  let main_font_size = 30
+  let sub_font_size = 17
+
+  
 
   return (
     <div>
@@ -75,87 +80,82 @@ function JobPostingDetail(job_posting) {
                 gap: 1,
                 gridTemplateColumns: 'repeat(2, 1fr)',
                 gridAutoColumns: '1fr',
+                
               }}
             >
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '1/5'}} >
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: main_font_size}}>
                   {"Company: "}
                 </Typography>
               </Item>
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '2/5'}} >
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size }}>
                   {company}
                 </Typography>
               </Item>
+
+              <Item sx={{gridColumn: '1/5'}} >
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: main_font_size}}>
+                  {"Position: "}
+                </Typography>
+              </Item>
+              <Item sx={{gridColumn: '2/5'}} >
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size-4 }}>
+                  {title}
+                </Typography>
+              </Item>
               
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '1/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: main_font_size}}>
                   {"Description: "}
                 </Typography>
               </Item>
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '2/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
                   {description}
                 </Typography>
               </Item>
 
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '1/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: main_font_size}}>
                   {"Requirements: "}
                 </Typography>
               </Item>
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '2/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
                   {requirements}
                 </Typography>
               </Item>
 
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '1/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: main_font_size}}>
                   {"Benefits: "}
                 </Typography>
               </Item>
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '2/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
                   {benefits}
                 </Typography>
               </Item>
 
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '1/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: main_font_size}}>
                   {"Salary: "}
                 </Typography>
               </Item>
-              <Item>
-                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left' }}>
+              <Item sx={{gridColumn: '2/5'}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size  }}>
                   {salary}
                 </Typography>
               </Item>
             </Box>
           
-            
-            <Typography gutterBottom variant="h5" component="div">
-              {title}
-            </Typography>
-
-            <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Description: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {description} </Box>
-            </Box>
-
-            <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Requirements: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {requirements} </Box>
-            </Box>
-
-            <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Benefits: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {benefits} </Box>
-            </Box>
-
-            <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Salary: "} 
-              <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {salary} </Box>
-            </Box>
-        
-      
-        
+           
+      </Box>
+      <Box>
+        <Button variant="contained" size="large">
+          Apply
+        </Button>
       </Box>
       <Box sx= {{ pb: 5}}></Box>
     </div>

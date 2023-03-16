@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grow from "@mui/material/Grow";
+import {useParams} from "react-router-dom"
 
 let job_postings;
 
@@ -12,6 +13,7 @@ function Dashboard() {
   const [data, setData] = React.useState([]);
   useEffect(() => {
     // ================START OF FRONT-END ENDPOINT=====================
+    
     fetch("http://localhost:8080/getAllJobs", {
       method: "POST",
       headers: {
@@ -36,6 +38,11 @@ function Dashboard() {
     //   window.location.href = "/SignInPage";
     // }
 
+    const url = window.location.href
+    const params = useParams();
+    console.log("PARAMS" + JSON.stringify(params))
+    const id = url.id
+    console.log("BRUHHHHH" + id)
     return (
       <div style={{ width: "100%" }}>
         <Grow in={true} timeout={3000}>

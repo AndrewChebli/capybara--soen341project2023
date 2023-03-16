@@ -60,13 +60,14 @@ function JobPosting(job_posting) {
   let requirements = job_posting.data.requirements;
   let benefits = job_posting.data.benefits;
   let salary = job_posting.data.salary;
+  let id = job_posting.data._id;
   console.log("title" + title)
   let spacing = 2;
 
   return (
     <div>
       <Card sx={{ width: 1000, maxWidth: 1000 , flexDirection: 2, justifyContent: 'center'} }>
-        <CardActionArea>
+        <CardActionArea href ={"../JobPostingPage/" + id}>
           <CardContent>
           <Avatar {...stringAvatar(company)} />
             <Typography gutterBottom variant="h4" component="div">
@@ -80,13 +81,13 @@ function JobPosting(job_posting) {
               <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {description} </Box>
             </Box>
 
-            <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Requirements: "} 
+            {/* <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Requirements: "} 
               <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {requirements} </Box>
             </Box>
 
             <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Benefits: "} 
               <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {benefits} </Box>
-            </Box>
+            </Box> */}
 
             <Box sx= {{ fontWeight: 'bold', fontSize: 15, pb: spacing }}> {"Salary: "} 
               <Box sx= {{ fontWeight: 'regular', fontSize: 15, }}> {salary} </Box>
@@ -94,6 +95,7 @@ function JobPosting(job_posting) {
         
       
           </CardContent>
+
         </CardActionArea>
       </Card>
       <Box sx= {{ pb: 5}}></Box>

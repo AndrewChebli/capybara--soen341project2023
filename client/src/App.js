@@ -38,7 +38,7 @@ function App() {
     <HeaderBar></HeaderBar>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/Home" element={<HomePage />} />
           <Route path="/DashboardPage" element={<Dashboard />} />
           <Route path="/SignInPage" element={<SignInPage />} />
           <Route path="/SignUpPage" element={<SignUpPage />} />
@@ -49,7 +49,7 @@ function App() {
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path = "/LogoutPage" element = {<LogoutPage></LogoutPage>} />
           <Route path = "/CreateJobPostingPage" element={<CreateJobPostingPage />} />
-          <Route path = "/JobPostingPage" element={<JobPostingPage /> } />
+          <Route path = "/JobPostingPage/:id" element={<JobPostingPage /> } />
         </Routes>
       </BrowserRouter>
     </div>
