@@ -70,7 +70,7 @@ const registerEmployee = async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     resume: req.body.resume,
-    resunmeName: req.body.resumeName,
+    resumeName: req.body.resumeName,
     skills: req.body.skills,
     experience: req.body.experience,
     education: req.body.education,
@@ -144,9 +144,8 @@ const updateEmployee = async (req, res, next) => {
   const update = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    password: req.body.password,
     resume: req.body.resume,
-    resunmeName: req.body.resumeName,
+    resumeName: req.body.resumeName,
     experience: req.body.experience,
     education: req.body.education,
   };
@@ -158,7 +157,7 @@ const updateEmployee = async (req, res, next) => {
     });
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not update employee.",
+      "Something went wrong, could not update employee error updating.",
       500
     );
     return next(error);

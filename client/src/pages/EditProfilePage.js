@@ -119,6 +119,7 @@ function EditProfilePage() {
         }),
       }
     );
+    console.log(response_from_backend)
     let response = await response_from_backend.json();
     console.log(response);
   }
