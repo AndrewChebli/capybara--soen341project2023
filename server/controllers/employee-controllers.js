@@ -41,7 +41,14 @@ const loginEmployee = async (req, res, next) => {
   }
   const _id = existingEmployee[0]._id;
   console.log(_id);
-  res.status(201).json({ message: "Logged in!", _id: _id , resume: existingEmployee[0].resume, resumeName: existingEmployee[0].resumeName});
+  res
+    .status(201)
+    .json({
+      message: "Logged in!",
+      _id: _id,
+      resume: existingEmployee[0].resume,
+      resumeName: existingEmployee[0].resumeName,
+    });
 };
 
 const getEmployeeById = async (req, res, next) => {
@@ -149,7 +156,7 @@ const updateEmployee = async (req, res, next) => {
     experience: req.body.experience,
     education: req.body.education,
   };
-  console.log(update)
+  console.log(update);
   let updatedEmployee;
   try {
     updatedEmployee = await existingEmployee.findOneAndUpdate(filter, update, {
@@ -162,7 +169,7 @@ const updateEmployee = async (req, res, next) => {
     );
     return next(error);
   }
-  if(!updatedEmployee){
+  if (!updatedEmployee) {
     const error = new HttpError(
       "Something went wrong, could not update employee.",
       500
@@ -170,7 +177,6 @@ const updateEmployee = async (req, res, next) => {
     return next(error);
   }
 
-  
   res.status(200).json({ employee: existingEmployee });
 };
 
