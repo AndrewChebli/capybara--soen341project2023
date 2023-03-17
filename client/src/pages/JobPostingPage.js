@@ -8,42 +8,21 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 function JobPostingPage() {
-  const params = useParams();
-  console.log("PARAMS" + JSON.stringify(params));
-   const id = params.id;
-   let jobposting = "";
- 
-  const [data, setData] = React.useState([]);
-  useEffect(() => {
-    console.log("USEEFFECT");
-    async function getOneJob() {
-      let response;
-      response = await fetch("http://localhost:8080/api/job/getone/" + id, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      response = await response.json();
-      console.log("RESPONSE" + JSON.stringify(response));
-      setData(response);
-    }
-    getOneJob();
-  }, [id]);
 
-  console.log("BRUHHHHH" + id);
+  
+
+
+
   return (
     <div style={{ width: "100%" }}>
-      <Grow in={true} timeout={3000}>
         <Typography
           variant="h2"
           component="h1"
           gutterBottom
           sx={{ p: 5, mt: 10 }}
         >
-          Job Postings
+          Job Posting
         </Typography>
-      </Grow>
       <Box
         sx={{
           display: "inline-flex",
@@ -56,7 +35,7 @@ function JobPostingPage() {
           justifyContent: "center",
         }}
       >
-          <JobPostingDetail data={data} />
+          <JobPostingDetail  />
       </Box>
     </div>
   );

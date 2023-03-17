@@ -8,6 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import Item from "@mui/material/Grid"
 import Button from "@mui/material/Button"
 import {useState, useEffect} from "react";
+import { useParams } from "react-router-dom";
 
 function stringToColor(string) { // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -53,24 +54,43 @@ function stringAvatar(name) {
     
 
 
-function JobPostingDetail(job_posting) {
+function JobPostingDetail() {
   console.log("JobPosting.js");
-  console.log(job_posting.data.job)
-// console.log(job_posting.data.job.title)
-  // let title = job_posting.data.job.title;
-  // let company = job_posting.data.job.company;
-  // let description = job_posting.data.job.description;
-  // let requirements = job_posting.data.job.requirements;
-  // let benefits = job_posting.data.job.benefits;
-  // let salary = job_posting.data.job.salary;
+
+  const url = useParams();
+  console.log(url)
+  const id = url.id;
   let spacing = 2;
   let main_font_size = 30
   let sub_font_size = 17
 
+   
+  const [data, setData] = React.useState({
+    title: "",
+    description: "",
+    company: "",
+    location: "",
+    salary: "",
+    requirements: "",
+    benefits: "",
+  });
   
-
-
-
+  useEffect(() => {
+    console.log("USEEFFECT");
+    async function getOneJob() {
+      let response;
+      response = await fetch("http://localhost:8080/api/job/getone/" + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      response = await response.json();
+      console.log("RESPONSE" + JSON.stringify(response));
+      setData(response.job);
+    }
+    getOneJob();
+  }, [id]);
 
 
   
@@ -96,7 +116,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}} >
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size }}>
-                  {/* {company} */}
+                  {data.company}
                 </Typography>
               </Item>
 
@@ -107,7 +127,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}} >
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size-4 }}>
-                  {/* {title} */}
+                  {data.title}
                 </Typography>
               </Item>
               
@@ -118,7 +138,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
-                  {/* {description} */}
+                  {data.description}
                 </Typography>
               </Item>
 
@@ -129,7 +149,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
-                  {/* {requirements} */}
+                  {data.requirements}
                 </Typography>
               </Item>
 
@@ -140,7 +160,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
-                  {/* {benefits} */}
+                  {data.benefits}
                 </Typography>
               </Item>
 
@@ -151,7 +171,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size  }}>
-                  {job_posting.data.job.salary}
+                  {data.salary}
                 </Typography>
               </Item>
             </Box>
