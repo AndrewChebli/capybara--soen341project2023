@@ -53,7 +53,7 @@ const handleClose = (event, reason) => {
   }
 };
 
-function JobPosting(job_posting) {
+function JobPostingSummary(job_posting) {
   const [applied, setApplied] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false); //////////////
   const [openError, setOpenError] = React.useState(false); /////////////
@@ -96,7 +96,11 @@ function JobPosting(job_posting) {
   let benefits = job_posting.data.benefits;
   let salary = job_posting.data.salary;
   let id = job_posting.data._id;
-  console.log("title" + title)
+  let location = job_posting.data.location;
+  let Dday = job_posting.data.Dday;
+  let Dmonth = job_posting.data.Dmonth;
+  let Dyear = job_posting.data.Dyear;
+  console.log("title" + title);
   let spacing = 2;
 
   return (
@@ -112,22 +116,11 @@ function JobPosting(job_posting) {
           overflow: "hidden",
         }}
       >
-        <CardActionArea href ={ "../JobPostingPage/" + id}>
+        <CardActionArea href={"../JobPostingPage/" + id}>
           <CardContent>
             <Grid container wrap="nowrap" spacing={2} direction="row">
-              <Grid item sx={2}>
+              <Grid item sx={2} paddingRight={2}>
                 <Avatar {...stringAvatar(company)}></Avatar>
-
-                <Button
-                  type="submit"
-                  halfWidth
-                  variant="contained"
-                  sx={{  mt: 3, mb: 2, mr: 2 }}
-                  onClick={applyToJob}
-                  disabled={applied}
-                >
-                  Apply
-                </Button>
               </Grid>
               <Divider orientation="vertical" flexItem variant="middle" />
               <Grid item xs zeroMinWidth>
@@ -152,25 +145,24 @@ function JobPosting(job_posting) {
                       <Typography variant="h6">{"Description"}</Typography>
                     </Divider>
                     <Typography
-                      textOverflow="ellipsis"
                       gutterBottom
                       component={"div"}
                       variant="body"
-                      sx={{
-                        "& .MuiInputBase-input": {
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        },
-                        maxHeight: 75,
-                      }}
+                      textOverflow={"ellipsis"}
+                      overflow={"hidden"}
+                      display={"-webkit-box"}
+                      WebkitLineClamp={3}
+                      WebkitBoxOrient={"vertical"}
+                      maxHeight={105}
                     >
                       {description}
                     </Typography>
                   </Grid>
-                  <Grid item sx={4}>
+
+                  <Grid item marginTop={"auto"} sx={4}>
                     <Divider variant="middle">
                       <Typography variant="h6" component="div">
-                        {"Requirements"}
+                        {"Salary"}
                       </Typography>
                     </Divider>
                     <Typography
@@ -178,21 +170,15 @@ function JobPosting(job_posting) {
                       gutterBottom
                       variant="body"
                       component="div"
-                      sx={{
-                        "& .MuiInputBase-input": {
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        },
-                        maxHeight: 200,
-                      }}
+                      minWidth= {250}
                     >
-                      {requirements}{" "}
+                      {salary}
                     </Typography>
                   </Grid>
-                  <Grid item sx={4}>
+                  <Grid item marginTop={"auto"} sx={4}>
                     <Divider variant="middle">
                       <Typography variant="h6" component="div">
-                        {"Benefits"}
+                        {"Location"}
                       </Typography>
                     </Divider>
                     <Typography
@@ -200,22 +186,31 @@ function JobPosting(job_posting) {
                       gutterBottom
                       variant="body"
                       component="div"
-                      sx={{
-                        "& .MuiInputBase-input": {
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        },
-                        maxHeight: 90,
-                      }}
+                      minWidth= {250}
                     >
-                      {benefits}
+                      {location}
+                    </Typography>
+                  </Grid>
+                  <Grid item marginTop={"auto"} sx={4}>
+                    <Divider variant="middle">
+                      <Typography variant="h6" component="div">
+                        {"Deadline : D/M/Y" }
+                      </Typography>
+                    </Divider>
+                    <Typography
+                      textOverflow={"ellipsis"}
+                      gutterBottom
+                      variant="body"
+                      component="div"
+                      minWidth= {250}
+                    >
+                      { Dmonth + "/" + Dday + "/" + Dyear}
                     </Typography>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </CardContent>
-
         </CardActionArea>
       </Card>
 
@@ -244,4 +239,4 @@ function JobPosting(job_posting) {
   );
 }
 
-export default JobPosting;
+export default JobPostingSummary;
