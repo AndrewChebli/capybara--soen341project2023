@@ -9,6 +9,7 @@ const getAllJobs = async (req, res, next) => {
 
 const getJobById = async (req, res, next) => {
   const _id = req.params._id;
+  console.log(_id)
   try {
     let existingJob;
     existingJob = await Job.findById(_id);
@@ -25,10 +26,20 @@ const getJobById = async (req, res, next) => {
   }
 };
 
-
-
 const addJob = async (req, res, next) => {
-  const { title, description, location, salary, company, Dday, Dmonth, Dyear, benefits, requirements, company_id} = req.body;
+  const {
+    title,
+    description,
+    location,
+    salary,
+    company,
+    Dday,
+    Dmonth,
+    Dyear,
+    benefits,
+    requirements,
+    company_id,
+  } = req.body;
   let applicants = [];
   let selected_applicants = [];
   const createdJob = new Job({
@@ -44,7 +55,7 @@ const addJob = async (req, res, next) => {
     benefits,
     requirements,
     company_id,
-    selected_applicants
+    selected_applicants,
   });
 
   try {
@@ -58,24 +69,26 @@ const addJob = async (req, res, next) => {
   }
 
   let job_id = createdJob._id;
-  let existingCompany ;
+  let existingCompany;
   try {
-      existingCompany = await Company.findById(company_id).exec();
+    existingCompany = await Company.findById(company_id).exec();
   } catch (err) {
-      const error = new HttpError(
-          'Adding job failed, cannot find related company.',  500   );
-      return next(error);
+    const error = new HttpError(
+      "Adding job failed, cannot find related company.",
+      500
+    );
+    return next(error);
   }
   if (!existingCompany) {
-
-      const error = new HttpError('Could not find company for this id.', 404);
-      return next(error);
+    const error = new HttpError("Could not find company for this id.", 404);
+    return next(error);
   }
   existingCompany.jobs.push(job_id);
   res.status(201).json({ job: createdJob });
 };
 
 const addApplicant = async (req, res, next) => {
+  console.log(req.body);
   const { job_id, applicant_id } = req.body;
   let existingJob;
   try {
@@ -92,15 +105,24 @@ const addApplicant = async (req, res, next) => {
     return next(error);
   }
   console.log(existingJob);
-  if(existingJob.applicants.find(applicant => applicant === applicant_id)){
-    const error = new HttpError("Applicant already applied to this job.", 500);
+  let result;
+  try {
+    result = await existingJob.applicants.find(
+      (applicant) => applicant === applicant_id
+    );
+    console.log(result)
+  } catch (err) {
+    const error = new HttpError("problem looking for duplicates", 500);
     return next(error);
   }
+
+
+
   const new_Applicant = {
-    applicant : applicant_id,
-    new : true
-  }
-  
+    applicant: applicant_id,
+    new: true,
+  };
+
   existingJob.applicants.push(new_Applicant);
 
   try {

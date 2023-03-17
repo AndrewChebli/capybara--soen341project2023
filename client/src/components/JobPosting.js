@@ -112,7 +112,7 @@ function JobPosting(job_posting) {
           overflow: "hidden",
         }}
       >
-        <CardActionArea>
+        <CardActionArea href ={ "../JobPostingPage/" + id}>
           <CardContent>
             <Grid container wrap="nowrap" spacing={2} direction="row">
               <Grid item sx={2}>

@@ -7,6 +7,7 @@ import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Item from "@mui/material/Grid"
 import Button from "@mui/material/Button"
+import {useState, useEffect} from "react";
 
 function stringToColor(string) { // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -50,29 +51,34 @@ function stringAvatar(name) {
 
 
     
-    
+
 
 function JobPostingDetail(job_posting) {
   console.log("JobPosting.js");
-  console.log(job_posting.data)
-
-  let title = job_posting.data.title;
-  let company = job_posting.data.company;
-  let description = job_posting.data.description;
-  let requirements = job_posting.data.requirements;
-  let benefits = job_posting.data.benefits;
-  let salary = job_posting.data.salary;
-  console.log("title" + title)
+  console.log(job_posting.data.job)
+// console.log(job_posting.data.job.title)
+  // let title = job_posting.data.job.title;
+  // let company = job_posting.data.job.company;
+  // let description = job_posting.data.job.description;
+  // let requirements = job_posting.data.job.requirements;
+  // let benefits = job_posting.data.job.benefits;
+  // let salary = job_posting.data.job.salary;
   let spacing = 2;
   let main_font_size = 30
   let sub_font_size = 17
 
   
 
+
+
+
+
+  
+
   return (
     <div>
       <Box sx={{ width: 1000, maxWidth: 1000 , flexDirection: 'column', justifyContent: 'flex-start'} }>
-          <Avatar {...stringAvatar(company)} sx={{width:100, height: 100}} />
+          {/* <Avatar {...stringAvatar(company)} sx={{width:100, height: 100}} /> */}
             <Box sx={{pb:5}}></Box>
             <Box
               sx={{
@@ -90,7 +96,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}} >
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size }}>
-                  {company}
+                  {/* {company} */}
                 </Typography>
               </Item>
 
@@ -101,7 +107,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}} >
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size-4 }}>
-                  {title}
+                  {/* {title} */}
                 </Typography>
               </Item>
               
@@ -112,7 +118,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
-                  {description}
+                  {/* {description} */}
                 </Typography>
               </Item>
 
@@ -123,7 +129,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
-                  {requirements}
+                  {/* {requirements} */}
                 </Typography>
               </Item>
 
@@ -134,7 +140,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: sub_font_size  }}>
-                  {benefits}
+                  {/* {benefits} */}
                 </Typography>
               </Item>
 
@@ -145,7 +151,7 @@ function JobPostingDetail(job_posting) {
               </Item>
               <Item sx={{gridColumn: '2/5'}}>
                 <Typography gutterBottom variant="h4" component="div" sx={{ textAlign: 'left', fontSize: main_font_size  }}>
-                  {salary}
+                  {job_posting.data.job.salary}
                 </Typography>
               </Item>
             </Box>
