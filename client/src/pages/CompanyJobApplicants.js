@@ -13,6 +13,17 @@ const CompanyJobApplicants = () => {
   const [open, setOpen] = useState(false);
   const [jobToDelete, setJobToDelete] = useState("");
   let company_id = localStorage.getItem("_id");
+
+  const handleOpen = (job) => {
+    setOpen(true);
+    setJobToDelete(job);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
   useEffect(() => {
     const fetchJobs = async () => {
       const response = await fetch(
