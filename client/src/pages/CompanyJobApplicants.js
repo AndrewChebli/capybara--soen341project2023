@@ -58,14 +58,14 @@ const CompanyJobApplicants = () => {
       </Typography>
       {jobs.map((job) => (
         <Paper elevation={3} sx={{ mb: 5, ml: "10%", width: "80%" }}>
-            <Box
-              sx={{
-                p: 2,
-                bgcolor: "background.default",
-                elevation: 12,
+          <Box
+            sx={{
+              p: 2,
+              bgcolor: "background.default",
+              elevation: 12,
               mt: "10",
-              }}
-            >
+            }}
+          >
             <Box
               key={job._id}
               sx={{
@@ -76,21 +76,20 @@ const CompanyJobApplicants = () => {
               }}
             >
               <Typography variant="h4" align="center" sx={{ width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "center" }}>
-                  {job.title} {job.Dday}/{job.Dmonth}/{job.Dyear}
-                </Typography>
+                {job.title} {job.Dday}/{job.Dmonth}/{job.Dyear}
+              </Typography>
             </Box>
-                {job.applicants.map((applicant) => (
-                  <Typography key={applicant.applicant} variant="h6">
-                    <ApplicantBox
-                      key={applicant.applicant}
-                      applicant_id={applicant.applicant}
-                      job_id={job._id}
-                    />
-                  </Typography>
-                ))}
-              </Box>
-            </Box>
-          </Paper>
+            {job.applicants.map((applicant) => (
+              <Typography key={applicant.applicant} variant="h6">
+                <ApplicantBox
+                  key={applicant.applicant}
+                  applicant_id={applicant.applicant}
+                  job_id={job._id}
+                />
+              </Typography>
+            ))}
+          </Box>
+        </Paper>
       ))}
       <Modal
         open={open}
@@ -102,9 +101,9 @@ const CompanyJobApplicants = () => {
           alignItems: "center",
           justifyContent: "center",
         }}
-      >
+      />
     </Box>
   ) : null;
 };
-
-export default CompanyJobApplicants;
+  
+  export default CompanyJobApplicants;
