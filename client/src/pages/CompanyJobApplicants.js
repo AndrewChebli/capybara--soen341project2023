@@ -78,6 +78,13 @@ const CompanyJobApplicants = () => {
               <Typography variant="h4" align="center" sx={{ width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "center" }}>
                 {job.title} {job.Dday}/{job.Dmonth}/{job.Dyear}
               </Typography>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => handleDelete()}
+              >
+            Delete
+          </Button>
             </Box>
             {job.applicants.map((applicant) => (
               <Typography key={applicant.applicant} variant="h6">
