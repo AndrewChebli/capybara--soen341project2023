@@ -23,23 +23,24 @@ const CompanyJobApplicants = () => {
   };
 
   const handleDelete = async () => {
-    const response = await fetch(
-      "http://localhost:8080/api/company/deleteJob/" + jobToDelete,
-      {
-        method: "DELETE",
+    try {
+      const response = await fetch(`http://localhost:8080/api/job/remove/${jobToDelete}`, {
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
+      });
+      
+      if (!response.ok) {
+        throw new Error('Error deleting job');
       }
-    );
-    const responseData = await response.json();
-    if (responseData.status === 200) {
+  
       window.location.reload();
-    } else {
-      alert("Error deleting job");
+    } catch (error) {
+      console.error(error);
+      alert('Error deleting job');
     }
   };
-  
   useEffect(() => {
     const fetchJobs = async () => {
       const response = await fetch(

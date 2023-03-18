@@ -13,10 +13,11 @@ router.get("/getone/:_id", (req, res, next) => {
   jobController.getJobById(req, res, next);
 });
 
-router.delete("/remove/:_id", (res, req, next) => {
+router.delete("/remove/:_id", (req, res, next) => {
   console.log("GET request to /job/remove/:_id");
   const _id = req.params._id;
   console.log(_id);
+  jobController.deleteJobById(req, res, next);
 });
 
 
