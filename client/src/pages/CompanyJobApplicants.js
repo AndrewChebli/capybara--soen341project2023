@@ -67,10 +67,19 @@ const CompanyJobApplicants = () => {
               mt: "10",
               }}
             >
-              <Box key={job._id} sx={{ mt: 5 , mb: 5 }}>
-                <Typography variant="h4">
+            <Box
+              key={job._id}
+              sx={{
+                mt: 5,
+                mb: 5,
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography variant="h4" align="center" sx={{ width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "center" }}>
                   {job.title} {job.Dday}/{job.Dmonth}/{job.Dyear}
                 </Typography>
+            </Box>
                 {job.applicants.map((applicant) => (
                   <Typography key={applicant.applicant} variant="h6">
                     <ApplicantBox
