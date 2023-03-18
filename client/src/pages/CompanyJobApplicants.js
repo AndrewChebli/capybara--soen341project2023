@@ -4,25 +4,13 @@ import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
 import ApplicantBox from "../components/ApplicantBox";
 import Paper from "@mui/material/Paper";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
+
+
+
 
 const CompanyJobApplicants = () => {
   const [jobs, setJobs] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [jobToDelete, setJobToDelete] = useState("");
   let company_id = localStorage.getItem("_id");
-
-  const handleOpen = (job) => {
-    setOpen(true);
-    setJobToDelete(job);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  
   useEffect(() => {
     const fetchJobs = async () => {
       const response = await fetch(
@@ -53,32 +41,21 @@ const CompanyJobApplicants = () => {
 
   return jobs ? (
     <Box sx={{ mt: 20 }}>
-      <Typography variant="h3" sx={{ mb: 5 }}>
-        Applicants
-      </Typography>
+      <Typography variant="h3" sx={{mb: 5}}>Applicants</Typography>
       {jobs.map((job) => (
-        <Paper elevation={3} sx={{ mb: 5, ml: "10%", width: "80%" }}>
+          <Paper elevation={3} sx={{ mb: 5,  ml: "10%", width: "80%" }}>
             <Box
               sx={{
                 p: 2,
                 bgcolor: "background.default",
                 elevation: 12,
-              mt: "10",
+                mt: "10" 
               }}
             >
-            <Box
-              key={job._id}
-              sx={{
-                mt: 5,
-                mb: 5,
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h4" align="center" sx={{ width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "center" }}>
+              <Box key={job._id} sx={{ mt: 5 , mb: 5 }}>
+                <Typography variant="h4">
                   {job.title} {job.Dday}/{job.Dmonth}/{job.Dyear}
                 </Typography>
-            </Box>
                 {job.applicants.map((applicant) => (
                   <Typography key={applicant.applicant} variant="h6">
                     <ApplicantBox
@@ -92,17 +69,6 @@ const CompanyJobApplicants = () => {
             </Box>
           </Paper>
       ))}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
     </Box>
   ) : null;
 };
