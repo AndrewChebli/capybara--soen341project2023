@@ -54,15 +54,17 @@ const CompanyJobApplicants = () => {
 
   return jobs ? (
     <Box sx={{ mt: 20 }}>
-      <Typography variant="h3" sx={{mb: 5}}>Applicants</Typography>
+      <Typography variant="h3" sx={{ mb: 5 }}>
+        Applicants
+      </Typography>
       {jobs.map((job) => (
-          <Paper elevation={3} sx={{ mb: 5,  ml: "10%", width: "80%" }}>
+        <Paper elevation={3} sx={{ mb: 5, ml: "10%", width: "80%" }}>
             <Box
               sx={{
                 p: 2,
                 bgcolor: "background.default",
                 elevation: 12,
-                mt: "10" 
+              mt: "10",
               }}
             >
               <Box key={job._id} sx={{ mt: 5 , mb: 5 }}>
