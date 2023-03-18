@@ -4,9 +4,8 @@ import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
 import ApplicantBox from "../components/ApplicantBox";
 import Paper from "@mui/material/Paper";
-
-
-
+import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
 
 const CompanyJobApplicants = () => {
   const [jobs, setJobs] = useState([]);
