@@ -81,10 +81,10 @@ const CompanyJobApplicants = () => {
               <Button
                 variant="contained"
                 color="error"
-                onClick={() => handleDelete()}
+                onClick={() => handleOpen(job._id)}
               >
-            Delete
-          </Button>
+                Delete
+              </Button>
             </Box>
             {job.applicants.map((applicant) => (
               <Typography key={applicant.applicant} variant="h6">
