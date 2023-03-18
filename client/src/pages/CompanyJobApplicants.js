@@ -101,7 +101,23 @@ const CompanyJobApplicants = () => {
           alignItems: "center",
           justifyContent: "center",
         }}
-      />
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Are you sure you want to delete this job?
+          </Typography>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handleDelete()}
+          >
+            Delete
+          </Button>
+          <Button variant="contained" onClick={() => handleClose()}>
+            Cancel
+          </Button>
+        </Box>
+      </Modal>
     </Box>
   ) : null;
 };
