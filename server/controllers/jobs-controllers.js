@@ -138,7 +138,28 @@ const addApplicant = async (req, res, next) => {
   res.status(200).json({ job: existingJob.toObject({ getters: true }) });
 };
 
+const deleteJobById = async (req, res, next) => {
+  const _id = req.params._id;
+
+  try {
+    let existingJob;
+    existingJob = await Job.findById(_id);
+    if (!existingJob) {
+      throw new Error("Could not find job.");
+    }
+    await existingJob.remove();
+    res.status(200).json({ message: "Job deleted successfully." });
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not delete the job.",
+      500
+    );
+    return next(error);
+  }
+};
+
 exports.getAllJobs = getAllJobs;
 exports.getJobById = getJobById;
 exports.addJob = addJob;
 exports.addApplicant = addApplicant;
+exports.deleteJobById = deleteJobById;
