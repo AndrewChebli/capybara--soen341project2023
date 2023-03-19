@@ -31,7 +31,9 @@ const CompanyJobApplicants = () => {
         },
       });
       
-      if (!response.ok) {
+      if (response.status == 200) {
+        alert('Job posting deleted successfully')
+      } else {
         throw new Error('Error deleting job');
       }
   
