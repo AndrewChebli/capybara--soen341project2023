@@ -1,5 +1,4 @@
-//import job_postings from "../job_postings.json";
-import JobPosting from "../components/JobPosting";
+import JobPosting from "../components/JobPostingSummary";
 import Box from "@mui/material/Box";
 import React from "react";
 import { useEffect } from "react";

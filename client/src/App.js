@@ -13,7 +13,6 @@ import EditProfilePage from "./pages/EditProfilePage";
 import CreateJobPostingPage from "./pages/CreateJobPostingPage";
 import HeaderBar from "./components/HeaderBar";
 import CompanyJobApplicants from "./pages/CompanyJobApplicants";
-import JobPosting from "./components/JobPosting";
 import JobPostingPage from "./pages/JobPostingPage"
 
  
