@@ -158,6 +158,7 @@ export default function SignUpForm() {
                   <AttachFileOutlinedIcon
                     fontSize="large"
                     color="primary"
+                    name = "resumeIcon"
                   ></AttachFileOutlinedIcon>
                 </label>
               </Grid>
