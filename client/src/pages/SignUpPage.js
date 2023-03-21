@@ -6,19 +6,23 @@ import SignUpFormCompany from "../components/SignUpFormCompany";
 
 function SignUp() {
   const [checked, setChecked] = React.useState(true);
-
   const handleChange = (event) => {
     setChecked(event.target.checked);
     console.log(checked);
   };
+
   if (checked === true) {
     return (
       <div>
-        <Typography variant = "h3" sx={{ mt: 20 }}>SignUp as Employee</Typography>
+        <Typography variant="h3" sx={{ mt: 20 }}>
+          SignUp as Employee
+        </Typography>
         <Switch
+
           checked={checked}
           onChange={handleChange}
           inputProps={{ "aria-label": "controlled" }}
+          name = "switch"
         />
         <SignUpForm></SignUpForm>
       </div>
@@ -26,7 +30,9 @@ function SignUp() {
   } else {
     return (
       <div>
-        <Typography variant="h3" sx={{ mt: 20 }}>SignUp  as Company</Typography>
+        <Typography variant="h3" sx={{ mt: 20 }}>
+          SignUp as Company
+        </Typography>
         <Switch
           checked={checked}
           onChange={handleChange}

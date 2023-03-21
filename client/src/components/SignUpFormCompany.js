@@ -64,7 +64,7 @@ function SignUpFormCompany() {
           alignItems: "stretch",
         }}
       >
-        <Grid container spacing={3} sm={12} mt={5} alignContent="center">
+        <Grid container spacing={3}  mt={5} alignContent="center">
           <Grid item xs={12}>
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', justifyContent: "center" }}>
@@ -134,11 +134,12 @@ function SignUpFormCompany() {
             
           <Grid item xs={12}>
             <TextField
+            name="Description"
               multiline={true}
               rows={4}
-              name="Description"
+              
               fullWidth
-              id="Description"
+              id="description"
               label="Description"
               type="text"
               required
