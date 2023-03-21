@@ -41,14 +41,12 @@ const loginEmployee = async (req, res, next) => {
   }
   const _id = existingEmployee[0]._id;
   console.log(_id);
-  res
-    .status(201)
-    .json({
-      message: "Logged in!",
-      _id: _id,
-      resume: existingEmployee[0].resume,
-      resumeName: existingEmployee[0].resumeName,
-    });
+  res.status(201).json({
+    message: "Logged in!",
+    _id: _id,
+    resume: existingEmployee[0].resume,
+    resumeName: existingEmployee[0].resumeName,
+  });
 };
 
 const getEmployeeById = async (req, res, next) => {
@@ -129,7 +127,6 @@ const deleteEmployee = async (req, res, next) => {
 const updateEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
   console.log(employeeId);
-  console.log(req.body);
 
   let existingEmployee;
   try {
@@ -147,22 +144,15 @@ const updateEmployee = async (req, res, next) => {
     return next(error);
   }
 
-  const filter = { _id: employeeId };
-  const update = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    resume: req.body.resume,
-    resumeName: req.body.resumeName,
-    experience: req.body.experience,
-    education: req.body.education,
-  };
-  console.log(update);
   let updatedEmployee;
+  console.log(existingEmployee._id)
   try {
-    updatedEmployee = await existingEmployee.findOneAndUpdate(filter, update, {
-      new: true,
-    });
+    updatedEmployee = await Employee.findOneAndUpdate(employeeId, req.body,
+      {
+        new: true,
+      });
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
       "Something went wrong, could not update employee error updating.",
       500
@@ -176,8 +166,9 @@ const updateEmployee = async (req, res, next) => {
     );
     return next(error);
   }
-
-  res.status(200).json({ employee: existingEmployee });
+  res
+    .status(200)
+    .json({ employee: updatedEmployee.toObject({ getters: true }) });
 };
 
 const getAllOffers = async (req, res, next) => {
