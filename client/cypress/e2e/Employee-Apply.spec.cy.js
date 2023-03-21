@@ -76,7 +76,10 @@ describe("Apply to a job", () => {
       expect(response.status).to.eq(201);
       expect(response.body).to.have.property("_id");
       employeeID = response.body._id;
-    });
+    }
+    );
+
+
   });
 
   it("should apply to a job", () => {

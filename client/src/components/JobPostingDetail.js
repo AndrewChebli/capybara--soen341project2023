@@ -1,59 +1,12 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { CardActionArea } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Item from "@mui/material/Grid"
 import Button from "@mui/material/Button"
 import {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-
-function stringToColor(string) { // assigns a color to the icon of a job posting card.
-  let hash = 0;
-  let i;
-
-  /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = "#";
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-  /* eslint-enable no-bitwise */
-
-  return color;
-}
-
-
-
-function stringAvatar(name) {
-  if (name.split(" ").length === 1) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name[0]}`,
-    };
-  } else {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
-  }
-}
-
-
-    
 
 
 function JobPostingDetail() {
@@ -73,7 +26,6 @@ function JobPostingDetail() {
   const url = useParams();
   console.log(url)
   const id = url.id;
-  let spacing = 2;
   let main_font_size = 30
   let sub_font_size = 17
 

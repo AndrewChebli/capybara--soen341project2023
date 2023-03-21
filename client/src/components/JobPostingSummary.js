@@ -2,13 +2,9 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import { CardActionArea, Divider } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Snackbar from "@mui/material/Snackbar";
 import Grid from "@mui/material/Grid";
-import Alert from "@mui/material/Alert";
 function stringToColor(string) {
   // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -63,7 +59,6 @@ function JobPostingSummary(job_posting) {
   let Dmonth = job_posting.data.Dmonth;
   let Dyear = job_posting.data.Dyear;
   console.log("title" + title);
-  let spacing = 2;
 
   return (
     <div>
@@ -175,8 +170,6 @@ function JobPostingSummary(job_posting) {
           </CardContent>
         </CardActionArea>
       </Card>
-
-      
     </div>
   );
 }
