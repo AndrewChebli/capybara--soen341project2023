@@ -58,36 +58,7 @@ function JobPostingSummary(job_posting) {
   const [openSuccess, setOpenSuccess] = React.useState(false); //////////////
   const [openError, setOpenError] = React.useState(false); /////////////
 
-  async function applyToJob() {
-    console.log("apply to job");
-    console.log(job_posting.data._id);
-    console.log(localStorage.getItem("_id"));
-
-    const reponse = await fetch(
-      `http://localhost:8080/api/job/add/applicant/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          job_id: job_posting.data._id,
-          applicant_id: localStorage.getItem("_id"),
-        }),
-      }
-    );
-    console.log(reponse);
-    const data = await reponse.json();
-    if (reponse.status === 500) {
-      setOpenError(true);
-      setApplied(true);
-    } else {
-      setOpenSuccess(true);
-      setApplied(true);
-    }
-    console.log(data);
-    setApplied(true);
-  }
+  
 
   let title = job_posting.data.title;
   let company = job_posting.data.company;

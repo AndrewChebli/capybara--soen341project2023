@@ -9,6 +9,8 @@ import Item from "@mui/material/Grid"
 import Button from "@mui/material/Button"
 import {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 function stringToColor(string) { // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -55,7 +57,18 @@ function stringAvatar(name) {
 
 
 function JobPostingDetail() {
-  console.log("JobPosting.js");
+
+  const [applied, setApplied] = React.useState(false);
+  const [openSuccess, setOpenSuccess] = React.useState(false); //////////////
+  const [openError, setOpenError] = React.useState(false); /////////////
+
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+  };
+
 
   const url = useParams();
   console.log(url)
@@ -92,7 +105,35 @@ function JobPostingDetail() {
     getOneJob();
   }, [id]);
 
+  async function applyToJob() {
+    console.log("apply to job");
+    console.log(localStorage.getItem("_id"));
 
+    const reponse = await fetch(
+      `http://localhost:8080/api/job/add/applicant/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          job_id: id,
+          applicant_id: localStorage.getItem("_id"),
+        }),
+      }
+    );
+    console.log(reponse);
+    const data = await reponse.json();
+    if (reponse.status === 500) {
+      setOpenError(true);
+      setApplied(true);
+    } else {
+      setOpenSuccess(true);
+      setApplied(true);
+    }
+    console.log(data);
+    setApplied(true);
+  }
   
 
   return (
@@ -175,15 +216,38 @@ function JobPostingDetail() {
                 </Typography>
               </Item>
             </Box>
-          
-           
-      </Box>
-      <Box>
-        <Button variant="contained" size="large">
+            <Box>
+        <Button variant="contained" size="large" onClick={applyToJob}
+          name = "apply"
+        >
           Apply
         </Button>
       </Box>
+           
+      </Box>
+      
       <Box sx= {{ pb: 5}}></Box>
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={6000}
+        onClose={() => setOpenSuccess(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Application Successful!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        autoHideDuration={6000}
+        onClose={() => setOpenError(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          You already Applied to this Job!
+        </Alert>
+      </Snackbar>
+      <Box sx={{ pb: 5 }}></Box>
     </div>
   );
 }

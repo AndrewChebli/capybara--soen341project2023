@@ -5,7 +5,8 @@ import '@testing-library/cypress/add-commands'
 
 describe("Selected Employee", () => {
 
-  it("should display the selected employee", () => {
+  it("should select an employee", () => {
     expect(true).to.equal(true);
+
   });
 });

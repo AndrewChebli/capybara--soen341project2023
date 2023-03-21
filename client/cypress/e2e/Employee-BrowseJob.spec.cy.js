@@ -46,7 +46,6 @@ describe("Browse Jobs", () => {
     cy.visit("http://localhost:3000/DashboardPage").then(() => {
       cy.wait("@getJobs").then((interception) => {
         expect(interception.response.statusCode).to.eq(304);
-        
       });
     });
 
