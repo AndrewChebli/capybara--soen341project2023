@@ -47,24 +47,15 @@ function stringAvatar(name) {
     };
   }
 }
-const handleClose = (event, reason) => {
-  if (reason === "clickaway") {
-    return;
-  }
-};
+
 
 function JobPostingSummary(job_posting) {
-  const [applied, setApplied] = React.useState(false);
-  const [openSuccess, setOpenSuccess] = React.useState(false); //////////////
-  const [openError, setOpenError] = React.useState(false); /////////////
 
   
 
   let title = job_posting.data.title;
   let company = job_posting.data.company;
   let description = job_posting.data.description;
-  let requirements = job_posting.data.requirements;
-  let benefits = job_posting.data.benefits;
   let salary = job_posting.data.salary;
   let id = job_posting.data._id;
   let location = job_posting.data.location;
@@ -185,27 +176,7 @@ function JobPostingSummary(job_posting) {
         </CardActionArea>
       </Card>
 
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={() => setOpenSuccess(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Application Successful!
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={() => setOpenError(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
-          You already Applied to this Job!
-        </Alert>
-      </Snackbar>
-      <Box sx={{ pb: 5 }}></Box>
+      
     </div>
   );
 }
