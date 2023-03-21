@@ -13,9 +13,13 @@ import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 
-let b64;
+  let b64 = null;
 
 function EditProfilePage() {
+
+  const [resume, setResume] = useState(null);
+  const [resumeName, setResumeName] = useState(null);
+
   const [employeeInfo, setEmployeeInfo] = useState({
     firstName: "",
     lastName: "",
@@ -53,7 +57,6 @@ function EditProfilePage() {
       );
       console.log(response_from_backend);
       let response = await response_from_backend.json();
-
       console.log(response);
       setEmployeeInfo(response.employee);
       setResume(response.employee.resume);
@@ -62,22 +65,23 @@ function EditProfilePage() {
     getEmployeeInfo();
   }, []);
 
-  const [resume, setResume] = useState(null);
-  const [resumeName, setResumeName] = useState(null);
 
-  const handleResumeChange = (event) => {
+   function  handleResumeChange (event) {
     console.log("click");
+    console.log(event.target.files[0])
     let file = event.target.files[0],
       reader = new FileReader();
 
     reader.onloadend = function () {
       b64 = reader.result.replace(/^data:.+;base64,/, "");
-      console.log("triggered");
       console.log(b64);
     };
     reader.readAsDataURL(file);
-    setResume(b64);
+    console.log("logging b64")
+    console.log(file)
     setResumeName(file.name);
+    setResume(b64);
+    console.log("logging resume")
   };
 
   let resume_name = resumeName ? resumeName : "No file chosen";
@@ -87,7 +91,6 @@ function EditProfilePage() {
     console.log(event.currentTarget);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     let response_from_backend = await fetch(
       "http://localhost:8080/api/employee/" +
         localStorage.getItem("_id"),
@@ -123,6 +126,8 @@ function EditProfilePage() {
     let response = await response_from_backend.json();
     console.log(response);
     if(response_from_backend.status === 200){
+      console.log(response.employee.resume)
+      localStorage.setItem("resume", response.employee.resume)
       alert("Profile Updated")
     }else{
       alert("Profile Update Failed")

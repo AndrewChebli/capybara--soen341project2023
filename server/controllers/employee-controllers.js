@@ -41,14 +41,12 @@ const loginEmployee = async (req, res, next) => {
   }
   const _id = existingEmployee[0]._id;
   console.log(_id);
-  res
-    .status(201)
-    .json({
-      message: "Logged in!",
-      _id: _id,
-      resume: existingEmployee[0].resume,
-      resumeName: existingEmployee[0].resumeName,
-    });
+  res.status(201).json({
+    message: "Logged in!",
+    _id: _id,
+    resume: existingEmployee[0].resume,
+    resumeName: existingEmployee[0].resumeName,
+  });
 };
 
 const getEmployeeById = async (req, res, next) => {
@@ -168,7 +166,9 @@ const updateEmployee = async (req, res, next) => {
     );
     return next(error);
   }
-  res.status(200).json({ employee: updatedEmployee.toObject({ getters: true }) });
+  res
+    .status(200)
+    .json({ employee: updatedEmployee.toObject({ getters: true }) });
 };
 
 const getAllOffers = async (req, res, next) => {
