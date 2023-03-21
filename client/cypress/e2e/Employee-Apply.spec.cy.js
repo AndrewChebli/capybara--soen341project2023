@@ -76,10 +76,7 @@ describe("Apply to a job", () => {
       expect(response.status).to.eq(201);
       expect(response.body).to.have.property("_id");
       employeeID = response.body._id;
-    }
-    );
-
-
+    });
   });
 
   it("should apply to a job", () => {
@@ -89,13 +86,18 @@ describe("Apply to a job", () => {
       cy.get("button[type=submit]").click();
     });
 
-    cy.visit("http://localhost:3000/JobPostingPage/" + jobID).then(() => {
-      cy.intercept("POST", "http://localhost:8080/api/job/add/applicant/").as("apply");
-      cy.get("button[name=apply]").click().then(() => {
-        cy.wait("@apply").then((interception) => {
-          expect(interception.response.statusCode).to.eq(200);
+    cy.visit(`http://localhost:3000/JobPostingPage/${jobID}`).then(() => {
+      cy.intercept("POST", "http://localhost:8080/api/job/add/applicant/")
+        .as("apply")
+        .then(() => {
+          cy.get("button[name=apply]")
+            .click()
+            .then(() => {
+              cy.wait("@apply").then((interception) => {
+                expect(interception.response.statusCode).to.eq(200);
+              });
+            });
         });
-      });
     });
   });
 

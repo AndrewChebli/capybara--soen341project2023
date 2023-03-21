@@ -171,6 +171,7 @@ function JobPostingDetail() {
             <Box>
         <Button variant="contained" size="large" onClick={applyToJob}
           name = "apply"
+          id="apply"
         >
           Apply
         </Button>
