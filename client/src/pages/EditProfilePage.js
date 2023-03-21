@@ -122,6 +122,11 @@ function EditProfilePage() {
     console.log(response_from_backend)
     let response = await response_from_backend.json();
     console.log(response);
+    if(response_from_backend.status === 200){
+      alert("Profile Updated")
+    }else{
+      alert("Profile Update Failed")
+    }
   }
 
   return (
