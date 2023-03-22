@@ -49,15 +49,19 @@ describe("Updates Employee", () => {
     cy.visit("http://localhost:3000/SignInPage");
     cy.get("input[name=email]").type("cypress@test.com");
     cy.get("input[name=password]").type("1234");
-    cy.get("button[type=submit]").click();
-    cy.wait(1000);
-    cy.visit("http://localhost:3000/EditProfilePage");
-    cy.get("input[name=firstName]").clear().type("Changed Name");
+    cy.get("button[type=submit]").click().then(()=> 
+    {
+      cy.wait(1000);
+      cy.visit("http://localhost:3000/EditProfilePage");
+      cy.wait(1000);
+      cy.get("input[name=firstName]").clear().type("Changed Name");
     cy.get("input[name=lastName]").clear().type("Changed LastName");
     cy.get("button[type=submit]").click();
-    cy.wait(5000);
+    }).then(() => {
+    cy.wait(1000);
     cy.visit("http://localhost:3000/ProfilePage");
-    expect(true).to.eq(true);
+    cy.get("[id=profileName]").should("contain", "Changed Name");
+    });
   });
 
   after(() => {
