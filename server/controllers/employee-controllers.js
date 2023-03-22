@@ -126,11 +126,13 @@ const deleteEmployee = async (req, res, next) => {
 
 const updateEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
-  console.log(employeeId);
+  console.log("PATCH " + employeeId);
 
   let existingEmployee;
   try {
-    existingEmployee = await Employee.findById(employeeId).exec();
+    existingEmployee = await Employee.findByIdAndUpdate(employeeId, req.body, {
+      new: true,
+    }).exec();
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not update employee.",
@@ -144,31 +146,9 @@ const updateEmployee = async (req, res, next) => {
     return next(error);
   }
 
-  let updatedEmployee;
-  console.log(existingEmployee._id)
-  try {
-    updatedEmployee = await Employee.findOneAndUpdate(employeeId, req.body,
-      {
-        new: true,
-      });
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Something went wrong, could not update employee error updating.",
-      500
-    );
-    return next(error);
-  }
-  if (!updatedEmployee) {
-    const error = new HttpError(
-      "Something went wrong, could not update employee.",
-      500
-    );
-    return next(error);
-  }
   res
     .status(200)
-    .json({ employee: updatedEmployee.toObject({ getters: true }) });
+    .json({ employee: existingEmployee.toObject({ getters: true }) });
 };
 
 const getAllOffers = async (req, res, next) => {
