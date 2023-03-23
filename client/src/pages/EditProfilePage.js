@@ -31,7 +31,7 @@ function EditProfilePage() {
       end: "",
     },
     resumeName: "",
-    resume: "",
+    resume: resume,
     experience: [
       {
         company: "",
@@ -58,6 +58,7 @@ function EditProfilePage() {
       console.log(response_from_backend);
       let response = await response_from_backend.json();
       console.log(response);
+      localStorage.setItem("resume", response.employee.resume)
       setEmployeeInfo(response.employee);
       setResume(response.employee.resume);
       setResumeName(response.employee.resumeName);
@@ -75,22 +76,22 @@ function EditProfilePage() {
     reader.onloadend = function () {
       b64 = reader.result.replace(/^data:.+;base64,/, "");
       console.log(b64);
+      setResume(b64);
     };
     reader.readAsDataURL(file);
     console.log("logging b64")
     console.log(file)
     setResumeName(file.name);
-    setResume(b64);
     console.log("logging resume")
   };
 
   let resume_name = resumeName ? resumeName : "No file chosen";
 
   async function updateService(event) {
-    console.log("clicked");
     console.log(event.currentTarget);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    console.log("sending to : " + localStorage.getItem("_id") );
     let response_from_backend = await fetch(
       "http://localhost:8080/api/employee/" +
         localStorage.getItem("_id"),
@@ -102,7 +103,7 @@ function EditProfilePage() {
         body: JSON.stringify({
           firstName: data.get("firstName"),
           lastName: data.get("lastName"),
-          resume: resume,
+          resume: b64,
           resumeName:  resumeName,
           education: {
             school: data.get("school"),
@@ -126,8 +127,8 @@ function EditProfilePage() {
     let response = await response_from_backend.json();
     console.log(response);
     if(response_from_backend.status === 200){
-      console.log(response.employee.resume)
       localStorage.setItem("resume", response.employee.resume)
+      console.log(response.employee);
       alert("Profile Updated")
     }else{
       alert("Profile Update Failed")
