@@ -32,8 +32,6 @@ router.delete("/:_id", (req, res,next) => {
 
 router.patch("/:_id", (req, res, next) => {
   console.log("PATCH request to /employee/update/:_id");
-  const _id = req.params._id;
-  console.log(_id);
   employeeController.updateEmployee(req, res, next);
 });
 router.get("/getAllOffers/:_id" ,(req,res,next) =>
