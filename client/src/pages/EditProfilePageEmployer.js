@@ -43,6 +43,22 @@ const handlePhotoChange = (event) => {
       lastName: data.get('lastName'),
     });
   };
+  
+  // const deleteAccount =  async () => {
+  //   console.log("deleting account")
+  //   let response_from_backend;
+  //   response_from_backend = await fetch(`http://localhost:8080/api/employer/${_id}`, 
+  //   {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     }
+  //   })
+
+  // }
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -217,6 +233,9 @@ const handlePhotoChange = (event) => {
           </form>
         </Box>
       </Container>
+      <Box>
+        <Button variant="contained"> Delete Account </Button>
+      </Box>
     </ThemeProvider>
   );
 }

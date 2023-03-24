@@ -120,6 +120,21 @@ const deleteEmployee = async (req, res, next) => {
       );
       return next(error);
     }
+
+    let allJobs;
+
+    try {
+      allJobs = await Job.find({applicants : {$elemMatch : {applicantId : employeeId}}}).exec();
+    } catch (err) {
+      const error = new HttpError (
+        "Could fetch related applications"
+      )
+      return next(error);
+    }
+
+    console.log("All jobs applied to ")
+    console.log(allJobs);
+
     res.status(200).json({ message: "Deleted employee." });
   }
 };

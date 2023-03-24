@@ -13,10 +13,9 @@ import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 
-  let b64 = null;
+let b64 = null;
 
 function EditProfilePage() {
-
   const [resume, setResume] = useState(null);
   const [resumeName, setResumeName] = useState(null);
 
@@ -58,7 +57,7 @@ function EditProfilePage() {
       console.log(response_from_backend);
       let response = await response_from_backend.json();
       console.log(response);
-      localStorage.setItem("resume", response.employee.resume)
+      localStorage.setItem("resume", response.employee.resume);
       setEmployeeInfo(response.employee);
       setResume(response.employee.resume);
       setResumeName(response.employee.resumeName);
@@ -66,10 +65,36 @@ function EditProfilePage() {
     getEmployeeInfo();
   }, []);
 
+  const deleteAccount = async () => {
+    let response_from_backend;
+    console.log("deleting account");
+    response_from_backend = await fetch(
+      `http://localhost:8080/api/employee/${localStorage.getItem("_id")}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-   function  handleResumeChange (event) {
+    if(response_from_backend.status === 200){
+      localStorage.clear();
+      alert("Account deleted successfully");
+      window.location.href = "/";
+    }else if (response_from_backend.status === 500){
+      alert("Error deleting account");
+    }else if(response_from_backend.status === 404){
+      alert("Account not found");
+    }else {
+      alert(response_from_backend.status + " " + response_from_backend);
+    }
+
+  }
+
+  function handleResumeChange(event) {
     console.log("click");
-    console.log(event.target.files[0])
+    console.log(event.target.files[0]);
     let file = event.target.files[0],
       reader = new FileReader();
 
@@ -79,11 +104,11 @@ function EditProfilePage() {
       setResume(b64);
     };
     reader.readAsDataURL(file);
-    console.log("logging b64")
-    console.log(file)
+    console.log("logging b64");
+    console.log(file);
     setResumeName(file.name);
-    console.log("logging resume")
-  };
+    console.log("logging resume");
+  }
 
   let resume_name = resumeName ? resumeName : "No file chosen";
 
@@ -91,10 +116,9 @@ function EditProfilePage() {
     console.log(event.currentTarget);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log("sending to : " + localStorage.getItem("_id") );
+    console.log("sending to : " + localStorage.getItem("_id"));
     let response_from_backend = await fetch(
-      "http://localhost:8080/api/employee/" +
-        localStorage.getItem("_id"),
+      "http://localhost:8080/api/employee/" + localStorage.getItem("_id"),
       {
         method: "PATCH",
         headers: {
@@ -104,7 +128,7 @@ function EditProfilePage() {
           firstName: data.get("firstName"),
           lastName: data.get("lastName"),
           resume: b64,
-          resumeName:  resumeName,
+          resumeName: resumeName,
           education: {
             school: data.get("school"),
             degree: data.get("degree"),
@@ -123,15 +147,15 @@ function EditProfilePage() {
         }),
       }
     );
-    console.log(response_from_backend)
+    console.log(response_from_backend);
     let response = await response_from_backend.json();
     console.log(response);
-    if(response_from_backend.status === 200){
-      localStorage.setItem("resume", response.employee.resume)
+    if (response_from_backend.status === 200) {
+      localStorage.setItem("resume", response.employee.resume);
       console.log(response.employee);
-      alert("Profile Updated")
-    }else{
-      alert("Profile Update Failed")
+      alert("Profile Updated");
+    } else {
+      alert("Profile Update Failed");
     }
   }
 
@@ -164,7 +188,9 @@ function EditProfilePage() {
               id="firstName"
               label="First Name"
               value={employeeInfo.firstName}
-              onChange={(e) => {setEmployeeInfo({...employeeInfo, firstName: e.target.value})}}
+              onChange={(e) => {
+                setEmployeeInfo({ ...employeeInfo, firstName: e.target.value });
+              }}
               autoFocus
             />
           </Grid>
@@ -175,7 +201,9 @@ function EditProfilePage() {
               label="Last Name"
               name="lastName"
               value={employeeInfo.lastName}
-              onChange={(e) => {setEmployeeInfo({...employeeInfo, lastName: e.target.value})}}
+              onChange={(e) => {
+                setEmployeeInfo({ ...employeeInfo, lastName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sx={{ m: 3 }}>
@@ -220,7 +248,17 @@ function EditProfilePage() {
                       id="position"
                       label="Position"
                       value={employeeInfo.experience[0].position}
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], position: e.target.value}]})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          experience: [
+                            {
+                              ...employeeInfo.experience[0],
+                              position: e.target.value,
+                            },
+                          ],
+                        });
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={20}>
@@ -231,7 +269,17 @@ function EditProfilePage() {
                       id="companyName"
                       label="Company Name"
                       value={employeeInfo.experience[0].company}
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], company: e.target.value}]})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          experience: [
+                            {
+                              ...employeeInfo.experience[0],
+                              company: e.target.value,
+                            },
+                          ],
+                        });
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -242,7 +290,17 @@ function EditProfilePage() {
                       id="dateStartedWork"
                       type="date"
                       value={employeeInfo.experience[0].start}
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], start: e.target.value}]})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          experience: [
+                            {
+                              ...employeeInfo.experience[0],
+                              start: e.target.value,
+                            },
+                          ],
+                        });
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -251,7 +309,17 @@ function EditProfilePage() {
                       fullWidth
                       id="dateCompletedWork"
                       type="date"
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], end: e.target.value}]})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          experience: [
+                            {
+                              ...employeeInfo.experience[0],
+                              end: e.target.value,
+                            },
+                          ],
+                        });
+                      }}
                       value={employeeInfo.experience[0].end}
                     />
                   </Grid>
@@ -264,7 +332,17 @@ function EditProfilePage() {
                       id="description"
                       label="Description"
                       type="text"
-                      onChange = {(e) => {setEmployeeInfo({...employeeInfo, experience: [{...employeeInfo.experience[0], description: e.target.value}]})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          experience: [
+                            {
+                              ...employeeInfo.experience[0],
+                              description: e.target.value,
+                            },
+                          ],
+                        });
+                      }}
                       value={employeeInfo.experience[0].description}
                     />
                   </Grid>
@@ -296,7 +374,15 @@ function EditProfilePage() {
                       id="school"
                       label="School Name"
                       value={employeeInfo.education.school}
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, school: e.target.value}})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          education: {
+                            ...employeeInfo.education,
+                            school: e.target.value,
+                          },
+                        });
+                      }}
                     />
                   </Grid>
                   <Grid item xs={6} sm={6}>
@@ -307,7 +393,15 @@ function EditProfilePage() {
                       label="Degree"
                       id="degree"
                       value={employeeInfo.education.degree}
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, degree: e.target.value}})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          education: {
+                            ...employeeInfo.education,
+                            degree: e.target.value,
+                          },
+                        });
+                      }}
                     />
                   </Grid>
                   <Grid item xs={6} sm={6}>
@@ -318,7 +412,15 @@ function EditProfilePage() {
                       id="dateStartedSchool"
                       type="date"
                       value={employeeInfo.education.start}
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, start: e.target.value}})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          education: {
+                            ...employeeInfo.education,
+                            start: e.target.value,
+                          },
+                        });
+                      }}
                     />
                   </Grid>
                   <Grid item xs={6} sm={6}>
@@ -328,7 +430,15 @@ function EditProfilePage() {
                       id="dateCompletedSchool"
                       type="date"
                       value={employeeInfo.education.end}
-                      onChange={(e) => {setEmployeeInfo({...employeeInfo, education: {...employeeInfo.education, end: e.target.value}})}}
+                      onChange={(e) => {
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          education: {
+                            ...employeeInfo.education,
+                            end: e.target.value,
+                          },
+                        });
+                      }}
                     />
                   </Grid>
                 </Grid>
@@ -344,6 +454,9 @@ function EditProfilePage() {
             Update Profile
           </Button>
         </Grid>
+      </Box>
+      <Box sx={{pt:15}}>
+        <Button onClick={deleteAccount} color="error" variant="contained"> Delete Account </Button>
       </Box>
     </Container>
   );
