@@ -2,13 +2,9 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import { CardActionArea, Divider } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Snackbar from "@mui/material/Snackbar";
 import Grid from "@mui/material/Grid";
-import Alert from "@mui/material/Alert";
 function stringToColor(string) {
   // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -47,53 +43,15 @@ function stringAvatar(name) {
     };
   }
 }
-const handleClose = (event, reason) => {
-  if (reason === "clickaway") {
-    return;
-  }
-};
+
 
 function JobPostingSummary(job_posting) {
-  const [applied, setApplied] = React.useState(false);
-  const [openSuccess, setOpenSuccess] = React.useState(false); //////////////
-  const [openError, setOpenError] = React.useState(false); /////////////
 
-  async function applyToJob() {
-    console.log("apply to job");
-    console.log(job_posting.data._id);
-    console.log(localStorage.getItem("_id"));
-
-    const reponse = await fetch(
-      `http://localhost:8080/api/job/add/applicant/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          job_id: job_posting.data._id,
-          applicant_id: localStorage.getItem("_id"),
-        }),
-      }
-    );
-    console.log(reponse);
-    const data = await reponse.json();
-    if (reponse.status === 500) {
-      setOpenError(true);
-      setApplied(true);
-    } else {
-      setOpenSuccess(true);
-      setApplied(true);
-    }
-    console.log(data);
-    setApplied(true);
-  }
+  
 
   let title = job_posting.data.title;
   let company = job_posting.data.company;
   let description = job_posting.data.description;
-  let requirements = job_posting.data.requirements;
-  let benefits = job_posting.data.benefits;
   let salary = job_posting.data.salary;
   let id = job_posting.data._id;
   let location = job_posting.data.location;
@@ -101,7 +59,6 @@ function JobPostingSummary(job_posting) {
   let Dmonth = job_posting.data.Dmonth;
   let Dyear = job_posting.data.Dyear;
   console.log("title" + title);
-  let spacing = 2;
 
   return (
     <div>
@@ -213,28 +170,6 @@ function JobPostingSummary(job_posting) {
           </CardContent>
         </CardActionArea>
       </Card>
-
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={() => setOpenSuccess(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Application Successful!
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={() => setOpenError(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
-          You already Applied to this Job!
-        </Alert>
-      </Snackbar>
-      <Box sx={{ pb: 5 }}></Box>
     </div>
   );
 }

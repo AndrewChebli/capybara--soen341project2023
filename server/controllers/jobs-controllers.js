@@ -105,12 +105,13 @@ const addApplicant = async (req, res, next) => {
     return next(error);
   }
 
-  let result ;
+  let result;
   result = existingJob.applicants.find((applicant) => {
     console.log(applicant.applicant + " < + > " + applicant_id)
     return applicant.applicant === applicant_id;
   });
   if (result) {
+
     const error = new HttpError("Applicant already applied.", 500);
     return next(error);
   }

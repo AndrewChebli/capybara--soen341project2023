@@ -18,6 +18,7 @@ function SignIn() {
           checked={checked}
           onChange={handleChange}
           inputProps={{ "aria-label": "controlled" }}
+          name = "switch"
         />
         <SignInForm></SignInForm>
       </div>

@@ -13,10 +13,15 @@ import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 
-let b64 = null;
+let b64 = localStorage.getItem("resume")
+  ? localStorage.getItem("resume")
+  : null;
 
 function EditProfilePage() {
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState(
+    localStorage.getItem("resume") ? localStorage.getItem("resume") : null
+  );
+
   const [resumeName, setResumeName] = useState(null);
 
   const [employeeInfo, setEmployeeInfo] = useState({
@@ -78,19 +83,18 @@ function EditProfilePage() {
       }
     );
 
-    if(response_from_backend.status === 200){
+    if (response_from_backend.status === 200) {
       localStorage.clear();
       alert("Account deleted successfully");
       window.location.href = "/";
-    }else if (response_from_backend.status === 500){
+    } else if (response_from_backend.status === 500) {
       alert("Error deleting account");
-    }else if(response_from_backend.status === 404){
+    } else if (response_from_backend.status === 404) {
       alert("Account not found");
-    }else {
+    } else {
       alert(response_from_backend.status + " " + response_from_backend);
     }
-
-  }
+  };
 
   function handleResumeChange(event) {
     console.log("click");
@@ -455,8 +459,11 @@ function EditProfilePage() {
           </Button>
         </Grid>
       </Box>
-      <Box sx={{pt:15}}>
-        <Button onClick={deleteAccount} color="error" variant="contained"> Delete Account </Button>
+      <Box sx={{ pt: 15 }}>
+        <Button onClick={deleteAccount} color="error" variant="contained">
+          {" "}
+          Delete Account{" "}
+        </Button>
       </Box>
     </Container>
   );
