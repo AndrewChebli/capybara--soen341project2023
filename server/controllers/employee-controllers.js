@@ -124,16 +124,38 @@ const deleteEmployee = async (req, res, next) => {
     let allJobs;
 
     try {
-      allJobs = await Job.find({applicants : {$elemMatch : {applicantId : employeeId}}}).exec();
-    } catch (err) {
-      const error = new HttpError (
-        "Could fetch related applications"
-      )
-      return next(error);
+      allJobs = await Job.findAll().exec();
+      allJobs.forEach(async (job) => {
+        job.applicants.forEach(async (applicant) => {
+          console.log(applicant._id + "<->" + employeeId)
+          if (applicant._id === employeeId) {
+            try {
+              await applicant.remove();
+            } catch (err) {
+              const error = new HttpError(
+                "Something went wrong, could not delete employee applications.",
+                500
+              );
+              return next(error);
+            }
+          }
+        });
+        await job.save();
+      });
+
+    }catch (error){
+      const err = new HttpError(
+        "Something went wrong, could not delete employee applications.",
+        500
+      );
+      return next(err);
     }
 
-    console.log("All jobs applied to ")
-    console.log(allJobs);
+
+
+
+
+
 
     res.status(200).json({ message: "Deleted employee." });
   }

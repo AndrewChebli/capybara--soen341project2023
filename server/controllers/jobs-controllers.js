@@ -104,15 +104,14 @@ const addApplicant = async (req, res, next) => {
     const error = new HttpError("Could not find job for this id.", 404);
     return next(error);
   }
-  console.log(existingJob);
-  let result;
-  try {
-    result = await existingJob.applicants.find(
-      (applicant) => applicant === applicant_id
-    );
-    console.log(result)
-  } catch (err) {
-    const error = new HttpError("problem looking for duplicates", 500);
+
+  let result ;
+  result = existingJob.applicants.find((applicant) => {
+    console.log(applicant.applicant + " < + > " + applicant_id)
+    return applicant.applicant === applicant_id;
+  });
+  if (result) {
+    const error = new HttpError("Applicant already applied.", 500);
     return next(error);
   }
 
