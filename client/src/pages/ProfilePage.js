@@ -72,7 +72,7 @@ function ProfilePage() {
         <Grid item xs={6} md={6}>
           <Typography variant="h6">Personal Info</Typography>
           <Divider variant="middle" sx={{ mb: 2 }} />
-          <Typography variant="body1" sx={{ marginBottom: 2 }}>
+          <Typography id = "profileName" variant="body1" sx={{ marginBottom: 2 }}>
             {employeeInfo.firstName} {employeeInfo.lastName}
           </Typography>
           <Typography variant="body1" sx={{ marginBottom: 2 }}>

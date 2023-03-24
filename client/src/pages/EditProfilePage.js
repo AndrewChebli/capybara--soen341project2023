@@ -13,11 +13,13 @@ import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 
-  let b64 = null;
+
+  let b64 = localStorage.getItem("resume") ? localStorage.getItem("resume") : null;
 
 function EditProfilePage() {
 
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState(localStorage.getItem("resume") ? localStorage.getItem("resume") : null);
+
   const [resumeName, setResumeName] = useState(null);
 
   const [employeeInfo, setEmployeeInfo] = useState({

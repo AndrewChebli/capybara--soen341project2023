@@ -1,17 +1,9 @@
 import JobPostingDetail from "../components/JobPostingDetail";
 import Box from "@mui/material/Box";
 import React from "react";
-import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import Grow from "@mui/material/Grow";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
 
 function JobPostingPage() {
-
-  
-
-
 
   return (
     <div style={{ width: "100%" }}>

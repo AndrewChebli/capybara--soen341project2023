@@ -12,7 +12,7 @@ function Home() {
         </Box>
       </Box>
     </div>
-  );
+  ); 
 }
 
 export default Home;

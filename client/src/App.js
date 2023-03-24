@@ -18,10 +18,7 @@ import JobPostingPage from "./pages/JobPostingPage"
  
 
 function App() {
-  function setDefaultState() {
-    localStorage.setItem("loginStatus", "false");
-    localStorage.setItem("loginType", JSON.stringify());
-  }
+
   if(localStorage.getItem("loginStatus") === null){
     localStorage.clear();
   }if(localStorage.getItem("loginStatus") === "out"){

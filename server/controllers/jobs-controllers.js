@@ -84,7 +84,7 @@ const addJob = async (req, res, next) => {
     return next(error);
   }
   existingCompany.jobs.push(job_id);
-  res.status(201).json({ job: createdJob });
+  res.status(201).json({ job: createdJob.toObject({ getters: true }) });
 };
 
 const addApplicant = async (req, res, next) => {

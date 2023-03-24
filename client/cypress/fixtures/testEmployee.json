@@ -1,0 +1,15 @@
+{
+  "firstName": "Cypress",
+  "lastName": "Test",
+  "password": "1234",
+  "confirmPassword": "1234",
+  "email": "test@cypress.com",
+  "jobTitle": "QA",
+  "companyName": "Cypress",
+  "dateStatedWork": "2019-01-01",
+  "dateCompletedWork": "2019-01-01",
+  "school": "Cypress",
+  "academicProgram": "QA",
+  "dateStatedSchool": "2019-01-01",
+  "dateCompletedSchool": "2019-01-01"
+}

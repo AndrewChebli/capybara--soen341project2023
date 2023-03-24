@@ -6,7 +6,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "cypress run"
+    "test": "cypress open",
+    "test:ci": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
