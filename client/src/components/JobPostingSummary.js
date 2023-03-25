@@ -60,7 +60,7 @@ function JobPostingSummary(props) {
   let location = data.location;
   let deadline = data.deadline;
   let type = data.type;
-
+let remote = data.remote;
   function changeLink()
   {
     console.log("handleLinkChange" + id)
@@ -128,7 +128,7 @@ function JobPostingSummary(props) {
                   <Grid item xs="auto">
                     <Chip
                       icon={<EmojiTransportationIcon fontSize="small" />}
-                      label={type}
+                      label={remote}
                     />
                   </Grid>
                 </Grid>
@@ -146,7 +146,7 @@ function JobPostingSummary(props) {
                   display={"-webkit-box"}
                   maxHeight={105}
                   backgroundColor={"#f5f5f5"}
-                  borderRadius={5}
+                  borderRadius={2}
                 >
                   {description}
                 </Typography>

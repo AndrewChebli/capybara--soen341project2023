@@ -17,7 +17,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Chip from "@mui/material/Chip";
 import PaidIcon from "@mui/icons-material/Paid";
 import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
-import WorkIcon from '@mui/icons-material/Work';
+import WorkIcon from "@mui/icons-material/Work";
 
 function JobPostingDetail(props) {
   const [applied, setApplied] = React.useState(false);
@@ -139,7 +139,7 @@ function JobPostingDetail(props) {
                 </Typography>
                 <Divider />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <Typography
                   gutterBottom
                   variant="h6"
@@ -149,6 +149,7 @@ function JobPostingDetail(props) {
                   {data.company}
                 </Typography>
               </Grid>
+
               <Grid
                 item
                 container
@@ -163,8 +164,6 @@ function JobPostingDetail(props) {
                     icon={<LocationOnIcon fontSize="small" />}
                     label={data.location}
                   />
-                </Grid>
-                <Grid item xs="auto">
                   <Chip
                     icon={<PaidIcon fontSize="small" />}
                     label={data.salary}
@@ -175,13 +174,26 @@ function JobPostingDetail(props) {
                     icon={<EmojiTransportationIcon fontSize="small" />}
                     label={data.remote}
                   />
-                </Grid>
-                <Grid item xs="auto">
                   <Chip
                     icon={<WorkIcon fontSize="small" />}
                     label={data.type}
                   />
                 </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  gutterBottom
+                  variant="h4"
+                  component="div"
+                  sx={{
+                    pt: 2,
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    fontSize: main_font_size,
+                  }}
+                >
+                  Company
+                </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography
@@ -194,20 +206,19 @@ function JobPostingDetail(props) {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Divider variant="middle">
-                <Typography
-                  gutterBottom
-                  variant="h4"
-                  component="div"
-                  sx={{
-                    textAlign: "left",
-                    fontWeight: "bold",
-                    fontSize: main_font_size,
-                  }}
-                >
-                  Job Description
-                </Typography>
-              </Divider>
+              <Typography
+                gutterBottom
+                variant="h4"
+                component="div"
+                sx={{
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  fontSize: main_font_size,
+                  py: 2,
+                }}
+              >
+                Job Description
+              </Typography>
               <Typography
                 gutterBottom
                 component="div"
@@ -228,7 +239,7 @@ function JobPostingDetail(props) {
                   fontSize: main_font_size,
                 }}
               >
-                Requirements:
+                Requirements
               </Typography>
             </Grid>
             <Item sx={{ gridColumn: "2/5" }}>
@@ -262,7 +273,7 @@ function JobPostingDetail(props) {
                   fontSize: main_font_size,
                 }}
               >
-                {"Benefits: "}
+                {"Benefits "}
               </Typography>
             </Item>
             <Item sx={{ gridColumn: "2/5" }}>
@@ -298,7 +309,6 @@ function JobPostingDetail(props) {
               </Button>
             </Box>
 
-            <Box sx={{ pb: 5 }}></Box>
             <Snackbar
               open={openSuccess}
               autoHideDuration={6000}

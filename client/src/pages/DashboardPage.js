@@ -23,6 +23,7 @@ function Dashboard() {
         .then((response) => response.json())
         .then((response) => {
           setData(response);
+          setCurrentLink(response[0]._id);
         });
     }
     getAllJobs();
