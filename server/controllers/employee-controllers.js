@@ -1,6 +1,7 @@
 const HttpError = require("../models/http-error");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
+const { getJobById } = require("./jobs-controllers");
 
 const getAllEmployess = async (req, res, next) => {
   Employee.find()
@@ -97,8 +98,34 @@ const deleteEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
   console.log(employeeId);
   let employee;
+
+  let allJobs;
+
+  try { 
+    allJobs = await Job.find().exec();
+    allJobs.forEach(async (job) => {
+      console.log(job.applicants);
+      job.applicants.forEach(async (applicant) => {
+        console.log(applicant.applicant + "<->" + employeeId);
+        if(applicant.applicant === employeeId){
+          console.log("========================removing " +  applicant.applicant)
+          job.applicants.pull(applicant);
+          }
+      });
+      await job.save();
+    });
+  }catch(err)
+  {
+    const error = new HttpError(
+      "Something went wrong, could not delete employee applications.",
+      500
+    );
+    return next(error);
+  }
+
+
   try {
-    employee = await Employee.findById(employeeId).exec();
+    employee = await Employee.findById(employeeId);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete employee.",
@@ -120,6 +147,35 @@ const deleteEmployee = async (req, res, next) => {
       );
       return next(error);
     }
+
+    // try {
+    //   allJobs = await Job.findAll().exec();
+    //   allJobs.forEach(async (job) => {
+    //     job.applicants.forEach(async (applicant) => {
+    //       console.log(applicant._id + "<->" + employeeId)
+    //       if (applicant._id === employeeId) {
+    //         try {
+    //           await applicant.remove();
+    //         } catch (err) {
+    //           const error = new HttpError(
+    //             "Something went wrong, could not delete employee applications.",
+    //             500
+    //           );
+    //           return next(error);
+    //         }
+    //       }
+    //     });
+    //     await job.save();
+    //   });
+
+    // }catch (error){
+    //   const err = new HttpError(
+    //     "Something went wrong, could not delete employee applications.",
+    //     500
+    //   );
+    //   return next(err);
+    // }
+
     res.status(200).json({ message: "Deleted employee." });
   }
 };
