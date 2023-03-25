@@ -3,8 +3,13 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Divider } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import FlagIcon from "@mui/icons-material/Flag";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Chip from "@mui/material/Chip";
+import PaidIcon from '@mui/icons-material/Paid';
+import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
 function stringToColor(string) {
   // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -45,20 +50,22 @@ function stringAvatar(name) {
 }
 
 
-function JobPostingSummary(job_posting) {
+function JobPostingSummary(props) {
+  const { data, handleLinkChange } = props;
+  let title = data.title;
+  let company = data.company;
+  let description = data.description;
+  let salary = data.salary;
+  let id = data._id;
+  let location = data.location;
+  let deadline = data.deadline;
+  let type = data.type;
 
-  
-
-  let title = job_posting.data.title;
-  let company = job_posting.data.company;
-  let description = job_posting.data.description;
-  let salary = job_posting.data.salary;
-  let id = job_posting.data._id;
-  let location = job_posting.data.location;
-  let Dday = job_posting.data.Dday;
-  let Dmonth = job_posting.data.Dmonth;
-  let Dyear = job_posting.data.Dyear;
-  console.log("title" + title);
+  function changeLink()
+  {
+    console.log("handleLinkChange" + id)
+    handleLinkChange(id);
+  }
 
   return (
     <div>
@@ -66,104 +73,93 @@ function JobPostingSummary(job_posting) {
         sx={{
           display: "flex",
           flexDirection: "column",
-          minWidth: 1000,
-          maxWidth: 1000,
+          minWidth: 450,
+          maxWidth: 450,
           justifyContent: "center",
-          flexGrow: 4,
           overflow: "hidden",
+          borderRadius: 5,
+          boxShadow: 5,
+          m: 1,
         }}
       >
-        <CardActionArea href={"../JobPostingPage/" + id}>
+        <CardActionArea  onClick = { changeLink}>
           <CardContent>
-            <Grid container wrap="nowrap" spacing={2} direction="row">
-              <Grid item sx={2} paddingRight={2}>
-                <Avatar {...stringAvatar(company)}></Avatar>
-              </Grid>
-              <Divider orientation="vertical" flexItem variant="middle" />
-              <Grid item xs zeroMinWidth>
+            <Grid container wrap="nowrap" spacing={2} direction="column">
+              <Grid
+                item
+                container
+                justifyContent="center"
+                alignItems="flex-start"
+                direction="column"
+              >
                 <Grid
+                  item
                   container
-                  spacing={2}
-                  justifyContent="left"
-                  alignItem={"center"}
+                  justifyContent="flex-start"
                   paddingTop={2}
+                  alignItems="flex-start"
+                  direction="row"
+                  spacing = {0.3}
                 >
-                  <Grid item sx="auto">
-                    <Typography
-                      variant="h5"
-                      component="div"
-                      sx={{ fontWeight: "bold" }}
-                    >
+                  <Grid item xs={10} >
+                    <Typography variant="h5" sx={{ fontWeight: "bold", textAlign : "left" }}>
                       {title}
                     </Typography>
-                  </Grid>
-                  <Grid item sx="auto">
-                    <Divider variant="middle">
-                      <Typography variant="h6">{"Description"}</Typography>
-                    </Divider>
-                    <Typography
-                      gutterBottom
-                      component={"div"}
-                      variant="body"
-                      textOverflow={"ellipsis"}
-                      overflow={"hidden"}
-                      display={"-webkit-box"}
-                      WebkitLineClamp={3}
-                      WebkitBoxOrient={"vertical"}
-                      maxHeight={105}
-                    >
-                      {description}
+                    <Typography  sx={{ textAlign : "left" }}>
+                      {company}
                     </Typography>
                   </Grid>
-
-                  <Grid item marginTop={"auto"} sx={4}>
-                    <Divider variant="middle">
-                      <Typography variant="h6" component="div">
-                        {"Salary"}
-                      </Typography>
-                    </Divider>
-                    <Typography
-                      textOverflow={"ellipsis"}
-                      gutterBottom
-                      variant="body"
-                      component="div"
-                      minWidth= {250}
-                    >
-                      {salary}
-                    </Typography>
+                  <Grid item xs={2} >
+                    <BookmarkAddIcon />
+                    <FlagIcon />
                   </Grid>
-                  <Grid item marginTop={"auto"} sx={4}>
-                    <Divider variant="middle">
-                      <Typography variant="h6" component="div">
-                        {"Location"}
-                      </Typography>
-                    </Divider>
-                    <Typography
-                      textOverflow={"ellipsis"}
-                      gutterBottom
-                      variant="body"
-                      component="div"
-                      minWidth= {250}
-                    >
-                      {location}
-                    </Typography>
+                  <Grid item xs="auto">
+                    <Chip
+                      icon={<LocationOnIcon fontSize="small" />}
+                      label={location}
+                    />
                   </Grid>
-                  <Grid item marginTop={"auto"} sx={4}>
-                    <Divider variant="middle">
-                      <Typography variant="h6" component="div">
-                        {"Deadline : D/M/Y" }
-                      </Typography>
-                    </Divider>
-                    <Typography
-                      textOverflow={"ellipsis"}
-                      gutterBottom
-                      variant="body"
-                      component="div"
-                      minWidth= {250}
-                    >
-                      { Dmonth + "/" + Dday + "/" + Dyear}
-                    </Typography>
+                  <Grid item xs="auto">
+                    <Chip
+                      icon={<PaidIcon fontSize="small" />}
+                      label={salary}
+                    />
                   </Grid>
+                  <Grid item xs="auto">
+                    <Chip
+                      icon={<EmojiTransportationIcon fontSize="small" />}
+                      label={type}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item sx="auto">
+                <Divider variant="middle">
+                  <Typography variant="h6">{"Description"}</Typography>
+                </Divider>
+                <Typography
+                  gutterBottom
+                  component={"div"}
+                  variant="body"
+                  textOverflow={"ellipsis"}
+                  overflow={"hidden"}
+                  display={"-webkit-box"}
+                  maxHeight={105}
+                  backgroundColor={"#f5f5f5"}
+                  borderRadius={5}
+                >
+                  {description}
+                </Typography>
+                <Grid item marginTop={"auto"} sx={4}>
+                  <Typography
+                    textOverflow={"ellipsis"}
+                    gutterBottom
+                    variant="body"
+                    component="div"
+                    minWidth={250}
+                  >
+                    Deadline : {deadline}
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
