@@ -47,7 +47,7 @@ function App() {
           <Route path = "/JobPostingPage/:id" element={<JobPostingPage /> } />
           <Route path = "/EditProfilePageEmployerPage" element={<EditProfilePageEmployer />} />
           <Route path = "/ProfilePageEmployerPage" element={<ProfilePageEmployer />} />
-          <Route path = "/EditJobPostingPage" element = { <EditJobPosting /> } />
+          <Route path = "/EditJobPostingPage/:id" element = { <EditJobPosting /> } />
         </Routes>
       </BrowserRouter>
     </div>

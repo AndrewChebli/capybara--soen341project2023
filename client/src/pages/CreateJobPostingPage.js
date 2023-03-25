@@ -66,6 +66,10 @@ function CreateJobPostingPage() {
       benefits: benefits,
       requirements: requirements,
       location: data.get("location"),
+      deadline: data.get("deadline"),
+      company_id: localStorage.getItem("_id"),
+      remote : data.get("remote"),
+      type : data.get("type")
     });
 
     //===============FRONTEND ENDPOINT=================
@@ -88,12 +92,13 @@ function CreateJobPostingPage() {
           company_id: localStorage.getItem("_id"),
           remote : data.get("remote"),
           type : data.get("type")
-           
         }),
       }
     );
 
     console.log(response_from_backend);
+    let result = await response_from_backend.json();
+    console.log(result)
     if (response_from_backend.status === 201) {
       alert("Job Posting Created Successfully");
     } else {

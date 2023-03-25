@@ -6,6 +6,8 @@ import ApplicantBox from "../components/ApplicantBox";
 import Paper from "@mui/material/Paper";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const CompanyJobApplicants = () => {
   const [jobs, setJobs] = useState([]);
@@ -96,15 +98,26 @@ const CompanyJobApplicants = () => {
               }}
             >
               <Typography variant="h4" align="center" sx={{ width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "center" }}>
-                {job.title} {job.Dday}/{job.Dmonth}/{job.Dyear}
+                {job.title }{" "}{ job.deadline}
               </Typography>
+              <Button
+                variant="contained"
+                color="warning"
+                onClick={() => window.location.href = `/EditJobPostingPage/${job._id}`}
+                sx = {{mr : 2}}
+              >
+                <EditIcon/>
+                Edit
+              </Button>
               <Button
                 variant="contained"
                 color="error"
                 onClick={() => handleOpen(job._id)}
               >
+                <DeleteIcon/>
                 Delete
               </Button>
+
             </Box>
             {job.applicants.map((applicant) => (
               <Typography key={applicant.applicant} variant="h6">
@@ -138,12 +151,14 @@ const CompanyJobApplicants = () => {
             color="error"
             onClick={() => handleDelete()}
           >
+            
             Delete
           </Button>
           <Button variant="contained" onClick={() => handleClose()}>
             Cancel
           </Button>
         </Box>
+        
       </Modal>
     </Box>
   ) : null;

@@ -90,7 +90,7 @@ function JobPostingDetail(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          job_id: id,
+          job_id: props.id,
           applicant_id: localStorage.getItem("_id"),
         }),
       }

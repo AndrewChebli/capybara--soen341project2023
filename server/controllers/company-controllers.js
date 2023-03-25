@@ -38,8 +38,8 @@ const getCompanyJobs = async (req, res, next) => {
     console.log("=====================================");
     job.applicants.forEach((applicant) => {
       applicant.new = "false";
-      applicant.save();
     });
+    job.save();
   });
 
   res.json({ status: 200, jobs: allCompanyJobs });

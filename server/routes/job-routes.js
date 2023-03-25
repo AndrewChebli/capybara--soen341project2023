@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const jobController = require("../controllers/jobs-controllers");
+
+
 router.get("/all", (req, res, next) => {
   console.log("GET request to /job/all");
   jobController.getAllJobs(req, res, next);
@@ -33,6 +35,10 @@ router.post("/add", (req, res, next) => {
   jobController.addJob(req, res, next);
 });
 
+router.patch("/update/:_id", (req, res, next) => {
+  console.log("PATCH request to /job/update/:_id");
+  jobController.updateJobById(req, res, next);
+});
 
 
 
