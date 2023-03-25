@@ -6,6 +6,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import Divider from "@mui/material/Divider";
 
 function CreateJobPostingPage() {
   styled(Paper)(({ theme }) => ({
@@ -16,47 +19,84 @@ function CreateJobPostingPage() {
     color: theme.palette.text.secondary,
   }));
 
-  const  handlePersonalInfoSubmit = async (event) => {
+  const [requirements, setRequirements] = React.useState([""]);
+  const [benefits, setBenefits] = React.useState([""]);
+
+  const handleFormChange = (event, index) => {
+    let data = [...requirements];
+    data[index] = event.target.value;
+    console.log(data);
+    setRequirements(data);
+  };
+
+  const addRequirement = () => {
+    setRequirements([...requirements, ""]);
+  };
+
+  const removeRequirement = (index) => {
+    let data = [...requirements];
+    data.splice(index, 1);
+    setRequirements(data);
+  };
+
+  const handleBenefitsChange = (event, index) => {
+    let data = [...benefits];
+    data[index] = event.target.value;
+    setBenefits(data);
+  };
+
+  const addBenefit = () => {
+    setBenefits([...benefits, ""]);
+  };
+
+  const removeBenefit = (index) => {
+    let data = [...benefits];
+    data.splice(index, 1);
+    setBenefits(data);
+  };
+
+  const handlePersonalInfoSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       title: data.get("title"),
-      company: data.get("company"),
-      day: data.get("day"),
-      month: data.get("month"),
-      year: data.get("year"),
+      company: localStorage.getItem("companyName"),
       description: data.get("description"),
       salary: data.get("salary"),
-      benefits: data.get("benefits"),
-      requirements: data.get("requirements"),
+      benefits: benefits,
+      requirements: requirements,
       location: data.get("location"),
     });
 
     //===============FRONTEND ENDPOINT=================
-    const response_from_backend = await fetch("http://localhost:8080/api/job/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: data.get("title"),
-        description: data.get("description"),
-        location: data.get("location"),
-        salary: data.get("salary"),
-        company: localStorage.getItem("companyName"),
-        Dday: data.get("day"),
-        Dmonth: data.get("month"),
-        Dyear: data.get("year"),
-        benefits: data.get("benefits"),
-        requirements: data.get("requirements"),
-        company_id: localStorage.getItem("_id"),
-      }),
-    });
+    const response_from_backend = await fetch(
+      "http://localhost:8080/api/job/add",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: data.get("title"),
+          description: data.get("description"),
+          location: data.get("location"),
+          salary: data.get("salary"),
+          company: localStorage.getItem("companyName"),
+          benefits: benefits,
+          requirements: requirements,
+          deadline: data.get("deadline"),
+          company_id: localStorage.getItem("_id"),
+          remote : data.get("remote"),
+          type : data.get("type")
+           
+        }),
+      }
+    );
 
     console.log(response_from_backend);
-    if(response_from_backend.status === 201){
+    if (response_from_backend.status === 201) {
       alert("Job Posting Created Successfully");
-    }else{
+    } else {
       alert("Job Posting Creation Failed");
     }
   };
@@ -87,47 +127,6 @@ function CreateJobPostingPage() {
               autoFocus
             />
           </Grid>
-          <Grid item xs={6}>
-            <Typography component="h1" variant="h6">
-              Deadline:
-            </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <TextField
-              id="day"
-              label="Deadline Day"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="filled"
-              name="day"
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <TextField
-              id="month"
-              type="number"
-              label="Deadline Month"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="filled"
-              name="month"
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <TextField
-              id="year"
-              type="number"
-              label="Deadline Year"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="filled"
-              name="year"
-            />
-          </Grid>
           <Grid item xs={12}>
             <TextField
               name="description"
@@ -141,18 +140,96 @@ function CreateJobPostingPage() {
             />
           </Grid>
           <Grid item xs={12}>
+            <Divider variant="middle">
+              <Typography component="h1" variant="h6">
+                Requirements
+              </Typography>
+            </Divider>
+            {requirements.map((requirement, index) => {
+              return (
+                <div key={index}>
+                  <Grid container direction={"row"} spacing={1} sx={{ my: 1 }}>
+                    <Grid item xs={10}>
+                      <TextField
+                        name="requirements"
+                        required
+                        fullWidth
+                        id="requirements"
+                        label="Job Requirements"
+                        placeholder="Enter a requirement"
+                        value={requirement}
+                        onChange={(event) => handleFormChange(event, index)}
+                        autoFocus
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button onClick={removeRequirement}>
+                        <RemoveCircleIcon />
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </div>
+              );
+            })}
+            <Button onClick={addRequirement} sx={{ ml: "84%" }}>
+              <AddCircleIcon />
+            </Button>
+          </Grid>
+
+          <Grid item xs={12}>
+          <Divider variant="middle">
+              <Typography component="h1" variant="h6">
+                Benefits
+              </Typography>
+            </Divider>
+            {benefits.map((benefit, index) => {
+              return (
+                <div key={index}>
+                  <Grid container direction={"row"} spacing={1} sx={{ my: 1 }}>
+                    <Grid item xs={10}>
+                      <TextField
+                        name="benefits"
+                        required
+                        fullWidth
+                        id="benefits"
+                        label="Benefits"
+                        placeholder="Enter a benefit"
+                        value={benefit}
+                        onChange={(event) => handleBenefitsChange(event, index)}
+                        autoFocus
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button onClick={removeBenefit}>
+                        <RemoveCircleIcon />
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </div>
+              );
+            })}
+            <Button onClick={addBenefit} sx={{  ml: "84%"  }}>
+              <AddCircleIcon />
+            </Button>
+          </Grid>
+        </Grid>
+        <Divider variant="middle">
+              <Typography component="h1" variant="h6">
+                Details 
+              </Typography>
+            </Divider>
+        <Grid container direction={"row"} spacing={2} sx={{ my: 1 }}>
+          <Grid item xs={6} sm={6}>
             <TextField
-              name="requirements"
+              name="location"
               required
               fullWidth
-              multiline
-              id="requirements"
-              label="Job Requirements"
+              id="location"
+              label="Location"
               autoFocus
-              rows={2}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               name="salary"
               required
@@ -163,31 +240,42 @@ function CreateJobPostingPage() {
               rows={2}
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="benefits"
-              required
-              fullWidth
-              multiline
-              id="benefits"
-              label="Benefits"
-              autoFocus
-              rows={3}
-            />
-          </Grid>
         </Grid>
-        <Grid item xs={12} sm={12}>
-          <Grid item xs={12} sm={12}>
+        <Grid container direction={"row"} spacing={2} sx={{ my: 1 }}>
+          <Grid item xs={6} sm={6}>
             <TextField
-              name="location"
+              name="type"
               required
               fullWidth
-              id="location"
-              label="location"
+              id="type"
+              label="Full time / Part time"
               autoFocus
             />
           </Grid>
-
+          <Grid item xs={6}>
+            <TextField
+              name="remote"
+              required
+              fullWidth
+              id="remote"
+              label="Remote / In office / Hybrid"
+              autoFocus
+              rows={2}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography component="h1" variant="h6">
+              Deadline
+            </Typography>
+            <TextField
+              name = "deadline"
+              required
+              fullWidth
+              id="deadline"
+              autoFocus
+              type = "date"
+            />
+          </Grid>
         </Grid>
         <Button
           type="submit"
