@@ -33,15 +33,16 @@ const addJob = async (req, res, next) => {
     location,
     salary,
     company,
-    Dday,
-    Dmonth,
-    Dyear,
+    deadline,
+    type,
+    remote,
     benefits,
     requirements,
     company_id,
   } = req.body;
   let applicants = [];
   let selected_applicants = [];
+  let companyDescription = "";
   const createdJob = new Job({
     title,
     description,
@@ -49,13 +50,14 @@ const addJob = async (req, res, next) => {
     salary,
     company,
     applicants,
-    Dday,
-    Dmonth,
-    Dyear,
     benefits,
     requirements,
     company_id,
     selected_applicants,
+    companyDescription,
+    deadline,
+    type,
+    remote,
   });
 
   try {
@@ -84,6 +86,32 @@ const addJob = async (req, res, next) => {
     return next(error);
   }
   existingCompany.jobs.push(job_id);
+
+  try{
+    await existingCompany.save();
+  }
+  catch(err){ 
+    const error = new HttpError(
+      "Something went wrong, could not update company.",
+      500
+    );
+    return next(error);
+  }
+  
+  try {
+    await Job.findByIdAndUpdate(job_id, { companyDescription: existingCompany.description });
+  }
+  catch(err){
+    const error = new HttpError(
+      "Something went wrong, could not update company description.",
+      500
+    );
+    return next(error);
+  }
+
+
+  
+
   res.status(201).json({ job: createdJob });
 };
 
@@ -158,6 +186,27 @@ const deleteJobById = async (req, res, next) => {
   }
 };
 
+const updateJobById = async (req, res, next) => {
+  const _id = req.params._id;
+
+  let updatedJob
+  try {
+    updatedJob = await Job.findByIdAndUpdate(
+      _id, req.body, { new: true }
+    )
+    
+  }catch(err){
+    const error = new HttpError(
+      "Something went wrong, could not update the job.",
+      500
+    );
+    return next(error);
+  }
+  res.status(200).json({ job: updatedJob.toObject({ getters: true }) });
+};
+
+
+exports.updateJobById = updateJobById;
 exports.getAllJobs = getAllJobs;
 exports.getJobById = getJobById;
 exports.addJob = addJob;

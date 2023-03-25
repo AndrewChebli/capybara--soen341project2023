@@ -3,14 +3,12 @@ const Company = require("../models/CompanyRegister.model.js");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
 
-
 const getAllCompanies = (req, res, next) => {
   console.log("GET request to /company/getall");
   Company.find()
     .then((companies) => {
       res.json(companies);
-    }
-    )
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
@@ -27,7 +25,24 @@ const getCompanyJobs = async (req, res, next) => {
     return next(error);
   }
   console.log(allCompanyJobs);
-  res.json({status: 200, jobs : allCompanyJobs});
+
+  if (!allCompanyJobs) {
+    const error = new HttpError(
+      "Could not find a job for the provided company id.",
+      404
+    );
+    return next(error);
+  }
+
+  allCompanyJobs.forEach((job) => {
+    console.log("=====================================");
+    job.applicants.forEach((applicant) => {
+      applicant.new = "false";
+    });
+    job.save();
+  });
+
+  res.json({ status: 200, jobs: allCompanyJobs });
 };
 
 const loginCompany = async (req, res, next) => {
@@ -49,22 +64,23 @@ const loginCompany = async (req, res, next) => {
     );
     return next(error);
   }
-  if(existingCompany.length === 0)
-  {
+  if (existingCompany.length === 0) {
     const error = new HttpError(
       "Invalid credentials, could not log you in.",
       401
-    ); 
+    );
     return next(error);
   }
   const _id = existingCompany[0]._id;
   console.log(_id);
-  res.status(201).json({ message: "Logged in!", _id: _id , companyName: existingCompany[0].companyName});
+  res.status(201).json({
+    message: "Logged in!",
+    _id: _id,
+    companyName: existingCompany[0].companyName,
+  });
 };
 
-
 const getCompanyById = (req, res, next) => {
-
   console.log("GET request to /company/getone/:_id");
   const _id = req.params._id;
   console.log(_id);
@@ -74,8 +90,7 @@ const getCompanyById = (req, res, next) => {
 };
 
 const registerCompany = async (req, res, next) => {
-
-  const createdCompany = new Company({ 
+  const createdCompany = new Company({
     companyName: req.body.companyName,
     email: req.body.email,
     password: req.body.password,
@@ -88,55 +103,45 @@ const registerCompany = async (req, res, next) => {
     jobs: req.body.jobs,
   });
 
-  try{
+  try {
     await createdCompany.save();
-  }catch(error)
-  {
+  } catch (error) {
     const err = new HttpError(
-      'Signing up failed, please try again later.',
+      "Signing up failed, please try again later.",
       500
     );
     return next(err);
   }
-    res.status(201).json({company: createdCompany});
-
+  res.status(201).json({ company: createdCompany });
 };
 
 const removeCompany = async (req, res, next) => {
-
   const companyId = req.params._id;
   let company;
   try {
-    company = await Company.findById(companyId);
-  }catch (error)
-  {
+    company = await Company.findById(companyId).exec();
+  } catch (error) {
     const err = new HttpError(
-      'Something went wrong, could not delete company.',
+      "Something went wrong, could not delete company.",
       500
     );
     return next(err);
-
   }
 
-  if(!company)
-  {
-    const err = new HttpError(
-      'Could not find company for this id.',
-      404
-    );
+  if (!company) {
+    const err = new HttpError("Could not find company for this id.", 404);
     return next(err);
-  }else{
-    try{
+  } else {
+    try {
       await company.remove();
-    }catch(error)
-    {
+    } catch (error) {
       const err = new HttpError(
-        'Something went wrong, could not delete company.',
+        "Something went wrong, could not delete company.",
         500
       );
       return next(err);
     }
-    res.status(200).json({message: 'Deleted company.'});
+    res.status(200).json({ message: "Deleted company." });
   }
 };
 
@@ -149,38 +154,69 @@ const updateCompany = (req, res, next) => {
 const selectApplicant = async (req, res, next) => {
   const { job_id, applicant_id } = req.body;
   let existingJob;
+
+  // adding the applicant to the selected applicants
   try {
-    existingJob = await Job.findById(job_id);
+    existingJob = await Job.findById(job_id).exec();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not find a job.",500);
+      "Something went wrong, could not find a job.",
+      500
+    );
     return next(error);
   }
   if (!existingJob) {
     const error = new HttpError("Could not find job for the provided id.", 404);
     return next(error);
   }
-  existingJob.applicants = existingJob.applicants.filter(
-    (applicant) => applicant._id !== applicant_id);
-  existingJob.selected_applicants.push(applicant_id);
+
+  //looking for duplicate applicants
+  let existingJobObject = existingJob.toObject({ getters: true });
+
+  let duplicate = false;
+  existingJobObject.selected_applicants.forEach((applicant) => {
+    if (applicant.applicant_id === applicant_id) {
+      console.log("triggered");
+      duplicate = true;
+    }
+  });
+  if (duplicate) {
+    const error = new HttpError(
+      "You have already selected this applicant.",
+      422
+    );
+    return next(error);
+  }
+
+  //adding the applicant to the selected applicants
+  existingJob.selected_applicants.push({ applicant_id: applicant_id });
+
   try {
     await existingJob.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not select applicant.",500);
+      "Something went wrong, could not select applicant.",
+      500
+    );
     return next(error);
   }
 
+  // adding the offer to the employee
   let existingEmployee;
   try {
-    existingEmployee = await Employee.findById(applicant_id);
+    existingEmployee = await Employee.findById(applicant_id).exec();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not find a employee.",500);
+      "Something went wrong, could not find a employee.",
+      500
+    );
     return next(error);
   }
   if (!existingEmployee) {
-    const error = new HttpError("Could not find employee for the provided id.", 404);
+    const error = new HttpError(
+      "Could not find employee for the provided id.",
+      404
+    );
     return next(error);
   }
   existingEmployee.offers.push(job_id);
@@ -188,37 +224,47 @@ const selectApplicant = async (req, res, next) => {
     await existingEmployee.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not select applicant.",500);
+      "Something went wrong, could not select applicant.",
+      500
+    );
     return next(error);
   }
 
   res.status(200).json({ job: existingJob.toObject({ getters: true }) });
 };
 
+//obsolete code
 const notifyApplicant = async (req, res, next) => {
   const { job_id, applicant_id } = req.body;
 
-  let selectedUser ;
+  let selectedUser;
   try {
     selectedUser = await Employee.findById(applicant_id).exec();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not find a user.",500);
+      "Something went wrong, could not find a user.",
+      500
+    );
     return next(error);
   }
 
   if (!selectedUser) {
-    const error = new HttpError("Could not find user for the provided id.", 404);
+    const error = new HttpError(
+      "Could not find user for the provided id.",
+      404
+    );
     return next(error);
   }
 
   selectApplicant.offers.push(job_id);
-  
+
   try {
     await selectedUser.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not select applicant.",500);
+      "Something went wrong, could not select applicant.",
+      500
+    );
     return next(error);
   }
   res.status(200).json({ job: selectedUser.toObject({ getters: true }) });

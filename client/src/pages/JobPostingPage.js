@@ -23,7 +23,8 @@ function JobPostingPage() {
           bgcolor: "background.paper",
           maxWidth: 1200,
           height: 300,
-          borderRadius: 1,
+          borderRadius: 5,
+          boxShadow: 15,
           justifyContent: "center",
         }}
       >

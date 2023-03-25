@@ -57,9 +57,11 @@ const ApplicantBox = (applicant_id, job_id) => {
     if (response === 500) {
       console.log("error");
     }
-    if (response === 200) {
+    else if (response === 200) {
       setSelected(true);
       console.log("success");
+    }else if (response.status === 422) {
+      window.alert("Applicant already selected");
     }
     console.log(responseData);
   }

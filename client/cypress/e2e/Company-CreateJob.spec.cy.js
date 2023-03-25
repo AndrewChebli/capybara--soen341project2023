@@ -45,19 +45,18 @@ describe("Create Job", () => {
           .as("createJob")
           .then(() => {
             cy.get("input[name=title]").type("Cypress Test Job");
-            cy.get("#day").type("1");
-            cy.get("#month").type("1");
-            cy.get("#year").type("2021");
             cy.get("textarea[name=description]").type(
               "Cypress Test Job Description"
             );
             cy.get("input[name=location]").type("Cypress Test Job Location");
             cy.get("input[name=salary]").type("1");
-            cy.get("textarea[name=requirements]").type(
+            cy.get("textarea[name=requirement]").type(
               "Cypress Test Job Requirements"
             );
-            cy.get("textarea[name=benefits]").type("Cypress Test Job Benefits");
-
+            cy.get("textarea[name=benefit]").type("Cypress Test Job Benefits");
+            cy.get("input[name=deadline]").type("2021-12-31");
+            cy.get("input[name=remote]").type("hybrid");
+            cy.get("input[name=type]").type("full-time");
             cy.get("button[type=submit]").click();
           });
         cy.wait("@createJob").then((interception) => {

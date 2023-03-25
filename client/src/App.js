@@ -14,6 +14,9 @@ import CreateJobPostingPage from "./pages/CreateJobPostingPage";
 import HeaderBar from "./components/HeaderBar";
 import CompanyJobApplicants from "./pages/CompanyJobApplicants";
 import JobPostingPage from "./pages/JobPostingPage"
+import EditProfilePageEmployer from "./pages/EditProfilePageEmployer";
+import ProfilePageEmployer from "./pages/ProfilePageEmployer";
+import EditJobPosting from "./pages/EditJobPostingPage";
 
  
 
@@ -42,6 +45,9 @@ function App() {
           <Route path = "/CreateJobPostingPage" element={<CreateJobPostingPage />} />
           <Route path = "/CompanyJobApplicantsPage" element={<CompanyJobApplicants />} />
           <Route path = "/JobPostingPage/:id" element={<JobPostingPage /> } />
+          <Route path = "/EditProfilePageEmployerPage" element={<EditProfilePageEmployer />} />
+          <Route path = "/ProfilePageEmployerPage" element={<ProfilePageEmployer />} />
+          <Route path = "/EditJobPostingPage/:id" element = { <EditJobPosting /> } />
         </Routes>
       </BrowserRouter>
     </div>
