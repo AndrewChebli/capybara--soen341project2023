@@ -8,8 +8,6 @@ router.get("/all", (req, res, next) => {
 
 router.get("/getone/:_id", (req, res, next) => {
   console.log("GET request to /job/getone/:_id");
-  const _id = req.params._id;
-  console.log(_id);
   jobController.getJobById(req, res, next);
 });
 
