@@ -52,6 +52,8 @@ function stringAvatar(name) {
 
 function JobPostingSummary(props) {
   const { data, handleLinkChange } = props;
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [reportReason, setReportReason] = React.useState("");
   let title = data.title;
   let company = data.company;
   let description = data.description;
@@ -66,6 +68,23 @@ let remote = data.remote;
     console.log("handleLinkChange" + id)
     handleLinkChange(id);
   }
+  const handleReportClick = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
+  };
+
+  const handleReportReasonChange = (event) => {
+    setReportReason(event.target.value);
+  };
+
+  const handleReportSubmit = () => {
+    // TODO: submit report
+    setIsModalOpen(false);
+  };
+  const handleCancelClick = () => {
+    setReportReason("");
+    setIsModalOpen(false);
+  };
 
   return (
     <div>
