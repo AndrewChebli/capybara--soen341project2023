@@ -8,8 +8,13 @@ import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import FlagIcon from "@mui/icons-material/Flag";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Chip from "@mui/material/Chip";
-import PaidIcon from '@mui/icons-material/Paid';
-import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
+import PaidIcon from "@mui/icons-material/Paid";
+import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
+import { Box } from "@mui/system";
+import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
 function stringToColor(string) {
   // assigns a color to the icon of a job posting card.
   let hash = 0;
@@ -49,7 +54,6 @@ function stringAvatar(name) {
   }
 }
 
-
 function JobPostingSummary(props) {
   const { data, handleLinkChange } = props;
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -62,8 +66,8 @@ function JobPostingSummary(props) {
   let location = data.location;
   let deadline = data.deadline;
   let type = data.type;
-let remote = data.remote;
-  function changeLink()
+  let remote = data.remote;
+  function changeLink() 
   {
     console.log("handleLinkChange" + id)
     handleLinkChange(id);
@@ -180,7 +184,7 @@ let remote = data.remote;
                   </Grid>
                   <Grid item xs={2}>
                     <Button>
-                    <BookmarkAddIcon />
+                      <BookmarkAddIcon />
                     </Button>
                     <Button onClick={handleReportClick}>
                       <FlagIcon color={reportReason ? "error" : "disabled"} />
