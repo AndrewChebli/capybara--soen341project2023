@@ -101,7 +101,54 @@ let remote = data.remote;
           m: 1,
         }}
       >
-        <CardActionArea  onClick = { changeLink}>
+        <Modal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          aria-labelledby="report-modal-title"
+          aria-describedby="report-modal-description"
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: "100vh",
+            }}
+          >
+            <Box sx={{ width: 400, bgcolor: "white", p: 2 }}>
+              <Typography
+                variant="h6"
+                component="h2"
+                id="report-modal-title"
+                sx={{ mb: 2 }}
+              >
+                Report Job Posting
+              </Typography>
+              <form onSubmit={handleReportSubmit}>
+                <TextField
+                  id="report-modal-reason"
+                  label="Reason for reporting"
+                  fullWidth
+                  value={reportReason}
+                  onChange={handleReportReasonChange}
+                  sx={{ mb: 2 }}
+                />
+                <Button variant="contained" type="submit" sx={{ mr: 1 }}>
+                  Submit
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={handleCancelClick}
+                >
+                  Cancel
+                </Button>
+              </form>
+            </Box>
+          </Box>
+        </Modal>
+
+        <CardActionArea onClick={changeLink}>
           <CardContent>
             <Grid container wrap="nowrap" spacing={2} direction="column">
               <Grid
@@ -118,13 +165,16 @@ let remote = data.remote;
                   paddingTop={2}
                   alignItems="flex-start"
                   direction="row"
-                  spacing = {0.3}
+                  spacing={0.3}
                 >
-                  <Grid item xs={10} >
-                    <Typography variant="h5" sx={{ fontWeight: "bold", textAlign : "left" }}>
+                  <Grid item xs={10}>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: "bold", textAlign: "left" }}
+                    >
                       {title}
                     </Typography>
-                    <Typography  sx={{ textAlign : "left" }}>
+                    <Typography sx={{ textAlign: "left" }}>
                       {company}
                     </Typography>
                   </Grid>
