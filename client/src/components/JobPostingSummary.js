@@ -178,9 +178,13 @@ let remote = data.remote;
                       {company}
                     </Typography>
                   </Grid>
-                  <Grid item xs={2} >
+                  <Grid item xs={2}>
+                    <Button>
                     <BookmarkAddIcon />
-                    <FlagIcon />
+                    </Button>
+                    <Button onClick={handleReportClick}>
+                      <FlagIcon color={reportReason ? "error" : "disabled"} />
+                    </Button>
                   </Grid>
                   <Grid item xs="auto">
                     <Chip
@@ -189,10 +193,7 @@ let remote = data.remote;
                     />
                   </Grid>
                   <Grid item xs="auto">
-                    <Chip
-                      icon={<PaidIcon fontSize="small" />}
-                      label={salary}
-                    />
+                    <Chip icon={<PaidIcon fontSize="small" />} label={salary} />
                   </Grid>
                   <Grid item xs="auto">
                     <Chip
