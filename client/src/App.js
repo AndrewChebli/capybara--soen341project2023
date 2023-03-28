@@ -17,7 +17,10 @@ import JobPostingPage from "./pages/JobPostingPage";
 import EditProfilePageEmployer from "./pages/EditProfilePageEmployer";
 import ProfilePageEmployer from "./pages/ProfilePageEmployer";
 import EditJobPosting from "./pages/EditJobPostingPage";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Reports from "./pages/ReportsPage";
+
 
 function App() {
   if (localStorage.getItem("loginStatus") === null) {
@@ -62,6 +65,7 @@ function App() {
           <Route path="/ReportsPage" element={<Reports />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

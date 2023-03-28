@@ -14,6 +14,8 @@ import { Box } from "@mui/system";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function stringToColor(string) {
   // assigns a color to the icon of a job posting card.
@@ -58,6 +60,7 @@ function JobPostingSummary(props) {
   const { data, handleLinkChange } = props;
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [reportReason, setReportReason] = React.useState("");
+  const [reportMessage, setReportMessage] = React.useState("");
   let title = data.title;
   let company = data.company;
   let description = data.description;
@@ -73,18 +76,40 @@ function JobPostingSummary(props) {
     handleLinkChange(id);
   }
   const handleReportClick = (e) => {
-    e.stopPropagation();
-    setIsModalOpen(true);
-  };
+  e.stopPropagation();
+  if (reportReason) {
+    toast.error('You have already reported this Item');
+    return;
+  }
+  if (data.reported) {
+    toast.warning('You have already reported this job posting.');
+    return;
+  }
+  setIsModalOpen(true);
+};
 
   const handleReportReasonChange = (event) => {
     setReportReason(event.target.value);
   };
+  
+  const handleReportMessageChange = (event) => {
+    setReportMessage(event.target.value);
+  };
 
-  const handleReportSubmit = () => {
+  const handleReportSubmit = (e) => {
+    e.preventDefault();
+    if (!reportReason || !reportMessage) {
+      toast.error('Please enter both reason and message.');
+      return;
+    }
+    console.log("Report: ", reportMessage);
+    console.log("Reason: ", reportReason);
+    
     // TODO: submit report
     setIsModalOpen(false);
   };
+
+
   const handleCancelClick = () => {
     setReportReason("");
     setIsModalOpen(false);
@@ -135,6 +160,14 @@ function JobPostingSummary(props) {
                   fullWidth
                   value={reportReason}
                   onChange={handleReportReasonChange}
+                  sx={{ mb: 2 }}
+                />
+                <TextField
+                  id="report-modal-message"
+                  label=" Message"
+                  fullWidth
+                  value={reportMessage}
+                  onChange={handleReportMessageChange}
                   sx={{ mb: 2 }}
                 />
                 <Button variant="contained" type="submit" sx={{ mr: 1 }}>
