@@ -21,10 +21,12 @@ app.use(bodyParser.json());
 const employeeRoutes = require("./routes/employee-routes");
 const jobRoutes = require("./routes/job-routes");
 const companyRoutes = require("./routes/company-routes");
+const reportRoutes = require("./routes/report-routes");
 
 app.use("/api/employee", employeeRoutes);
 app.use("/api/company", companyRoutes);
 app.use("/api/job", jobRoutes);
+app.use("/api/report", reportRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
