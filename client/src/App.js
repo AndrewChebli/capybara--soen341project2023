@@ -17,7 +17,8 @@ import JobPostingPage from "./pages/JobPostingPage"
 import EditProfilePageEmployer from "./pages/EditProfilePageEmployer";
 import ProfilePageEmployer from "./pages/ProfilePageEmployer";
 import EditJobPosting from "./pages/EditJobPostingPage";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
  
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path = "/EditJobPostingPage/:id" element = { <EditJobPosting /> } />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }
