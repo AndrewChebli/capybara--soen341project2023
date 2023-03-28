@@ -1,5 +1,4 @@
-const mongoose = require ("mogoose");
-
+const mongoose = require("mongoose");
 const ReportModel = new mongoose.Schema(
   {
     type : {type: String, required: true},

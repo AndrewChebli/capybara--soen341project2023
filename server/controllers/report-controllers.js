@@ -1,4 +1,4 @@
-const Report = require("../models/report-model");
+const Report = require("../models/report.model");
 const HttpError = require("../models/http-error");
 
 const getAllReports = async (req, res, next) => {
