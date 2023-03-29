@@ -9,9 +9,10 @@ import { Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import ReportDetails from "../components/ReportDetails";
 
+
 let sample = [
   {
-    _id: "60f9b0f1b1b1b1b1b1b1b1b1",
+    _id: "6423661ae92454b14245b464",
     type: "Job",
     message: "This job posting is a scam",
     reason: "Spam",

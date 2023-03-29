@@ -61,6 +61,7 @@ function JobPostingSummary(props) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [reportReason, setReportReason] = React.useState("");
   const [reportMessage, setReportMessage] = React.useState("");
+  const [isBookmarked, setIsBookmarked] = React.useState(false);
   let title = data.title;
   let company = data.company;
   let description = data.description;
@@ -75,6 +76,18 @@ function JobPostingSummary(props) {
     console.log("handleLinkChange" + id)
     handleLinkChange(id);
   }
+
+  const handleBookmarkClick = (e) => {
+    e.stopPropagation();
+    if (isBookmarked) {
+      toast.warning('You have already bookmarked this job posting.');
+    } else {
+      toast.success('Job posting bookmarked.');
+      setIsBookmarked(true);
+    }
+  };
+
+
   const handleReportClick = (e) => {
   e.stopPropagation();
   if (reportReason) {
@@ -107,6 +120,9 @@ function JobPostingSummary(props) {
     
     // TODO: submit report
     setIsModalOpen(false);
+  
+    // Show a toast message saying "Job Post Reported"
+    toast.success('Job Post Reported');
   };
 
 
@@ -216,8 +232,8 @@ function JobPostingSummary(props) {
                     </Typography>
                   </Grid>
                   <Grid item xs={2}>
-                    <Button>
-                      <BookmarkAddIcon />
+                    <Button onClick={handleBookmarkClick}>
+                      <BookmarkAddIcon color={ isBookmarked? "success" : "default"}/>
                     </Button>
                     <Button onClick={handleReportClick}>
                       <FlagIcon color={reportReason ? "error" : "disabled"} />
