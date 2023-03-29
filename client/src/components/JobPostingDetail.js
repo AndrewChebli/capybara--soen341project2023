@@ -118,8 +118,8 @@ function JobPostingDetail(props) {
       <div>
         <Card
           sx={{
-            minWidth: 750,
-            maxWidth: 750,
+            minWidth: "85%",
+            maxWidth: "85%",
             bgcolor: "#f5f5f5",
             borderRadius: 5,
             boxShadow: 10,

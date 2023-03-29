@@ -10,44 +10,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Chip from "@mui/material/Chip";
 import PaidIcon from '@mui/icons-material/Paid';
 import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
-function stringToColor(string) {
-  // assigns a color to the icon of a job posting card.
-  let hash = 0;
-  let i;
+import WorkIcon from '@mui/icons-material/Work';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-  /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
 
-  let color = "#";
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-  /* eslint-enable no-bitwise */
-
-  return color;
-}
-
-function stringAvatar(name) {
-  if (name.split(" ").length === 1) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name[0]}`,
-    };
-  } else {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
-  }
-}
 
 
 function JobPostingSummary(props) {
@@ -71,12 +37,8 @@ let remote = data.remote;
     <div>
       <Card
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          minWidth: 450,
-          maxWidth: 450,
-          justifyContent: "center",
-          overflow: "hidden",
+          minWidth: "95%",
+          maxWidth: "95%",
           borderRadius: 5,
           boxShadow: 5,
           m: 1,
@@ -129,6 +91,12 @@ let remote = data.remote;
                     <Chip
                       icon={<EmojiTransportationIcon fontSize="small" />}
                       label={remote}
+                    />
+                  </Grid>
+                  <Grid item xs="auto">
+                    <Chip
+                      icon={<AccessTimeIcon fontSize="small" />}
+                      label={type}
                     />
                   </Grid>
                 </Grid>

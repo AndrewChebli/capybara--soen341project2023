@@ -76,6 +76,7 @@ const ApplicantBox = (applicant_id, job_id) => {
         <Accordion
           expanded={expanded === "panel2"}
           onChange={handleChange("panel2")}
+          sx={{ mb: 1 , backgroundColor: "#f5f5f5", borderRadius: 4, border: 1, borderColor: 'divider'}}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

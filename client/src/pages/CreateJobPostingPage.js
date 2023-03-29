@@ -156,10 +156,10 @@ function CreateJobPostingPage() {
                   <Grid container direction={"row"} spacing={1} sx={{ my: 1 }}>
                     <Grid item xs={10}>
                       <TextField
-                        name="requirements"
+                        name="requirement"
                         required
                         fullWidth
-                        id="requirements"
+                        id = {index}
                         label="Job Requirements"
                         placeholder="Enter a requirement"
                         value={requirement}

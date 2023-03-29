@@ -237,7 +237,8 @@ const getAllOffers = async (req, res, next) => {
   for (let i = 0; i < allOffers.length; i++) {
     allOffers[i] = allOffers[i].toObject({ getters: true });
     for (let j = 0; j < allOffers[i].selected_applicants.length; j++) {
-      if (_id === allOffers[i].selected_applicants[j]) {
+      if (_id === allOffers[i].selected_applicants[j].applicant_id) {
+        console.log("found")
         myOffers.push(allOffers[i]);
       }
     }

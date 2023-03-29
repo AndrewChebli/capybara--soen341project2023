@@ -10,7 +10,7 @@ import JobPostingDetail from "../components/JobPostingDetail";
 
 function Dashboard() {
   const [data, setData] = React.useState([]);
-  const [currentLink, setCurrentLink] = React.useState("");
+  const [currentLink, setCurrentLink] = React.useState();
 
   useEffect(() => {
     async function getAllJobs() {
@@ -38,54 +38,40 @@ function Dashboard() {
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div >
       <Grow in={true} timeout={3000}>
         <Typography
           variant="h2"
           component="h1"
-          gutterBottom
           sx={{ p: 5, mt: 10 }}
         >
           Job Postings
         </Typography>
       </Grow>
-      <Grid container spacing = {-20} justifyContent="center" alignItems="center">
+      <Grid
+        container
+        justifyContent="center"
+      >
         <Grid
           item
-          xs={6}
-          sx={{
-            display: "inline-flex",
-            flexWrap: "wrap",
-            alignContent: "baseline",
-            justifyContent: "center",
-            bgcolor: "background.paper",
-            maxWidth: 450,
-            minWidth: 450,
-            height: 300,
-          }}
+          container
+          direction="column"
+          justifyContent="center"
+          xs = {4}
+          overflow="auto"
         >
-          {data.map((job_posting) => (
-            <JobPostingSummary
-              handleLinkChange={onLinkChange}
-              data={job_posting}
-              key={job_posting._id}
-            />
-          ))}
+          <Grid item xs={12}>
+            {data.map((job_posting) => (
+              <JobPostingSummary
+                handleLinkChange={onLinkChange}
+                data={job_posting}
+                key={job_posting._id}
+              />
+            ))}
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Box
-            sx={{
-              display: "inline-flex",
-              flexWrap: "wrap",
-              alignContent: "baseline",
-              justifyContent: "center",
-              bgcolor: "background.paper",
-              maxWidth: 450,
-              height: 300,
-            }}
-          >
-            <JobPostingDetail id={currentLink} />
-          </Box>
+        <Grid item xs={7}>
+          <JobPostingDetail id={currentLink} />
         </Grid>
       </Grid>
     </div>

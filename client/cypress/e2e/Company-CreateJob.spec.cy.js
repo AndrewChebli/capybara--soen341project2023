@@ -37,8 +37,6 @@ describe("Create Job", () => {
       cy.get("button[type=submit]").click().then(() => {
         cy.wait(1000);
       });
-
-
     }).then(()=> {
       cy.visit("http://localhost:3000/CreateJobPostingPage").then(() => {
         cy.intercept("POST", "http://localhost:8080/api/job/add")
@@ -49,11 +47,13 @@ describe("Create Job", () => {
               "Cypress Test Job Description"
             );
             cy.get("input[name=location]").type("Cypress Test Job Location");
-            cy.get("input[name=salary]").type("1");
-            cy.get("textarea[name=requirement]").type(
-              "Cypress Test Job Requirements"
-            );
-            cy.get("textarea[name=benefit]").type("Cypress Test Job Benefits");
+            cy.get("input[name=salary]").type("1000");
+            //*[@id="0"]
+            // cy.get("input[#id='0']").type("Cypress Test Job Benefit 1");
+            // cy.get("textarea[name=requirement]").type(
+            //   "Cypress Test Job Requirements"
+            // );
+            // cy.get("textarea[name=benefit]").type("Cypress Test Job Benefits");
             cy.get("input[name=deadline]").type("2021-12-31");
             cy.get("input[name=remote]").type("hybrid");
             cy.get("input[name=type]").type("full-time");
