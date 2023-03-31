@@ -6,14 +6,16 @@ import ResumeViewer from "../components/ResumeViewer";
 import Grid from "@mui/material/Grid";
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import { Card, CardContent, CardMedia } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import SchoolIcon from "@mui/icons-material/School";
 import Paper from "@mui/material/Paper";
+import Grow from "@mui/material/Grow";
 
 function ProfilePage() {
+  const [news, setNews] = useState([]);
   const [employeeInfo, setEmployeeInfo] = useState({
     firstName: "",
     lastName: "",
@@ -37,6 +39,23 @@ function ProfilePage() {
   });
 
   useEffect(() => {
+    async function getNews() {
+      let response_from_backend = await fetch(
+        "http://localhost:8080/api/employee/news",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      let response = await response_from_backend.json();
+      console.log("NEWS");
+      console.log(response);
+      setNews(response.news.results);
+    }
+    getNews();
+
     async function getEmployeeInfo() {
       let response_from_backend = await fetch(
         "http://localhost:8080/api/employee/getone/" +
@@ -139,7 +158,7 @@ function ProfilePage() {
                     </Paper>
                   </Grid>
                   <Grid item xs={12}>
-                    <Divider sx = {{ my : 2 }} />
+                    <Divider sx={{ my: 2 }} />
                     <Paper
                       sx={{
                         p: 2,
@@ -149,24 +168,82 @@ function ProfilePage() {
                     >
                       <Typography variant="h4" sx={{ textAlign: "left" }}>
                         {employeeInfo.experience[0].position}
-
-                        </Typography>
-                        <Typography variant="h5" sx={{ textAlign: "left" }}>
+                      </Typography>
+                      <Typography variant="h5" sx={{ textAlign: "left" }}>
                         At {employeeInfo.experience[0].company}
-                        
-                        </Typography>
-                        <Typography variant="h6" sx={{ textAlign: "left" }}>
+                      </Typography>
+                      <Typography variant="h6" sx={{ textAlign: "left" }}>
                         {employeeInfo.experience[0].description}
-                        
-                        </Typography>
-                        <Typography variant="h6" sx={{ textAlign: "left" }} >
-                        {"from " } {employeeInfo.experience[0].start} {" to "}{employeeInfo.experience[0].end}
-                        </Typography>
+                      </Typography>
+                      <Typography variant="h6" sx={{ textAlign: "left" }}>
+                        {"from "} {employeeInfo.experience[0].start} {" to "}
+                        {employeeInfo.experience[0].end}
+                      </Typography>
                     </Paper>
                   </Grid>
                 </CardContent>
               </Card>
             </Grid>
+          </Grid>
+          <Grid
+            sx={{ ml: 2 }}
+            item
+            container
+            direciton="column"
+            xs={3}
+            spacing={2}
+          >
+            <Grid item sx={12}>
+              
+              <Typography
+                variant="h3"
+                color="primary"
+                sx={{ textAlign: "left" }}
+              >
+                News
+              </Typography>
+            </Grid>
+            {news.map((article) => (
+              <Grow in={true} timeout={1000}>
+              <Grid item xs={12} key={article.title}
+              
+              sx = {{
+                transition: "max-height 1s ease-in",
+                easing: "cube-bezier(0.075, 0.82, 0.165, 1)"
+              }}>
+                <Card sx = {{ borderRadius : 5 , backgroundColor : "#f5f5f5",}}>
+                  <CardActionArea href={article.link}>
+                    <CardContent>
+
+                      <Typography variant="h5" color = "primary" component="div">
+                        {article.title}
+                      </Typography>
+                      <Box
+                      sx={{
+                        position: "relative",
+                        backgroundColor : "white", 
+                        borderRadius: 5,
+                        shadow : 5,
+                        p : 1, 
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                      >
+                      <Typography variant="body2">
+                        {article.description}
+                      </Typography>
+                      </Box>
+                      <Typography variant="body2">{article.url}</Typography>
+                      <Typography variant="body2">
+                        {article.publishedAt}
+                      </Typography>
+                      <Typography variant="body2"></Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+              </Grow>
+            ))}
           </Grid>
         </Grid>
       </Box>

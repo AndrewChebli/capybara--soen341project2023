@@ -37,7 +37,7 @@ function Dashboard() {
         });
     }
     getAllJobs();
-  }, []);
+  }, [data]);
 
   if (localStorage.getItem("loginStatus") === "false") {
     window.location.href = "/SignInPage";

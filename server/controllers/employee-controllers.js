@@ -247,6 +247,40 @@ const getAllOffers = async (req, res, next) => {
   res.json({ status: 200, offers: myOffers });
 };
 
+const getNews = async (req, res, next) => {
+  let news;
+  try {
+    news  = fetch("https://newsdata.io/api/1/news?apikey=pub_198561604e298373f3b46663b31ff10631502&language=en&category=business,technology", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let response = await news;
+    response = await response.json();
+    
+    if(response.status === "success"){
+      console.log(
+        "=========================worked========================="
+      )
+      res.json({status: 200, news: response});
+    }
+    else{
+      const error = new HttpError(
+        "Something went wrong, could not find news.",
+        500
+      );
+      return next(error);
+    }
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find news.",
+      500
+    );
+    return next(error);
+  }
+}
+
 exports.getAllEmployess = getAllEmployess;
 exports.getEmployeeById = getEmployeeById;
 exports.registerEmployee = registerEmployee;
@@ -254,3 +288,4 @@ exports.updateEmployee = updateEmployee;
 exports.deleteEmployee = deleteEmployee;
 exports.loginEmployee = loginEmployee;
 exports.getAllOffers = getAllOffers;
+exports.getNews = getNews;
