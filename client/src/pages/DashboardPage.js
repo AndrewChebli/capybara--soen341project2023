@@ -1,16 +1,25 @@
 import JobPostingSummary from "../components/JobPostingSummary";
-import Box from "@mui/material/Box";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grow from "@mui/material/Grow";
 import { Grid } from "@mui/material";
-import { useState } from "react";
 import JobPostingDetail from "../components/JobPostingDetail";
+import Pagination from '@mui/material/Pagination';
+
 
 function Dashboard() {
   const [data, setData] = React.useState([]);
   const [currentLink, setCurrentLink] = React.useState();
+  const [page, setPage] = React.useState(1);
+  const [currentView , setCurrentView] = React.useState([]);
+  const page_size = Math.floor(data.length/5);
+  console.log(data.length)
+  console.log(page_size)
+
+  const handleChange = (event, value) => {
+    setPage(value);
+    setCurrentView(data.slice((value-1)*5,value*5));
+  };
 
   useEffect(() => {
     async function getAllJobs() {
@@ -24,6 +33,7 @@ function Dashboard() {
         .then((response) => {
           setData(response);
           setCurrentLink(response[0]._id);
+          setCurrentView(data.slice(0,5));
         });
     }
     getAllJobs();
@@ -61,7 +71,7 @@ function Dashboard() {
           overflow="auto"
         >
           <Grid item xs={12}>
-            {data.map((job_posting) => (
+            {currentView.map((job_posting) => (
               <JobPostingSummary
                 handleLinkChange={onLinkChange}
                 data={job_posting}
@@ -73,7 +83,9 @@ function Dashboard() {
         <Grid item xs={7}>
           <JobPostingDetail id={currentLink} />
         </Grid>
+        <Pagination  sx = {{ my: 15 }} size = "large" color= "primary" count={page_size} page={page} onChange={handleChange} />
       </Grid>
+      
     </div>
   );
 }

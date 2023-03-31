@@ -31,7 +31,7 @@ const getCompanyJobs = async (req, res, next) => {
       "Could not find a job for the provided company id.",
       404
     );
-    return next(error);
+    return next(error)
   }
 
   allCompanyJobs.forEach((job) => {
