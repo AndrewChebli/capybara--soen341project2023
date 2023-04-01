@@ -157,7 +157,9 @@ function ProfilePage() {
                       </Typography>
                     </Paper>
                   </Grid>
-                  <Grid item xs={12}>
+                  
+                  {employeeInfo.experience.map((experience) => ( 
+                  <Grid item xs={12} key = {experience.position}>
                     <Divider sx={{ my: 2 }} />
                     <Paper
                       sx={{
@@ -167,20 +169,21 @@ function ProfilePage() {
                       }}
                     >
                       <Typography variant="h4" sx={{ textAlign: "left" }}>
-                        {employeeInfo.experience[0].position}
+                        {experience.position}
                       </Typography>
                       <Typography variant="h5" sx={{ textAlign: "left" }}>
-                        At {employeeInfo.experience[0].company}
+                        At {experience.company}
                       </Typography>
                       <Typography variant="h6" sx={{ textAlign: "left" }}>
-                        {employeeInfo.experience[0].description}
+                        {experience.description}
                       </Typography>
                       <Typography variant="h6" sx={{ textAlign: "left" }}>
-                        {"from "} {employeeInfo.experience[0].start} {" to "}
-                        {employeeInfo.experience[0].end}
+                        {"from "} {experience.start} {" to "}
+                        {experience.end}
                       </Typography>
                     </Paper>
                   </Grid>
+                  ))}
                 </CardContent>
               </Card>
             </Grid>
@@ -194,7 +197,6 @@ function ProfilePage() {
             spacing={2}
           >
             <Grid item sx={12}>
-              
               <Typography
                 variant="h3"
                 color="primary"
@@ -204,44 +206,49 @@ function ProfilePage() {
               </Typography>
             </Grid>
             {news.map((article) => (
-              <Grow in={true} timeout={1000}>
-              <Grid item xs={12} key={article.title}
-              
-              sx = {{
-                transition: "max-height 1s ease-in",
-                easing: "cube-bezier(0.075, 0.82, 0.165, 1)"
-              }}>
-                <Card sx = {{ borderRadius : 5 , backgroundColor : "#f5f5f5",}}>
-                  <CardActionArea href={article.link}>
-                    <CardContent>
-
-                      <Typography variant="h5" color = "primary" component="div">
-                        {article.title}
-                      </Typography>
-                      <Box
-                      sx={{
-                        position: "relative",
-                        backgroundColor : "white", 
-                        borderRadius: 5,
-                        shadow : 5,
-                        p : 1, 
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                      >
-                      <Typography variant="body2">
-                        {article.description}
-                      </Typography>
-                      </Box>
-                      <Typography variant="body2">{article.url}</Typography>
-                      <Typography variant="body2">
-                        {article.publishedAt}
-                      </Typography>
-                      <Typography variant="body2"></Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
+              <Grow key = {article.title} in={true} timeout={1000}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    transition: "max-height 1s ease-in",
+                    easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
+                  }}
+                >
+                  <Card sx={{ borderRadius: 5, backgroundColor: "#f5f5f5" }}>
+                    <CardActionArea href={article.link}>
+                      <CardContent>
+                        <Typography
+                          variant="h5"
+                          color="primary"
+                          component="div"
+                        >
+                          {article.title}
+                        </Typography>
+                        <Box
+                          sx={{
+                            position: "relative",
+                            backgroundColor: "white",
+                            borderRadius: 5,
+                            shadow: 5,
+                            p: 1,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <Typography variant="body2">
+                            {article.description}
+                          </Typography>
+                        </Box>
+                        <Typography variant="body2">{article.url}</Typography>
+                        <Typography variant="body2">
+                          {article.publishedAt}
+                        </Typography>
+                        <Typography variant="body2"></Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
               </Grow>
             ))}
           </Grid>

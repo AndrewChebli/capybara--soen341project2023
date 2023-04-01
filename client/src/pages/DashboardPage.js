@@ -23,21 +23,19 @@ function Dashboard() {
 
   useEffect(() => {
     async function getAllJobs() {
-      await fetch("http://localhost:8080/api/job/all", {
+     let response = await fetch("http://localhost:8080/api/job/all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       })
-        .then((response) => response.json())
-        .then((response) => {
-          setData(response);
-          setCurrentLink(response[0]._id);
-          setCurrentView(data.slice(0,5));
-        });
+      let data = await response.json();
+      setData(data);
+      setCurrentView(data.slice(0,5));
+      setCurrentLink(data[0]._id);
     }
     getAllJobs();
-  }, [data]);
+  }, []);
 
   if (localStorage.getItem("loginStatus") === "false") {
     window.location.href = "/SignInPage";
