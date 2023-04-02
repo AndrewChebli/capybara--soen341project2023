@@ -13,9 +13,11 @@ import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import SchoolIcon from "@mui/icons-material/School";
 import Paper from "@mui/material/Paper";
 import Grow from "@mui/material/Grow";
+import Carousel from "react-material-ui-carousel";
 
 function ProfilePage() {
   const [news, setNews] = useState([]);
+
   const [employeeInfo, setEmployeeInfo] = useState({
     firstName: "",
     lastName: "",
@@ -36,7 +38,29 @@ function ProfilePage() {
       },
     ],
     offers: [],
+    skills: [],
+    resume: "",
   });
+
+  useEffect(() => {
+    async function getEmployeeInfo() {
+      let response_from_backend = await fetch(
+        `http://localhost:8080/api/employee/getone/${localStorage.getItem(
+          "id"
+        )}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      let response = await response_from_backend.json();
+      console.log(response);
+      setEmployeeInfo(response.employee);
+    }
+    getEmployeeInfo();
+  }, []);
 
   useEffect(() => {
     async function getNews() {
@@ -55,30 +79,13 @@ function ProfilePage() {
       setNews(response.news.results);
     }
     getNews();
-
-    async function getEmployeeInfo() {
-      let response_from_backend = await fetch(
-        "http://localhost:8080/api/employee/getone/" +
-          localStorage.getItem("_id"),
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      let response = await response_from_backend.json();
-      console.log(response);
-      setEmployeeInfo(response.employee);
-    }
-    getEmployeeInfo();
-  }, [setEmployeeInfo]);
+  }, []);
 
   return (
     <Box>
       <Box sx={{ mt: 15, maxWidth: " 80%", pl: "10%" }}>
-        <Grid container direction="row ">
-          <Grid item container direction=" column " xs={8}>
+        <Grid container direction="row">
+          <Grid item container direction="column">
             <Grid item>
               <Card sx={{ borderRadius: 5 }}>
                 <CardMedia sx={{ height: 305, mt: 5 }}>
@@ -133,7 +140,7 @@ function ProfilePage() {
                     <Grid item xs={4}>
                       <Chip
                         icon={<SchoolIcon fontSize="small" />}
-                        label={"Bachelor's in " + employeeInfo.education.degree}
+                        label={employeeInfo.education.degree}
                       />
                     </Grid>
                   </Grid>
@@ -143,49 +150,63 @@ function ProfilePage() {
                         p: 2,
                         flexGrow: 1,
                         borderRadius: 5,
+                        mt: 2,
                       }}
                     >
                       <Typography variant="h6" sx={{ textAlign: "left" }}>
-                        I'm a software engineer with over five years of
-                        experience in developing and maintaining complex
-                        software systems. My expertise lies in developing
-                        scalable, maintainable, and secure applications using
-                        programming languages such as Java, Python, and
-                        JavaScript. I have a deep understanding of software
-                        design patterns, algorithms, and data structures, which
-                        allows me to write efficient and robust code.
+                        {employeeInfo.bio}
                       </Typography>
                     </Paper>
                   </Grid>
-                  
-                  {employeeInfo.experience.map((experience) => ( 
-                  <Grid item xs={12} key = {experience.position}>
-                    <Divider sx={{ my: 2 }} />
-                    <Paper
-                      sx={{
-                        p: 2,
-                        flexGrow: 1,
-                        borderRadius: 5,
-                      }}
-                    >
-                      <Typography variant="h4" sx={{ textAlign: "left" }}>
-                        {experience.position}
-                      </Typography>
-                      <Typography variant="h5" sx={{ textAlign: "left" }}>
-                        At {experience.company}
-                      </Typography>
-                      <Typography variant="h6" sx={{ textAlign: "left" }}>
-                        {experience.description}
-                      </Typography>
-                      <Typography variant="h6" sx={{ textAlign: "left" }}>
-                        {"from "} {experience.start} {" to "}
-                        {experience.end}
-                      </Typography>
-                    </Paper>
-                  </Grid>
+                  <Typography variant="h3" sx={{ my: 5, textAlign: "left" }}>
+                    Work Experience
+                  </Typography>
+                  {employeeInfo.experience.map((experience) => (
+                    <Grid item xs={12} key={experience.position}>
+                      <Divider sx={{ my: 4 }} />
+                      <Paper
+                        sx={{
+                          p: 2,
+                          flexGrow: 1,
+                          borderRadius: 5,
+                        }}
+                      >
+                        <Typography
+                          variant="h4"
+                          sx={{ textAlign: "left", my: 1 }}
+                        >
+                          {experience.position}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          sx={{ textAlign: "left", my: 1 }}
+                        >
+                          At {experience.company}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "left", mx: 5, my: 1 }}
+                        >
+                          {experience.description}
+                        </Typography>
+                        <Divider variant="middle" sx={{ my: 2 }}>
+                          <Typography
+                            variant="body3"
+                            sx={{ textAlign: "right" }}
+                          >
+                            {experience.start} {" to "}
+                            {experience.end}
+                          </Typography>
+                        </Divider>
+                      </Paper>
+                    </Grid>
                   ))}
                 </CardContent>
               </Card>
+            </Grid>
+            <Grid item sx={{ mt: 5 }}>
+              <Typography variant="h2">Resume</Typography>
+              {/* <ResumeViewer resume={employeeInfo.resume} /> */}
             </Grid>
           </Grid>
           <Grid
@@ -202,12 +223,57 @@ function ProfilePage() {
                 color="primary"
                 sx={{ textAlign: "left" }}
               >
+                Skills
+              </Typography>
+            </Grid>
+            {employeeInfo.skills.map((skill) => (
+              <Grow key={skill} in={true} timeout={1000}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    transition: "max-height 1s ease-in",
+                    easing: "cube-bezier(0.075, 0.82, 0.165, 1)",
+                  }}
+                >
+                  <Card sx={{ borderRadius: 5, backgroundColor: "#f5f5f5" }}>
+                    <CardContent>
+                      <Typography
+                        variant="h5"
+                        color="primary"
+                        component="div"
+                        sx={{ textAlign: "left" }}
+                      >
+                        {skill}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grow>
+            ))}
+
+            <Grid item sx={12}>
+              <Typography
+                variant="h3"
+                color="primary"
+                sx={{ textAlign: "left" }}
+              >
                 News
               </Typography>
             </Grid>
-            {news.map((article) => (
-              <Grow key = {article.title} in={true} timeout={1000}>
+            <Carousel
+              autoPlay={true}
+              interval={5000}
+              animation="slide"
+              sx={{
+                maxHeight: "100%",
+                minHeight: "100%",
+                width: "100%",
+              }}
+            >
+              {news.map((article) => (
                 <Grid
+                  key={article.title}
                   item
                   xs={12}
                   sx={{
@@ -249,8 +315,8 @@ function ProfilePage() {
                     </CardActionArea>
                   </Card>
                 </Grid>
-              </Grow>
-            ))}
+              ))}
+            </Carousel>
           </Grid>
         </Grid>
       </Box>

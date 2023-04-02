@@ -1,9 +1,53 @@
 import React from "react";
 import { Box, Grid, TextField, Typography } from "@mui/material";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
 
-function WorkExperienceBox(registerService) {
+function WorkExperienceBox(props) {
+
+  const [workExperience, setWorkExperience] = React.useState([
+    {
+      start: "",
+      end: "",
+      company: "",
+      position: "",
+      description: "",
+    }
+  ]);
+  
+  const handlePositionChange = (e) => {
+    let data = [...workExperience];
+    data[0].position = e.target.value;
+    setWorkExperience(data);
+    props.handleWorkExperience(workExperience);
+  }
+
+  const handleNameChange = (e) => {
+    let data = [...workExperience];
+    data[0].company = e.target.value;
+    setWorkExperience(data);
+    props.handleWorkExperience(workExperience);
+  }
+
+  const handleStartDateChange = (e) => {
+    let data = [...workExperience];
+    data[0].start = e.target.value;
+    setWorkExperience(data);
+    props.handleWorkExperience(workExperience);
+  }
+
+  const handleEndDateChange = (e) => {
+    let data = [...workExperience];
+    data[0].end = e.target.value;
+    setWorkExperience(data);
+    props.handleWorkExperience(workExperience);
+  }
+
+  const handleDescriptionChange = (e) => {
+    let data = [...workExperience];
+    data[0].description = e.target.value;
+    setWorkExperience(data);
+    props.handleWorkExperience(workExperience);
+  }
+
   return (
     <Box
       sx={{
@@ -21,20 +65,22 @@ function WorkExperienceBox(registerService) {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
-              name="jobTitle"
+              name="Position"
               required
               fullWidth
-              id="jobTitle"
-              label="Job Title"
+              id="Position"
+              label=" Position"
+              onChange = {(e) => {handlePositionChange(e)}}
             />
           </Grid>
           <Grid item xs={12} sm={20}>
             <TextField
-              name="companyName"
+              name="company"
               required
               fullWidth
-              id="companyName"
-              label="Company Name"
+              id="copmany"
+              label="Company"
+              onChange = {(e) => {handleNameChange(e)}}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -44,6 +90,7 @@ function WorkExperienceBox(registerService) {
               fullWidth
               id="dateStartedWork"
               type="date"
+              onChange = {(e) => {handleStartDateChange(e)}}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -52,6 +99,7 @@ function WorkExperienceBox(registerService) {
               fullWidth
               id="dateCompletedWork"
               type="date"
+              onChange = {(e) => {handleEndDateChange(e)}}
             />
           </Grid>
           <Grid item xs={12} sm={20}>
@@ -63,19 +111,8 @@ function WorkExperienceBox(registerService) {
               id="Description"
               label="Description"
               type="text"
+              onChange = {(e) => {handleDescriptionChange(e)}}
             />
-
-          </Grid>
-          
-          <Grid
-  container
-  direction="row"
-  justifyContent="center"
-  alignItems="center"
->
-            <Fab color="primary" aria-label="add" sx={{mt:3, ml: 4, mr:2}}>
-                <AddIcon />
-            </Fab>
           </Grid>
         </Grid>
       </Grid>

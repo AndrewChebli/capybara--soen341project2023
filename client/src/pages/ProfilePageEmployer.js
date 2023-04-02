@@ -13,16 +13,22 @@ import EmailIcon from "@mui/icons-material/Email";
 import BusinessIcon from "@mui/icons-material/Business";
 import Chip from "@mui/material/Chip";
 import JobPostingSummary from "../components/JobPostingSummary";
+import { useParams } from "react-router-dom";
 
-function ProfilePageEmployer() {
+function ProfilePageEmployer(props) {
   const [companyInfo, setCompanyInfo] = React.useState({});
   const [companyJobs, setCompanyJobs] = React.useState([]);
   const [currentLink, setCurrentLink] = React.useState();
 
+  let { id } = useParams();
+  if (id === undefined) {
+    id = localStorage.getItem("id");
+  }
+
   useEffect(() => {
     async function getCompanyInfo() {
       const response = await fetch(
-        "http://localhost:8080/api/company/getone/642363fb3184b0dc63800a4c",
+        `http://localhost:8080/api/company/getone/${id}`,
         {
           method: "GET",
           headers: {

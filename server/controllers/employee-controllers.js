@@ -78,6 +78,8 @@ const registerEmployee = async (req, res, next) => {
     resume: req.body.resume,
     resumeName: req.body.resumeName,
     skills: req.body.skills,
+    phoneNumber: req.body.phoneNumber,
+    bio: req.body.bio,
     experience: req.body.experience,
     education: req.body.education,
   });

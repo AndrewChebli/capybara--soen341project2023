@@ -5,6 +5,8 @@ import { Button, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import Chip from "@mui/material/Chip";
+import BusinessIcon from '@mui/icons-material/Business';
 
 function Offers() {
   const [offers, setOffers] = useState([]);
@@ -104,14 +106,23 @@ function Offers() {
                       {offerInfo.salary}
                     </Typography>
                       <Typography variant="body1" component="div">
-                        {offerInfo.email}Will add email
+                        {offerInfo.companyEmail}
+                      </Typography>
+                      <Typography variant="body1" component="div">
+                        <BusinessIcon /> { offerInfo.remote }
                       </Typography>
                   </Grid>
                   
                   <Divider orientation="vertical" flexItem variant="middle" />
                   <Grid item xs={2}>
-                    <Button color = "secondary">View Company</Button>
-                    <Button>View Job</Button>
+                    <Button color = "secondary"
+                      onClick={() => {
+                        window.location.href = `/ProfilePageEmployerPage/${offerInfo.company_id}` }}
+                    >View Company</Button>
+                    <Button
+                      onClick={() => {
+                        window.location.href = `/JobPostingPage/${offerInfo._id}` }}
+                    >View Job</Button>
                   </Grid>
                 </Grid>
               </Paper>

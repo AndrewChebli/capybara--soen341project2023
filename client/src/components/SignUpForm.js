@@ -1,50 +1,73 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
-import { Typography } from "@mui/material";
 import PersonalInformationBox from "./PersonalInformationBox";
 import WorkExperienceBox from "./WorkExperienceBox";
 import EducationBox from "./EducationBox";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
-
-let b64;
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepContent from "@mui/material/StepContent";
+import StepButton from "@mui/material/StepButton";
+import ResumeBox from "./ResumeBox";
 
 export default function SignUpForm() {
   const [resume, setResume] = useState(null);
+  const [personalInfo, setPersonalInfo] = useState(null);
+  const [workExperience, setWorkExperience] = useState(null);
+  const [education, setEducation] = useState(null);
+  const [resumeName, setResumeName] = useState(null);
+  const [skills, setSkills] = useState([""]);
+  const [bio , setBio] = useState(null);
 
-  const handleResumeChange = (event) => {
-    console.log("click");
-    let file = event.target.files[0],
-      reader = new FileReader();
+  const steps = [
+    {
+      label: "Personal Information",
+      description: "Enter your personal information",
+      component: <PersonalInformationBox handlePersonalInfo = {setPersonalInfo} handleBio = {setBio}/>,
+    },
+    {
+      label: "Work Experience",
+      description: "Enter your work experience",
+      component: <WorkExperienceBox handleWorkExperience={setWorkExperience} />,
+    },
+    {
+      label: "Education",
+      description: "Enter your education",
+      component: <EducationBox handleEducation={setEducation} handleSkills = {setSkills}/>,
+    },
+    {
+      label: "Resume",
+      description: "Upload your resume",
+      component: <ResumeBox handleResume={setResume} handleResumeName = {setResumeName} />,
+    },
+  ];
 
-    reader.onloadend = function () {
-      b64 = reader.result.replace(/^data:.+;base64,/, "");
-      console.log("triggered");
-      console.log(b64);
-    };
-    reader.readAsDataURL(file);
-    setResume(event.target.files[0]);
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const handleChange = (event) => {
+    if (activeStep === steps.length - 1 && resume !== null) {
+      registerService();
+    } else if (activeStep === steps.length - 1) {
+      alert("Please upload your resume");
+    } else {
+      handleNext();
+    }
   };
 
-  let resume_name = resume ? resume.name : "No file chosen";
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
-  async function registerService(event) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
 
-    //Prints the data to the console
-    //User Block
-    console.log(data.get(`firstName`));
-    console.log(data.get(`lastName`));
-    console.log(data.get(`email`));
-    console.log(data.get(`password`));
 
-    console.log(data.get(`resume`));
+  async function registerService() {
+
+    console.log("Personal info: " + JSON.stringify(personalInfo));
+    console.log("Work Experience: " + JSON.stringify(workExperience));
+    console.log("Education: " + JSON.stringify(education));
 
     const response = await fetch(
       "http://localhost:8080/api/employee/register",
@@ -54,25 +77,18 @@ export default function SignUpForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName: data.get("firstName"),
-          lastName: data.get("lastName"),
-          email: data.get("email"),
-          password: data.get("password"),
-          resumeName: resume_name,
-          resume: b64,
-          experience: {
-            company: data.get("companyName"),
-            title: data.get("jobTitle"),
-            start: data.get("dateStartedWork"),
-            end: data.get("dateCompletedWork"),
-            description: data.get("Description"),
-          },
-          education: {
-            school: data.get("school"),
-            degree: data.get("academicProgram"),
-            start: data.get("dateStartedSchool"),
-            end: data.get("dateCompletedSchool"),
-          },
+          firstName: personalInfo.firstName,
+          lastName: personalInfo.lastName,
+          email: personalInfo.email,
+          password: personalInfo.password,
+          phoneNumber: personalInfo.phoneNumber,
+          bio : bio,
+          skills: skills,
+          experience: workExperience,
+          education: education,
+          resume: resume,
+          resumeName: resumeName,
+
         }),
       }
     );
@@ -99,86 +115,30 @@ export default function SignUpForm() {
           alignItems: "stretch",
         }}
       >
-        <Grid container spacing={3} alignContent="center">
-          <Grid item xs={12}>
-            <Grid item xs={12}>
-              <Grid item xs={4}></Grid>
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar
-                  sx={{
-                    mt: 0.85,
-                    ml: 4,
-                    mb: 3,
-                    mr: 1,
-                    bgcolor: "secondary.main",
-                    justifyContent: "center",
-                    display: "flex",
-                  }}
-                >
-                  <LockOutlinedIcon />
-                </Avatar>
-
-                <Typography component="h3" variant="h3" sx={{ mb: 2, mr: 2 }}>
-                  Join the Hive!
-                </Typography>
-                {/* </Grid> */}
-              </Box>
-
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Grid item xs={1}>
-                  <Avatar
-                    sx={{ width: 128, height: 128, marginBottom: -5 }}
-                    alt="Profile picture"
-                  />
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <PersonalInformationBox />
-              <Grid item xs={12} sx={{ m: 3 }}>
-                <label htmlFor="resumeInput">
-                  <Typography component="h4" variant="h6">
-                    {`${resume_name}`}{" "}
-                  </Typography>
-                  <input
-                    id="resumeInput"
-                    name="resume"
-                    type="file"
-                    accept=".pdf, .docx"
-                    hidden
-                    onChange={handleResumeChange}
-                  />
-                  <AttachFileOutlinedIcon
-                    fontSize="large"
-                    color="primary"
-                    name="resumeIcon"
-                  ></AttachFileOutlinedIcon>
-                </label>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <WorkExperienceBox />
-          </Grid>
-          <Grid item xs={12}>
-            <EducationBox />
-          </Grid>
-
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ mb: 5, ml: 2 }}
-          >
-            <Button type="submit" variant="contained">
-              Sign Up
-            </Button>
-          </Grid>
-        </Grid>
+        <Stepper activeStep={activeStep} orientation="vertical">
+          {steps.map((step, index) => (
+            <Step key={step.label}>
+              <StepButton onClick={() => setActiveStep(index)}>
+                {step.label}
+              </StepButton>
+              <StepContent>
+                {step.component}
+                <Box sx={{ mb: 2 }}>
+                  <div>
+                    <Button
+                      variant="contained"
+                      onClick={handleChange}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      {activeStep === steps.length - 1 ? "Submit" : "Next"}
+                    </Button>
+                  </div>
+                </Box>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
       </Box>
-
-      {/* <Copyright marginTop={4} /> */}
     </Container>
   );
 }

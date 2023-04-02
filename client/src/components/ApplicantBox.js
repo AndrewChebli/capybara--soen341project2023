@@ -6,6 +6,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Grid from "@mui/material/Grid";
+import { Divider, ListItem, Paper } from "@mui/material";
+import SchoolIcon from "@mui/icons-material/School";
 
 const ApplicantBox = (applicant_id, job_id) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -34,6 +37,7 @@ const ApplicantBox = (applicant_id, job_id) => {
         }
       );
       const responseData = await response.json();
+      console.log(responseData);
       setApplicant(responseData.employee);
     };
     fetchApplicant();
@@ -54,20 +58,18 @@ const ApplicantBox = (applicant_id, job_id) => {
       }
     );
     const responseData = await response.json();
+    console.log(responseData);
     if (response === 500) {
       console.log("error");
-    }
-    else if (response === 200) {
+    } else if (response === 200) {
       setSelected(true);
-      console.log("success");
-    }else if (response.status === 422) {
+      window.alert("Applicant selected");
+    } else if (response.status === 422) {
       window.alert("Applicant already selected");
     }
     console.log(responseData);
   }
 
-  //
-  // {applicant.email}
   if (!applicant) {
     return <div />;
   } else {
@@ -76,7 +78,13 @@ const ApplicantBox = (applicant_id, job_id) => {
         <Accordion
           expanded={expanded === "panel2"}
           onChange={handleChange("panel2")}
-          sx={{ mb: 1 , backgroundColor: "#f5f5f5", borderRadius: 4, border: 1, borderColor: 'divider'}}
+          sx={{
+            mb: 1,
+            backgroundColor: "#f5f5f5",
+            borderRadius: 4,
+            border: 1,
+            borderColor: "divider",
+          }}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -91,27 +99,95 @@ const ApplicantBox = (applicant_id, job_id) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              {applicant.education.school}
-              {applicant.education.degree}
-              {applicant.education.start}
-              {applicant.education.end}
-            </Typography>
-            <Typography>
-              {applicant.experience.company}
-              {applicant.experience.position}
-              {applicant.experience.description}
-              {applicant.experience.start}
-              {applicant.experience.end}
-              <Button
-                sx={{ ml: 10 }}
-                variant="contained"
-                onClick={selectApplicant}
-                disabled={selected}
-              >
-                Select
-              </Button>
-            </Typography>
+            <Grid container spacing={2} direction="row">
+              <Grid item xs={6}>
+                <Paper sx={{ p: 2, m: 2 }}>
+                  <Typography sx={{ color: "text.secondary" }}>
+                    <Typography variant="h6" sx={{ color: "text.secondary" }}>
+                      Bio
+                    </Typography>
+                    {applicant.bio}
+                  </Typography>
+                </Paper>
+                <Paper sx={{ p: 2, m: 2 }}>
+                  <Typography sx={{ color: "text.secondary" }}>
+                    <SchoolIcon sx={{ mx: 2 }} />
+                    {applicant.education.degree}
+                  </Typography>
+                  <Typography sx={{ color: "text.secondary" }}>
+                    {applicant.education.school}
+                  </Typography>
+                </Paper>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Paper sx={{ p: 2, m: 2 }}>
+                  <Typography variant="h6" sx={{ color: "text.secondary" }}>
+                    Skills
+                  </Typography>
+                  <Typography sx={{ color: "text.secondary" }}>
+                    {applicant.skills.map((skill) => (
+                      <ListItem key={skill}>{skill}</ListItem>
+                    ))}
+                  </Typography>
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant="h6" sx={{ color: "text.secondary" }}>
+                  Experience
+                </Typography>
+              </Grid>
+              {applicant.experience.map((exp) => (
+                <Grid item xs={6} key={exp.position}>
+                  <Paper sx={{ p: 2, m: 2 }}>
+                    <Typography variant="h5" sx={{ color: "text.secondary" }}>
+                      {exp.position}
+                    </Typography>
+                    <Divider sx={{ my: 1 }} />
+                    <Typography variant="h6" sx={{ color: "text.secondary" }}>
+                      {exp.company}
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {exp.description}
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {exp.start_date}
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {exp.end_date}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+            <Grid item container direction="row" xs={12} sx={{ my: 2 }}>
+              <Grid item xs={4}>
+                <Button fullWidth  disabled={selected}
+                color = "secondary"
+                  onClick={() => {  
+                    window.location.href = `/ProfilePage/${applicant_id.applicant_id}`;
+                  }}
+                >
+                  Full Profile
+                </Button>
+              </Grid>
+              <Grid item xs={4}>
+                <Button fullWidth onClick={selectApplicant} disabled={selected}>
+                  Select
+                </Button>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  fullWidth
+                  color="error"
+                  onClick={selectApplicant}
+                  disabled={selected}
+                >
+                  Reject
+                </Button>
+              </Grid>
+            </Grid>
           </AccordionDetails>
         </Accordion>
       </Box>

@@ -17,10 +17,9 @@ import JobPostingPage from "./pages/JobPostingPage";
 import EditProfilePageEmployer from "./pages/EditProfilePageEmployer";
 import ProfilePageEmployer from "./pages/ProfilePageEmployer";
 import EditJobPosting from "./pages/EditJobPostingPage";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Reports from "./pages/ReportsPage";
-
 
 function App() {
   if (localStorage.getItem("loginStatus") === null) {
@@ -44,6 +43,8 @@ function App() {
           <Route path="/EditProfilePage" element={<EditProfilePage />} />
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path="/LogoutPage" element={<LogoutPage></LogoutPage>} />
+          <Route path = "/JobPostingPage/:id" element = {<JobPostingPage />} />
+          <Route path = "ViewCandidate/:id" element = {< ProfilePage />} />
           <Route
             path="/CreateJobPostingPage"
             element={<CreateJobPostingPage />}
@@ -54,8 +55,12 @@ function App() {
           />
           <Route path="/JobPostingPage/:id" element={<JobPostingPage />} />
           <Route
-            path="/EditProfilePageEmployerPage"
+            path="/EditProfileEmployerPage"
             element={<EditProfilePageEmployer />}
+          />
+          <Route
+            path="/ProfilePageEmployerPage/:id"
+            element={<ProfilePageEmployer />}
           />
           <Route
             path="/ProfilePageEmployerPage"

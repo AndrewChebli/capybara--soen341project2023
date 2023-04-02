@@ -22,6 +22,8 @@ function EditProfilePage() {
     localStorage.getItem("resume") ? localStorage.getItem("resume") : null
   );
   const [workExperience, setWorkExperience] = useState([""]);
+  const [skills, setSkills] = useState([""]);
+  const [bio, setBio] = useState("");
 
   const [resumeName, setResumeName] = useState(null);
 
@@ -47,6 +49,14 @@ function EditProfilePage() {
       },
     ],
   });
+
+  const handleSkillChange = async (e, index) => {
+    let data = [...skills];
+    data[index] = e.target.value;
+    console.log(data);
+    setSkills(data);
+  };
+
   const handlePositionChange = (event, index) => {
     let data = [...workExperience];
     data[index].position = event.target.value;
@@ -141,6 +151,8 @@ function EditProfilePage() {
       setResume(response.employee.resume);
       setResumeName(response.employee.resumeName);
       setWorkExperience(response.employee.experience);
+      setSkills(response.employee.skills);
+      setBio(response.employee.bio);
     }
     getEmployeeInfo();
   }, []);
@@ -169,6 +181,16 @@ function EditProfilePage() {
     } else {
       alert(response_from_backend.status + " " + response_from_backend);
     }
+  };
+
+  const addSkill = () => {
+    setSkills([...skills, ""]);
+  };
+
+  const removeSkill = (index) => {
+    let data = [...skills];
+    data.splice(index, 1);
+    setSkills(data);
   };
 
   function handleResumeChange(event) {
@@ -215,6 +237,8 @@ function EditProfilePage() {
             end: data.get("dateCompletedSchool"),
           },
           experience: workExperience,
+          skills: skills,
+          bio: data.get("bio"),
         }),
       }
     );
@@ -274,6 +298,20 @@ function EditProfilePage() {
               value={employeeInfo.lastName}
               onChange={(e) => {
                 setEmployeeInfo({ ...employeeInfo, lastName: e.target.value });
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="bio"
+              label="Bio"
+              name="bio"
+              value={bio}
+              multiline={true}
+              rows={4}
+              onChange={(e) => {
+                setBio(e.target.value);
               }}
             />
           </Grid>
@@ -385,6 +423,48 @@ function EditProfilePage() {
                     <Button onClick={() => removeWorkExperience(index)}>
                       <RemoveCircleIcon />
                     </Button>
+                  </div>
+                ))}
+              </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  component="h1"
+                  variant="h4"
+                  margin={2}
+                  marginTop={6}
+                >
+                  Skills
+                </Typography>
+                <Divider sx={{ my: 2 }} />
+              </Grid>
+              <Grid container spacing={2} direction="column">
+                {skills.map((skill, index) => (
+                  <div key={index}>
+                    <Grid container spacing={1} direction="row" sx = {{ my : 1}}>
+                      <Grid item xs={10} >
+                        <TextField
+                          name="skill"
+                          required
+                          fullWidth
+                          id="skill"
+                          label="Skill"
+                          value={skill}
+                          onChange={(e) => {
+                            handleSkillChange(e, index);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={1} >
+                      <Button onClick={addSkill}>
+                        <AddCircleIcon />
+                      </Button>
+                      </Grid>
+                      <Grid item xs={1} >
+                      <Button onClick={() => removeSkill(index)}>
+                        <RemoveCircleIcon />
+                      </Button>
+                      </Grid>
+                    </Grid>
                   </div>
                 ))}
               </Grid>

@@ -11,6 +11,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Divider from "@mui/material/Divider";
 
 function CreateJobPostingPage() {
+  
   styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,

@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
 
-function ResumeViewer(base) {
+function ResumeViewer(props) {
   const base64_resume = localStorage.getItem("resume");
   console.log("Resume Viewer");
   // console.log(base64_resume)

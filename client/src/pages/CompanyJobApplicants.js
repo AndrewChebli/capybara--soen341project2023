@@ -113,7 +113,6 @@ const CompanyJobApplicants = () => {
                 sx = {{mr : 2}}
               >
                 <EditIcon/>
-                Edit
               </Button>
               <Button
                 variant="contained"
@@ -121,7 +120,6 @@ const CompanyJobApplicants = () => {
                 onClick={() => handleOpen(job._id)}
               >
                 <DeleteIcon/>
-                Delete
               </Button>
               </Box>
 

@@ -26,6 +26,8 @@ function JobPostingDetail(props) {
   const [loaded, setLoaded] = React.useState(false);
   const [id, setId] = React.useState(props.id);
 
+
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -47,12 +49,22 @@ function JobPostingDetail(props) {
     type: "",
     deadline: "",
   });
-
+  let param = useParams().id;
   useEffect(() => {
+
+    console.log("props.id " + props.id);
+    console.log("url " + JSON.stringify(param));
+
+    if (props.id === undefined) {
+      console.log("here");
+      setId(param);
+    } else {
+      setId(props.id);
+    }
     async function getOneJob() {
       let response_from_backend;
       response_from_backend = await fetch(
-        "http://localhost:8080/api/job/getone/" + props.id,
+        "http://localhost:8080/api/job/getone/" + id,
         {
           method: "GET",
           headers: {
@@ -76,7 +88,7 @@ function JobPostingDetail(props) {
       }
     }
     getOneJob();
-  }, [props]);
+  }, [id, param, props.id]);
 
   async function applyToJob() {
     console.log("apply to job");
@@ -107,102 +119,67 @@ function JobPostingDetail(props) {
     console.log(data);
     setApplied(true);
   }
-  if (!loaded) {
-    return (
-      <div>
-        <h1>loading</h1>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <Card
-          sx={{
-            minWidth: "85%",
-            maxWidth: "85%",
-            bgcolor: "#f5f5f5",
-            borderRadius: 5,
-            boxShadow: 10,
-            p: 2,
-          }}
-        >
-          <CardContent>
-            <Grid container spacing={2} direction="column">
-              <Grid item xs={12}>
-                <Typography
-                  gutterBottom
-                  variant="h3"
-                  component="div"
-                  sx={{ textAlign: "left", fontWeight: "bold" }}
-                >
-                  {data.title}
-                </Typography>
-                <Divider />
-              </Grid>
-              <Grid item xs={8}>
-                <Typography
-                  gutterBottom
-                  variant="h6"
-                  component="div"
-                  sx={{ textAlign: "left", fontWeight: "bold" }}
-                >
-                  {data.company}
-                </Typography>
-              </Grid>
 
-              <Grid
-                item
-                container
-                xs={12}
-                spacing={1}
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
+    return (
+      <Card
+        sx={{
+          minWidth: "85%",
+          maxWidth: "85%",
+          bgcolor: "#f5f5f5",
+          borderRadius: 5,
+          boxShadow: 10,
+          p: 2,
+        }}
+      >
+        <CardContent>
+          <Grid container spacing={2} direction="column">
+            <Grid item xs={12}>
+              <Typography
+                gutterBottom
+                variant="h3"
+                component="div"
+                sx={{ textAlign: "left", fontWeight: "bold" }}
               >
-                <Grid item xs="auto">
-                  <Chip
-                    icon={<LocationOnIcon fontSize="small" />}
-                    label={data.location}
-                  />
-                  <Chip
-                    icon={<PaidIcon fontSize="small" />}
-                    label={data.salary}
-                  />
-                </Grid>
-                <Grid item xs="auto">
-                  <Chip
-                    icon={<EmojiTransportationIcon fontSize="small" />}
-                    label={data.remote}
-                  />
-                  <Chip
-                    icon={<WorkIcon fontSize="small" />}
-                    label={data.type}
-                  />
-                </Grid>
+                {data.title}
+              </Typography>
+              <Divider />
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                gutterBottom
+                variant="h6"
+                component="div"
+                sx={{ textAlign: "left", fontWeight: "bold" }}
+              >
+                {data.company}
+              </Typography>
+            </Grid>
+
+            <Grid
+              item
+              container
+              xs={12}
+              spacing={1}
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              <Grid item xs="auto">
+                <Chip
+                  icon={<LocationOnIcon fontSize="small" />}
+                  label={data.location}
+                />
+                <Chip
+                  icon={<PaidIcon fontSize="small" />}
+                  label={data.salary}
+                />
               </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  gutterBottom
-                  variant="h4"
-                  component="div"
-                  sx={{
-                    pt: 2,
-                    textAlign: "left",
-                    fontWeight: "bold",
-                    fontSize: main_font_size,
-                  }}
-                >
-                  Company
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  gutterBottom
-                  component="div"
-                  sx={{ textAlign: "left" }}
-                >
-                  {data.companyDescription}
-                </Typography>
+              <Grid item xs="auto">
+                <Chip
+                  icon={<EmojiTransportationIcon fontSize="small" />}
+                  label={data.remote}
+                />
+                <Chip icon={<WorkIcon fontSize="small" />} label={data.type} />
               </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -211,138 +188,157 @@ function JobPostingDetail(props) {
                 variant="h4"
                 component="div"
                 sx={{
+                  pt: 2,
                   textAlign: "left",
                   fontWeight: "bold",
                   fontSize: main_font_size,
-                  py: 2,
                 }}
               >
-                Job Description
+                Company
               </Typography>
+            </Grid>
+            <Grid item xs={12}>
               <Typography
                 gutterBottom
                 component="div"
                 sx={{ textAlign: "left" }}
               >
-                {data.description}
+                {data.companyDescription}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Typography
-                gutterBottom
-                variant="h4"
-                component="div"
-                sx={{
-                  pt: 2,
-                  textAlign: "left",
-                  fontWeight: "bold",
-                  fontSize: main_font_size,
-                }}
-              >
-                Requirements
-              </Typography>
-            </Grid>
-            <Item sx={{ gridColumn: "2/5" }}>
-              <List>
-                {data.requirements.map((requirement, index) => (
-                  <ListItem>
-                    <CircleIcon sx={{ fontSize: 8, px: 2 }} />
-                    <Typography
-                      key={index}
-                      gutterBottom
-                      variant="h4"
-                      component="div"
-                      sx={{ textAlign: "left", fontSize: sub_font_size }}
-                    >
-                      {requirement}
-                    </Typography>
-                  </ListItem>
-                ))}
-              </List>
-            </Item>
-
-            <Item sx={{ gridColumn: "1/5" }}>
-              <Typography
-                gutterBottom
-                variant="h4"
-                component="div"
-                sx={{
-                  pt: 2,
-                  textAlign: "left",
-                  fontWeight: "bold",
-                  fontSize: main_font_size,
-                }}
-              >
-                {"Benefits "}
-              </Typography>
-            </Item>
-            <Item sx={{ gridColumn: "2/5" }}>
-              <List>
-                {data.benefits.map((benefit, index) => (
-                  <ListItem>
-                    <CircleIcon sx={{ fontSize: 8, px: 2 }} />
-                    <Typography
-                      key={index}
-                      gutterBottom
-                      variant="h4"
-                      component="div"
-                      sx={{
-                        fontSize: sub_font_size,
-                        textAlign: "left",
-                      }}
-                    >
-                      {benefit}
-                    </Typography>
-                  </ListItem>
-                ))}
-              </List>
-            </Item>
-            <Box>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={applyToJob}
-                name="apply"
-                id="apply"
-              >
-                Apply
-              </Button>
-            </Box>
-
-            <Snackbar
-              open={openSuccess}
-              autoHideDuration={6000}
-              onClose={() => setOpenSuccess(false)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="div"
+              sx={{
+                textAlign: "left",
+                fontWeight: "bold",
+                fontSize: main_font_size,
+                py: 2,
+              }}
             >
-              <Alert
-                onClose={handleClose}
-                severity="success"
-                sx={{ width: "100%" }}
-              >
-                Application Successful!
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              open={openError}
-              autoHideDuration={6000}
-              onClose={() => setOpenError(false)}
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              Job Description
+            </Typography>
+            <Typography gutterBottom component="div" sx={{ textAlign: "left" }}>
+              {data.description}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="div"
+              sx={{
+                pt: 2,
+                textAlign: "left",
+                fontWeight: "bold",
+                fontSize: main_font_size,
+              }}
             >
-              <Alert
-                onClose={handleClose}
-                severity="warning"
-                sx={{ width: "100%" }}
-              >
-                You already Applied to this Job!
-              </Alert>
-            </Snackbar>
-            <Box sx={{ pb: 5 }}></Box>
-          </CardContent>
-        </Card>
-      </div>
+              Requirements
+            </Typography>
+          </Grid>
+          <Item sx={{ gridColumn: "2/5" }}>
+            <List>
+              {data.requirements.map((requirement, index) => (
+                <ListItem>
+                  <CircleIcon sx={{ fontSize: 8, px: 2 }} />
+                  <Typography
+                    key={index}
+                    gutterBottom
+                    variant="h4"
+                    component="div"
+                    sx={{ textAlign: "left", fontSize: sub_font_size }}
+                  >
+                    {requirement}
+                  </Typography>
+                </ListItem>
+              ))}
+            </List>
+          </Item>
+
+          <Item sx={{ gridColumn: "1/5" }}>
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="div"
+              sx={{
+                pt: 2,
+                textAlign: "left",
+                fontWeight: "bold",
+                fontSize: main_font_size,
+              }}
+            >
+              {"Benefits "}
+            </Typography>
+          </Item>
+          <Item sx={{ gridColumn: "2/5" }}>
+            <List>
+              {data.benefits.map((benefit, index) => (
+                <ListItem>
+                  <CircleIcon sx={{ fontSize: 8, px: 2 }} />
+                  <Typography
+                    key={index}
+                    gutterBottom
+                    variant="h4"
+                    component="div"
+                    sx={{
+                      fontSize: sub_font_size,
+                      textAlign: "left",
+                    }}
+                  >
+                    {benefit}
+                  </Typography>
+                </ListItem>
+              ))}
+            </List>
+          </Item>
+          <Box>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={applyToJob}
+              name="apply"
+              id="apply"
+            >
+              Apply
+            </Button>
+          </Box>
+
+          <Snackbar
+            open={openSuccess}
+            autoHideDuration={6000}
+            onClose={() => setOpenSuccess(false)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              Application Successful!
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={openError}
+            autoHideDuration={6000}
+            onClose={() => setOpenError(false)}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="warning"
+              sx={{ width: "100%" }}
+            >
+              You already Applied to this Job!
+            </Alert>
+          </Snackbar>
+          <Box sx={{ pb: 5 }}></Box>
+        </CardContent>
+      </Card>
     );
   }
-}
 
 export default JobPostingDetail;
