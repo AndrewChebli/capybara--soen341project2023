@@ -6,7 +6,7 @@ import ResumeViewer from "../components/ResumeViewer";
 import Grid from "@mui/material/Grid";
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import {
+import { 
   Button,
   Card,
   CardActionArea,
