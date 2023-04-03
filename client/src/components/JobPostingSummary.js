@@ -58,6 +58,7 @@ function JobPostingSummary(props) {
   const { data, handleLinkChange } = props;
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [reportReason, setReportReason] = React.useState("");
+  const [favorite, setIsFavorite] = React.useState(false);
   let title = data.title;
   let company = data.company;
   let description = data.description;
@@ -76,6 +77,11 @@ function JobPostingSummary(props) {
     e.stopPropagation();
     setIsModalOpen(true);
   };
+  
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    setIsFavorite(true);
+  }
 
   const handleReportReasonChange = (event) => {
     setReportReason(event.target.value);
@@ -183,8 +189,8 @@ function JobPostingSummary(props) {
                     </Typography>
                   </Grid>
                   <Grid item xs={2}>
-                    <Button>
-                      <BookmarkAddIcon />
+                    <Button onClick={handleFavoriteClick}>
+                      <BookmarkAddIcon color={favorite? "warning" : "disabled"} />
                     </Button>
                     <Button onClick={handleReportClick}>
                       <FlagIcon color={reportReason ? "error" : "disabled"} />
