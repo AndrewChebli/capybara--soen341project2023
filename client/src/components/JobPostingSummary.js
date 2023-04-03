@@ -77,10 +77,14 @@ function JobPostingSummary(props) {
     e.stopPropagation();
     setIsModalOpen(true);
   };
-  
+
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
+    if(favorite === false){
     setIsFavorite(true);
+    }else{
+      setIsFavorite(false);
+    }
   }
 
   const handleReportReasonChange = (event) => {
