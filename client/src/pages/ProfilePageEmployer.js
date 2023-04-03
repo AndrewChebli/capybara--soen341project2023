@@ -28,7 +28,7 @@ function ProfilePageEmployer(props) {
   useEffect(() => {
     async function getCompanyInfo() {
       const response = await fetch(
-        `http://localhost:8080/api/company/getone/${id}`,
+        "http://localhost:8080/api/company/getone/" + id,
         {
           method: "GET",
           headers: {
@@ -41,7 +41,7 @@ function ProfilePageEmployer(props) {
       if (response.status === 200) {
         setCompanyInfo(data);
       } else {
-        window.location.href = "/SignInPage";
+        // window.location.href = "/SignInPage";
       }
     }
     getCompanyInfo();

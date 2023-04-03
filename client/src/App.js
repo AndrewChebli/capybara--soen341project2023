@@ -45,6 +45,7 @@ function App() {
           <Route path="/LogoutPage" element={<LogoutPage></LogoutPage>} />
           <Route path = "/JobPostingPage/:id" element = {<JobPostingPage />} />
           <Route path = "ViewCandidate/:id" element = {< ProfilePage />} />
+          <Route path = "ProfilePage/:id" element = {< ProfilePage />} />
           <Route
             path="/CreateJobPostingPage"
             element={<CreateJobPostingPage />}

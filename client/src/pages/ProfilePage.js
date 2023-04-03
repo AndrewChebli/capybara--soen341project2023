@@ -6,7 +6,13 @@ import ResumeViewer from "../components/ResumeViewer";
 import Grid from "@mui/material/Grid";
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 import Chip from "@mui/material/Chip";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
@@ -14,8 +20,10 @@ import SchoolIcon from "@mui/icons-material/School";
 import Paper from "@mui/material/Paper";
 import Grow from "@mui/material/Grow";
 import Carousel from "react-material-ui-carousel";
+import { useParams } from "react-router-dom";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 
-function ProfilePage() {
+function ProfilePage(props) {
   const [news, setNews] = useState([]);
 
   const [employeeInfo, setEmployeeInfo] = useState({
@@ -41,13 +49,16 @@ function ProfilePage() {
     skills: [],
     resume: "",
   });
-
+  let url = useParams().id;
   useEffect(() => {
     async function getEmployeeInfo() {
+      let id = localStorage.getItem("_id");
+      if (url !== undefined) {
+        id = url;
+      }
+      console.log(id);
       let response_from_backend = await fetch(
-        `http://localhost:8080/api/employee/getone/${localStorage.getItem(
-          "id"
-        )}`,
+        "http://localhost:8080/api/employee/getone/" + id,
         {
           method: "GET",
           headers: {
@@ -60,7 +71,7 @@ function ProfilePage() {
       setEmployeeInfo(response.employee);
     }
     getEmployeeInfo();
-  }, []);
+  }, [url]);
 
   useEffect(() => {
     async function getNews() {
@@ -81,11 +92,23 @@ function ProfilePage() {
     getNews();
   }, []);
 
+
   return (
     <Box>
       <Box sx={{ mt: 15, maxWidth: " 80%", pl: "10%" }}>
         <Grid container direction="row">
-          <Grid item container direction="column">
+          <Grid item container direction="column" xs={8}>
+            {url !== undefined ? (
+              <Button
+                variant="contained"
+                sx={{ mb: 5 }}
+                href="../CompanyJobApplicantsPage"
+              >
+                Return to Applicants
+              </Button>
+            ) : (
+              <div></div>
+            )}
             <Grid item>
               <Card sx={{ borderRadius: 5 }}>
                 <CardMedia sx={{ height: 305, mt: 5 }}>
@@ -206,7 +229,9 @@ function ProfilePage() {
             </Grid>
             <Grid item sx={{ mt: 5 }}>
               <Typography variant="h2">Resume</Typography>
-              {/* <ResumeViewer resume={employeeInfo.resume} /> */}
+              <Document file={`data:application/pdf;base64,${employeeInfo.resume}`}>
+                <Page pageNumber={1}  renderTextLayer={false}/>
+              </Document>
             </Grid>
           </Grid>
           <Grid
@@ -226,8 +251,8 @@ function ProfilePage() {
                 Skills
               </Typography>
             </Grid>
-            {employeeInfo.skills.map((skill) => (
-              <Grow key={skill} in={true} timeout={1000}>
+            {employeeInfo.skills.map((skill, index) => (
+              <Grow key={skill} in={true} timeout={index * 1000}>
                 <Grid
                   item
                   xs={12}
