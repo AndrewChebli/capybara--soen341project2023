@@ -389,32 +389,34 @@ const addBookmark = async (req, res, next) => {
 
 const deleteBookmark = async (req, res, next) => {
   let _id = req.params._id;
+  let bookmarkToDelete = req.body.index;
+  console.log("We got here" + bookmarkToDelete)
   let existingEmployee;
 
-  try {
-    existingEmployee = await Employee.findById(_id).exec();
-  } catch (err) {
+  try{
+    existingEmployee = await Employee.findById(_id);
+  }catch(err){
     const error = new HttpError(
-      "Something went wrong, could not find a employee.",
+      "Something went wrong, could not find employee.",
       500
     );
     return next(error);
   }
 
-  existingEmployee.bookmarks = existingEmployee.bookmarks.filter(
-    (bookmark) => bookmark._id !== req.body._id
-  );
-    
-  try {
-    await existingEmployee.save();
-  } catch (err) {
+  console.log(existingEmployee.bookmarks);
+  existingEmployee.bookmarks.splice(bookmarkToDelete, 1);
+  console.log(existingEmployee.bookmarks);
+
+  try{
+    existingEmployee.save();
+  }catch(err){
     const error = new HttpError(
-      "Something went wrong, could not delete bookmark.",
+      "Something went wrong, could delete bookmark.",
       500
     );
     return next(error);
   }
-
+  
   res.json({ status: 200, message: "Deleted bookmark" });
 };
   
