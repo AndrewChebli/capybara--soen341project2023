@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,10 +8,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
-import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 let b64 = localStorage.getItem("resume")
   ? localStorage.getItem("resume")
@@ -21,6 +21,9 @@ function EditProfilePage() {
   const [resume, setResume] = useState(
     localStorage.getItem("resume") ? localStorage.getItem("resume") : null
   );
+  const [workExperience, setWorkExperience] = useState([""]);
+  const [skills, setSkills] = useState([""]);
+  const [bio, setBio] = useState("");
 
   const [resumeName, setResumeName] = useState(null);
 
@@ -46,6 +49,87 @@ function EditProfilePage() {
       },
     ],
   });
+
+  const handleSkillChange = async (e, index) => {
+    let data = [...skills];
+    data[index] = e.target.value;
+    console.log(data);
+    setSkills(data);
+  };
+
+  const handlePositionChange = (event, index) => {
+    let data = [...workExperience];
+    data[index].position = event.target.value;
+    setWorkExperience(data);
+  };
+
+  const handleCompanyChange = (event, index) => {
+    let data = [...workExperience];
+    data[index].company = event.target.value;
+    setWorkExperience(data);
+    setEmployeeInfo({
+      ...employeeInfo,
+      experience: workExperience,
+    });
+  };
+
+  const handleDescriptionChange = (event, index) => {
+    let data = [...workExperience];
+    data[index].description = event.target.value;
+    setWorkExperience(data);
+    setEmployeeInfo({
+      ...employeeInfo,
+      experience: workExperience,
+    });
+  };
+
+  const handleStartChange = (event, index) => {
+    let data = [...workExperience];
+    data[index].start = event.target.value;
+    setWorkExperience(data);
+    setEmployeeInfo({
+      ...employeeInfo,
+      experience: workExperience,
+    });
+  };
+
+  const handleEndChange = (event, index) => {
+    let data = [...workExperience];
+    data[index].end = event.target.value;
+    setWorkExperience(data);
+    setEmployeeInfo({
+      ...employeeInfo,
+      experience: workExperience,
+    });
+  };
+
+  const addWorkExperience = () => {
+    setWorkExperience([
+      ...workExperience,
+      {
+        company: "",
+        position: "",
+        description: "",
+        start: "",
+        end: "",
+      },
+    ]);
+    setEmployeeInfo({
+      ...employeeInfo,
+      experience: workExperience,
+    });
+  };
+
+  const removeWorkExperience = (index) => {
+    let data = [...workExperience];
+    data.splice(index, 1);
+    setWorkExperience(data);
+    setEmployeeInfo({
+      ...employeeInfo,
+      experience: workExperience,
+    });
+  };
+
   useEffect(() => {
     async function getEmployeeInfo() {
       let response_from_backend;
@@ -66,6 +150,9 @@ function EditProfilePage() {
       setEmployeeInfo(response.employee);
       setResume(response.employee.resume);
       setResumeName(response.employee.resumeName);
+      setWorkExperience(response.employee.experience);
+      setSkills(response.employee.skills);
+      setBio(response.employee.bio);
     }
     getEmployeeInfo();
   }, []);
@@ -94,6 +181,16 @@ function EditProfilePage() {
     } else {
       alert(response_from_backend.status + " " + response_from_backend);
     }
+  };
+
+  const addSkill = () => {
+    setSkills([...skills, ""]);
+  };
+
+  const removeSkill = (index) => {
+    let data = [...skills];
+    data.splice(index, 1);
+    setSkills(data);
   };
 
   function handleResumeChange(event) {
@@ -139,15 +236,9 @@ function EditProfilePage() {
             start: data.get("dateStartedSchool"),
             end: data.get("dateCompletedSchool"),
           },
-          experience: [
-            {
-              company: data.get("companyName"),
-              position: data.get("position"),
-              description: data.get("description"),
-              start: data.get("dateStartedWork"),
-              end: data.get("dateCompletedWork"),
-            },
-          ],
+          experience: workExperience,
+          skills: skills,
+          bio: data.get("bio"),
         }),
       }
     );
@@ -210,6 +301,20 @@ function EditProfilePage() {
               }}
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="bio"
+              label="Bio"
+              name="bio"
+              value={bio}
+              multiline={true}
+              rows={4}
+              onChange={(e) => {
+                setBio(e.target.value);
+              }}
+            />
+          </Grid>
           <Grid item xs={12} sx={{ m: 3 }}>
             <label htmlFor="resumeInput">
               <Typography component="h4" variant="h6">
@@ -242,115 +347,126 @@ function EditProfilePage() {
                   Work Experience
                 </Typography>
                 <Divider sx={{ mb: 2 }} />
-
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      name="position"
-                      required
-                      fullWidth
-                      id="position"
-                      label="Position"
-                      value={employeeInfo.experience[0].position}
-                      onChange={(e) => {
-                        setEmployeeInfo({
-                          ...employeeInfo,
-                          experience: [
-                            {
-                              ...employeeInfo.experience[0],
-                              position: e.target.value,
-                            },
-                          ],
-                        });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={20}>
-                    <TextField
-                      name="companyName"
-                      required
-                      fullWidth
-                      id="companyName"
-                      label="Company Name"
-                      value={employeeInfo.experience[0].company}
-                      onChange={(e) => {
-                        setEmployeeInfo({
-                          ...employeeInfo,
-                          experience: [
-                            {
-                              ...employeeInfo.experience[0],
-                              company: e.target.value,
-                            },
-                          ],
-                        });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="dateStartedWork"
-                      required
-                      fullWidth
-                      id="dateStartedWork"
-                      type="date"
-                      value={employeeInfo.experience[0].start}
-                      onChange={(e) => {
-                        setEmployeeInfo({
-                          ...employeeInfo,
-                          experience: [
-                            {
-                              ...employeeInfo.experience[0],
-                              start: e.target.value,
-                            },
-                          ],
-                        });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="dateCompletedWork"
-                      fullWidth
-                      id="dateCompletedWork"
-                      type="date"
-                      onChange={(e) => {
-                        setEmployeeInfo({
-                          ...employeeInfo,
-                          experience: [
-                            {
-                              ...employeeInfo.experience[0],
-                              end: e.target.value,
-                            },
-                          ],
-                        });
-                      }}
-                      value={employeeInfo.experience[0].end}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={20}>
-                    <TextField
-                      multiline={true}
-                      rows={4}
-                      name="description"
-                      fullWidth
-                      id="description"
-                      label="Description"
-                      type="text"
-                      onChange={(e) => {
-                        setEmployeeInfo({
-                          ...employeeInfo,
-                          experience: [
-                            {
-                              ...employeeInfo.experience[0],
-                              description: e.target.value,
-                            },
-                          ],
-                        });
-                      }}
-                      value={employeeInfo.experience[0].description}
-                    />
-                  </Grid>
-                </Grid>
+                {workExperience.map((exp, index) => (
+                  <div key={index}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <TextField
+                          name="position"
+                          required
+                          fullWidth
+                          id="position"
+                          label="Position"
+                          value={exp.position}
+                          onChange={(e) => {
+                            handlePositionChange(e, index);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={20}>
+                        <TextField
+                          name="companyName"
+                          required
+                          fullWidth
+                          id="companyName"
+                          label="Company Name"
+                          value={exp.company}
+                          onChange={(e) => {
+                            handleCompanyChange(e, index);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          name="dateStartedWork"
+                          required
+                          fullWidth
+                          id="dateStartedWork"
+                          type="date"
+                          value={exp.start}
+                          onChange={(e) => {
+                            handleStartChange(e, index);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          name="dateCompletedWork"
+                          fullWidth
+                          id="dateCompletedWork"
+                          type="date"
+                          onChange={(e) => {
+                            handleEndChange(e, index);
+                          }}
+                          value={exp.end}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={20}>
+                        <TextField
+                          multiline={true}
+                          rows={4}
+                          name="description"
+                          fullWidth
+                          id="description"
+                          label="Description"
+                          type="text"
+                          onChange={(e) => {
+                            handleDescriptionChange(e, index);
+                          }}
+                          value={exp.description}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Button onClick={addWorkExperience} sx={{ ml: "84%" }}>
+                      <AddCircleIcon />
+                    </Button>
+                    <Button onClick={() => removeWorkExperience(index)}>
+                      <RemoveCircleIcon />
+                    </Button>
+                  </div>
+                ))}
+              </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  component="h1"
+                  variant="h4"
+                  margin={2}
+                  marginTop={6}
+                >
+                  Skills
+                </Typography>
+                <Divider sx={{ my: 2 }} />
+              </Grid>
+              <Grid container spacing={2} direction="column">
+                {skills.map((skill, index) => (
+                  <div key={index}>
+                    <Grid container spacing={1} direction="row" sx = {{ my : 1}}>
+                      <Grid item xs={10} >
+                        <TextField
+                          name="skill"
+                          required
+                          fullWidth
+                          id="skill"
+                          label="Skill"
+                          value={skill}
+                          onChange={(e) => {
+                            handleSkillChange(e, index);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={1} >
+                      <Button onClick={addSkill}>
+                        <AddCircleIcon />
+                      </Button>
+                      </Grid>
+                      <Grid item xs={1} >
+                      <Button onClick={() => removeSkill(index)}>
+                        <RemoveCircleIcon />
+                      </Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                ))}
               </Grid>
             </Box>
           </Grid>

@@ -78,6 +78,8 @@ const registerEmployee = async (req, res, next) => {
     resume: req.body.resume,
     resumeName: req.body.resumeName,
     skills: req.body.skills,
+    phoneNumber: req.body.phoneNumber,
+    bio: req.body.bio,
     experience: req.body.experience,
     education: req.body.education,
   });
@@ -237,7 +239,8 @@ const getAllOffers = async (req, res, next) => {
   for (let i = 0; i < allOffers.length; i++) {
     allOffers[i] = allOffers[i].toObject({ getters: true });
     for (let j = 0; j < allOffers[i].selected_applicants.length; j++) {
-      if (_id === allOffers[i].selected_applicants[j]) {
+      if (_id === allOffers[i].selected_applicants[j].applicant_id) {
+        console.log("found")
         myOffers.push(allOffers[i]);
       }
     }
@@ -246,6 +249,40 @@ const getAllOffers = async (req, res, next) => {
   res.json({ status: 200, offers: myOffers });
 };
 
+const getNews = async (req, res, next) => {
+  let news;
+  try {
+    news  = fetch("https://newsdata.io/api/1/news?apikey=pub_198561604e298373f3b46663b31ff10631502&language=en&category=business,technology", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let response = await news;
+    response = await response.json();
+    
+    if(response.status === "success"){
+      console.log(
+        "=========================worked========================="
+      )
+      res.json({status: 200, news: response});
+    }
+    else{
+      const error = new HttpError(
+        "Something went wrong, could not find news.",
+        500
+      );
+      return next(error);
+    }
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find news.",
+      500
+    );
+    return next(error);
+  }
+}
+
 exports.getAllEmployess = getAllEmployess;
 exports.getEmployeeById = getEmployeeById;
 exports.registerEmployee = registerEmployee;
@@ -253,3 +290,4 @@ exports.updateEmployee = updateEmployee;
 exports.deleteEmployee = deleteEmployee;
 exports.loginEmployee = loginEmployee;
 exports.getAllOffers = getAllOffers;
+exports.getNews = getNews;

@@ -11,6 +11,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Divider from "@mui/material/Divider";
 
 function CreateJobPostingPage() {
+  
   styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -68,8 +69,8 @@ function CreateJobPostingPage() {
       location: data.get("location"),
       deadline: data.get("deadline"),
       company_id: localStorage.getItem("_id"),
-      remote : data.get("remote"),
-      type : data.get("type")
+      remote: data.get("remote"),
+      type: data.get("type"),
     });
 
     //===============FRONTEND ENDPOINT=================
@@ -90,15 +91,15 @@ function CreateJobPostingPage() {
           requirements: requirements,
           deadline: data.get("deadline"),
           company_id: localStorage.getItem("_id"),
-          remote : data.get("remote"),
-          type : data.get("type")
+          remote: data.get("remote"),
+          type: data.get("type"),
         }),
       }
     );
 
     console.log(response_from_backend);
     let result = await response_from_backend.json();
-    console.log(result)
+    console.log(result);
     if (response_from_backend.status === 201) {
       alert("Job Posting Created Successfully");
     } else {
@@ -156,10 +157,10 @@ function CreateJobPostingPage() {
                   <Grid container direction={"row"} spacing={1} sx={{ my: 1 }}>
                     <Grid item xs={10}>
                       <TextField
-                        name="requirements"
+                        name="requirement"
                         required
                         fullWidth
-                        id="requirements"
+                        id={index}
                         label="Job Requirements"
                         placeholder="Enter a requirement"
                         value={requirement}
@@ -168,7 +169,7 @@ function CreateJobPostingPage() {
                       />
                     </Grid>
                     <Grid item xs={2}>
-                      <Button onClick={removeRequirement}>
+                      <Button onClick={() => removeRequirement(index)}>
                         <RemoveCircleIcon />
                       </Button>
                     </Grid>
@@ -182,7 +183,7 @@ function CreateJobPostingPage() {
           </Grid>
 
           <Grid item xs={12}>
-          <Divider variant="middle">
+            <Divider variant="middle">
               <Typography component="h1" variant="h6">
                 Benefits
               </Typography>
@@ -213,16 +214,16 @@ function CreateJobPostingPage() {
                 </div>
               );
             })}
-            <Button onClick={addBenefit} sx={{  ml: "84%"  }}>
+            <Button onClick={addBenefit} sx={{ ml: "84%" }}>
               <AddCircleIcon />
             </Button>
           </Grid>
         </Grid>
         <Divider variant="middle">
-              <Typography component="h1" variant="h6">
-                Details 
-              </Typography>
-            </Divider>
+          <Typography component="h1" variant="h6">
+            Details
+          </Typography>
+        </Divider>
         <Grid container direction={"row"} spacing={2} sx={{ my: 1 }}>
           <Grid item xs={6} sm={6}>
             <TextField
@@ -273,12 +274,12 @@ function CreateJobPostingPage() {
               Deadline
             </Typography>
             <TextField
-              name = "deadline"
+              name="deadline"
               required
               fullWidth
               id="deadline"
               autoFocus
-              type = "date"
+              type="date"
             />
           </Grid>
         </Grid>

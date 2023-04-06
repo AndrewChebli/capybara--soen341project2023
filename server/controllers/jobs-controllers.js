@@ -64,7 +64,7 @@ const addJob = async (req, res, next) => {
     await createdJob.save();
   } catch (error) {
     const err = new HttpError(
-      "Adding job failed, please try again later.",
+      "Adding job failed, please try again later1.",
       500
     );
     return next(err);

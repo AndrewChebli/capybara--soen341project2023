@@ -36,11 +36,12 @@ describe("Apply to a job", () => {
           location: "Cypress Job Tester Location",
           salary: 1,
           company: "Cypress Test Company",
-          requirements: "Cypress Job Tester Requirements",
-          benefits: "Cypress Job Tester Benefits",
-          Dday: 1,
-          Dmonth: 1,
-          Dyear: 1,
+          requirements: ["Cypress Job Tester Requirements"],
+          benefits: ["Cypress Job Tester Benefits"],
+          deadline: "2021-12-31",
+          remote: "hybrid",
+          type: "full-time",
+          
         }).then((response) => {
           expect(response.status).to.eq(201);
           jobID = response.body.job._id;

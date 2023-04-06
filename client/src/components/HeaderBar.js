@@ -122,7 +122,6 @@ function HeaderBar() {
                 href={ "../" + page+"Page"} //Page name MUST BE the same as page variable
               >
                 {page}
-                {console.log(page+"Page")}
               </Button>
             ))}
           </Box>

@@ -40,4 +40,10 @@ router.get("/getAllOffers/:_id" ,(req,res,next) =>
   employeeController.getAllOffers(req,res,next);
 })
 
+
+router.get("/news", (req, res, next) => {
+  console.log("GET request to /employee/news");
+  employeeController.getNews(req, res, next);
+});
+
 module.exports = router;

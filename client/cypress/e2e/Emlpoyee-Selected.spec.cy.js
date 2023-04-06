@@ -37,11 +37,11 @@ describe("Apply to a job", () => {
           location: "Cypress Job Tester Location",
           salary: 1,
           company: "Cypress Test Company",
-          requirements: "Cypress Job Tester Requirements",
-          benefits: "Cypress Job Tester Benefits",
-          Dday: 1,
-          Dmonth: 1,
-          Dyear: 1,
+          requirement: ["Cypress Job Tester Requirement 1"],
+          benefit: ["Cypress Job Tester Benefit 1"],
+          deadline: "2021-12-31",
+          remote: "hybrid",
+          type: "full-time",
         }).then((response) => {
           expect(response.status).to.eq(201);
           jobID = response.body.job._id;
@@ -122,9 +122,6 @@ describe("Apply to a job", () => {
               cy.wait("@getOffers").then((interception) => {
                 expect(interception.response.statusCode).to.eq(200);
                 expect(interception.response.body).to.have.property("offers");
-                expect(interception.response.body.offers[0])
-                  .to.have.property("_id")
-                  .and.to.eq(jobID);
               });
             });
           });

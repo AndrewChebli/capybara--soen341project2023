@@ -45,6 +45,7 @@ const CompanyJobApplicants = () => {
       alert('Error deleting job');
     }
   };
+  
   useEffect(() => {
     const fetchJobs = async () => {
       const response = await fetch(
@@ -74,12 +75,12 @@ const CompanyJobApplicants = () => {
   }, [company_id]);
 
   return jobs ? (
-    <Box sx={{ mt: 20 }}>
+    <Box sx={{ mt: 20}}>
       <Typography variant="h3" sx={{ mb: 5 }}>
         Applicants
       </Typography>
       {jobs.map((job) => (
-        <Paper elevation={3} sx={{ mb: 5, ml: "10%", width: "80%" }}>
+        <Paper  key = {job} elevation={3} sx={{ mb: 5, ml: "10%", width: "80%", borderRadius : 4}}>
           <Box
             sx={{
               p: 2,
@@ -91,15 +92,20 @@ const CompanyJobApplicants = () => {
             <Box
               key={job._id}
               sx={{
-                mt: 5,
-                mb: 5,
+                mt: 3,
+                mb: 3,
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "space-evenly",
               }}
             >
-              <Typography variant="h4" align="center" sx={{ width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "center" }}>
+              <Typography variant="h4" align="center" sx={{ textAlign: "center" }}>
                 {job.title }{" "}{ job.deadline}
               </Typography>
+              <Typography variant="h4" align="center" sx={{  textAlign: "center" }}>
+                {job.location}
+              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+
               <Button
                 variant="contained"
                 color="warning"
@@ -107,7 +113,6 @@ const CompanyJobApplicants = () => {
                 sx = {{mr : 2}}
               >
                 <EditIcon/>
-                Edit
               </Button>
               <Button
                 variant="contained"
@@ -115,8 +120,8 @@ const CompanyJobApplicants = () => {
                 onClick={() => handleOpen(job._id)}
               >
                 <DeleteIcon/>
-                Delete
               </Button>
+              </Box>
 
             </Box>
             {job.applicants.map((applicant) => (
@@ -151,7 +156,6 @@ const CompanyJobApplicants = () => {
             color="error"
             onClick={() => handleDelete()}
           >
-            
             Delete
           </Button>
           <Button variant="contained" onClick={() => handleClose()}>
