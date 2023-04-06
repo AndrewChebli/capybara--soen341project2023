@@ -90,7 +90,9 @@ function JobPostingDetail(props) {
     getOneJob();
   }, [id, param, props.id]);
 
-  async function applyToJob() {
+  async function applyToJob(event) {
+    event.preventDefault();
+    event.stopPropagation();
     console.log("apply to job");
     console.log(localStorage.getItem("_id"));
 
@@ -129,6 +131,8 @@ function JobPostingDetail(props) {
           borderRadius: 5,
           boxShadow: 10,
           p: 2,
+          maxHeight: "900px",
+          overflow: "scroll",
         }}
       >
         <CardContent>

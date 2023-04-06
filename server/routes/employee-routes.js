@@ -46,4 +46,21 @@ router.get("/news", (req, res, next) => {
   employeeController.getNews(req, res, next);
 });
 
+router.get("/bookmarks/:_id", (req, res, next) => {
+  console.log("GET request to /employee/bookmarks/:_id");
+  employeeController.getBookmarks(req, res, next);
+});
+
+router.post("/bookmarks/:_id", (req, res, next) => {
+  console.log("POST request to /employee/bookmarks/:_id");
+  employeeController.addBookmark(req, res, next);
+});
+
+router.delete("/bookmarks/:_id", (req, res, next) => {
+  console.log("DELETE request to /employee/bookmarks/:_id");
+  employeeController.deleteBookmark(req, res, next);
+});
+
+
+
 module.exports = router;
