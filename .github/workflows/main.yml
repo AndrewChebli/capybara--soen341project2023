@@ -16,10 +16,10 @@ jobs:
         with:
           install-command: npm run install:frontend
           runTests: false
+      - name: Static Analysis with ESLint
+        run: npm run eslint:backend && npm run eslint:frontend
       - name: Cypress E2E tests 🧪
         uses: cypress-io/github-action@v5
         with:
           start: npm run start:frontend, npm run start:backend
           command: npm run run:cypress:tests
-      - name: Static Analysis with ESLint
-        run: npm run eslint:backend && npm run eslint:frontend
