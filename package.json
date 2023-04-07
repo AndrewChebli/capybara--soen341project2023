@@ -12,6 +12,9 @@
     "cy:run": "cypress run",
     "run:cypress:tests": "cd client && cypress run --spec \"./cypress/e2e/*.spec.cy.js\"",
     "cy:open": "cypress open",
+    "eslint:frontend": "cd client && npx eslint . --ext .js,.jsx",
+    "eslint:backend": "cd server && npx eslint . --ext .js,.jsx",
+
 
     "start:all": "npm run start:frontend && npm run start:backend ",
     "cy:open:with:servers": "start-server-and-test start:frontend 3000 start:backend 3000 cy:open",
