@@ -39,13 +39,13 @@ const report = async (req, res, next) => {
   console.log("=================" + type + "==================")
   console.log(req.body);
   let report = new Report({
-    type: type,
-    message : req.body.message,
-    whilestblower_name: req.body.whilestblower_name,
-    whilestblower_id: req.body.whilestblower_email,
+    type: req.body.type,
+    message: req.body.message,
+    reason: req.body.reason,
+    whistleblower_id: req.body.whistleblower_id,
     offender_id: req.body.offender_id,
     offender_name: req.body.offender_name,
-    data : req.body.data,
+    data: req.body.data,
   });
   try {
     await report.save();

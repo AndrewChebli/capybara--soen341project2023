@@ -43,10 +43,13 @@ export default function SignIn() {
           localStorage.setItem("loginStatus", "true");
           localStorage.setItem("loginType", res.type);
           alert("Login Successful");
-          if(res.type === "employee")
+          if(res.type === "employee"){
           window.location.href = "http://localhost:3000/DashboardPage";
-          else if(res.type === "company")
+          }
+          else if(res.type === "company"){
+          localStorage.setItem("companyName", res.user.companyName);
           window.location.href = "http://localhost:3000/CompanyJobApplicantsPage";
+          }
           else if(res.type === "admin")
           window.location.href = "http://localhost:3000/ReportsPage";
 

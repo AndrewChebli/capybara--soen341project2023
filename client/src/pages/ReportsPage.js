@@ -4,73 +4,51 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Grid } from "@mui/material";
+import { AccordionActions, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import ReportDetails from "../components/ReportDetails";
+import { Button } from "@mui/material";
+import { useEffect } from "react";
 
-let sample = [
-  {
-    _id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    type: "Job",
-    message: "This job posting is a scam",
-    reason: "Spam",
-    whistleblower_id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    whistleblower_name: "Edward Snowden",
-    offender_id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    offender_name: "Google",
-    data: {
-      _id: "60f9b0f1b1b1b1b1b1b1b1b1",
-      title: "Software Engineer",
-      company: "Google",
-      location: "Mountain View, CA",
-      salary: "$100,000",
-      description: "This is a job posting for a software engineer at Google",
-      date: "2021-07-20T00:00:00.000Z",
-      __v: 0,
-    },
-  },
-  {
-    _id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    type: "User",
-    message: "This user is a scam",
-    reason: "Spam",
-    whistleblower_id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    whistleblower_name: "Edward Snowden",
-    offender_id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    offender_name: "John Doe",
-    data: {
-      _id: "60f9b0f1b1b1b1b1b1b1b1b1",
-      name: "John Doe",
-      email: "johndoe@hotmail.com",
-      password: "password",
-      __v: 0,
-    },
-  },
-  {
-    _id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    type: "Company",
-    message: "This company is a scam",
-    reason: "Spam",
-    whistleblower_id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    whistleblower_name: "Edward Snowden",
-    offender_id: "60f9b0f1b1b1b1b1b1b1b1b1",
-    offender_name: "Google",
-    data: {
-      _id: "60f9b0f1b1b1b1b1b1b1b1b1",
-      name: "Google",
-      email: "google@google.com",
-      password: "password",
-      __v: 0,
-    },
-  },
-];
+const deleteReport = (index) => {
+  if(window.confirm("Are you sure you want to delete this report?")){
+    deleteOffender(index);
+  }
+};
 
+const deleteOffender = (index) => {
+};
 function Reports() {
+  
   const [expanded, setExpanded] = React.useState(false);
+  const [reports, setReports] = React.useState([]);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  useEffect(() => {
+    let getAllReports;
+    getAllReports = async () => {
+      try {
+        const response = await fetch
+        ("http://localhost:8080/api/report/getAll"
+        , {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        setReports(data.reports);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAllReports();
+  }, []);
+
 
   return (
     <div style={{ width: "100%" }}>
@@ -81,48 +59,69 @@ function Reports() {
         sx={{ p: 5, mt: 10 }}
       ></Typography>
       <div>
-        {sample.map((report, index) => (
-          <Box 
+        {reports.map((report, index) => (
+          <Box
             sx={{ width: "80%", bgcolor: "background.paper", pl: "10%" }}
-            key = {report._id}
+            key={report._id}
           >
-          <Accordion
-            expanded={expanded === index}
-            onChange={handleChange(index)}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
+            <Accordion
+              expanded={expanded === index}
+              onChange={handleChange(index)}
             >
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justifyContent={"center"}
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
               >
-                <Grid item xs={3}>
-                  <Typography sx={{ color: "text.secondary" }}>
-                    {"A  "} {report.type} {" was reported for "} {report.reason}
-                  </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="center"
+                  justifyContent={"center"}
+                >
+                  <Grid item xs={3}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {"A  "} {report.type} {" was reported for "}{" "}
+                      {report.reason}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography sx={{ color: "text.primary" }}>
+                      {"Offender:  "}
+                      {report.offender_name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography>{report.message}</Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <Typography sx = {{color :"text.primary"}}>
-                    {report.whistleblower_name}
-                    {" reported "} {report.offender_name}
-                  </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <ReportDetails report={report} />
+              </AccordionDetails>
+              <AccordionActions>
+                <Grid container direction="row" justifyContent="flex-end">
+                  <Grid item xs={3}>
+                    <Grid item xs={3}>
+                      <Button
+                        size="small"
+                        color="success"
+                        onClick={(index) => deleteReport(index)}
+                      >
+                        Ignore
+                      </Button>
+                    </Grid>
+                  </Grid>
+                  <Button
+                    size="small"
+                    color="error"
+                    onClick={(index) => deleteOffender(index)}
+                  >
+                    Delete
+                  </Button>
                 </Grid>
-                <Grid item xs={5}>
-                  <Typography >
-                    {report.message}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </AccordionSummary>
-            <AccordionDetails>
-              <ReportDetails report = {report}/>
-            </AccordionDetails>
-          </Accordion>
+              </AccordionActions>
+            </Accordion>
           </Box>
         ))}
       </div>
