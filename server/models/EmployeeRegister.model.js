@@ -20,6 +20,7 @@ const EmployeeRegisterModel = new mongoose.Schema(
     },
     experience: { type: Array, unique: false },     
     offers: { type: Array, unique: false },
+    bookmarks: { type: Array, unique: false },
   },
   { collection: "users" }
 );

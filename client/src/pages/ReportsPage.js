@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -88,7 +87,6 @@ function Reports() {
             key = {report._id}
           >
           <Accordion
-
             expanded={expanded === index}
             onChange={handleChange(index)}
           >

@@ -23,7 +23,7 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
     
-        const response = await fetch("http://localhost:8080/api/employee/login", {
+        const response = await fetch("http://localhost:8080/api/universal/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -35,16 +35,21 @@ export default function SignIn() {
         });
 
         console.log(response);
-        if (response.status === 201) {
+        if (response.status === 200) {
           const res = await response.json();
           console.log(res)
           console.log(res._id);
-          localStorage.setItem("_id", res._id);
+          localStorage.setItem("_id", res.user._id);
           localStorage.setItem("loginStatus", "true");
-          localStorage.setItem("loginType", "employee");
-          localStorage.setItem("resume", res.resume);
+          localStorage.setItem("loginType", res.type);
           alert("Login Successful");
+          if(res.type === "employee")
           window.location.href = "http://localhost:3000/DashboardPage";
+          else if(res.type === "company")
+          window.location.href = "http://localhost:3000/CompanyJobApplicantsPage";
+          else if(res.type === "admin")
+          window.location.href = "http://localhost:3000/ReportsPage";
+
         }else{
           alert("Invalid Credentials");
         }

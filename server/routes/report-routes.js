@@ -3,8 +3,8 @@ const router = express.Router();
 const reportController = require("../controllers/report-controllers");
 
 
-router.post("/job",(req,res,next)=>{
-  console.log("POST request to /report/job");
+router.post("/",(req,res,next)=>{
+  console.log("POST request to /report");
   reportController.reportJob(req,res,next);
 })
 

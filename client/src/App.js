@@ -20,6 +20,8 @@ import EditJobPosting from "./pages/EditJobPostingPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Reports from "./pages/ReportsPage";
+import BookmarksPage from "./pages/BookmarksPage";
+import TournamentPage from "./pages/TournamentPage";
 
 function App() {
   if (localStorage.getItem("loginStatus") === null) {
@@ -46,6 +48,8 @@ function App() {
           <Route path = "/JobPostingPage/:id" element = {<JobPostingPage />} />
           <Route path = "ViewCandidate/:id" element = {< ProfilePage />} />
           <Route path = "ProfilePage/:id" element = {< ProfilePage />} />
+          <Route path = "/BookmarksPage" element = {<BookmarksPage/>}/>
+          <Route path = "TournamentPage" element = {<TournamentPage/>}/>
           <Route
             path="/CreateJobPostingPage"
             element={<CreateJobPostingPage />}

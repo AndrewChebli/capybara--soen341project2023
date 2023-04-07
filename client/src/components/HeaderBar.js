@@ -7,29 +7,30 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
 
 let pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
+let pages_names = ["Home", "Dashboard", "Bookmarks","Offers","Profile","EditProfile", "Logout"];
 function HeaderBar() {
   
 
   if(localStorage.getItem("loginStatus") === "true"){
     if(localStorage.loginType === "employee"){
-    pages = ["Home", "Dashboard", "Offers","Profile","EditProfile", "Logout"];
+    pages = ["Home", "Dashboard", "Bookmarks","Offers","Profile","EditProfile", "Logout"];
+    pages_names = ["Home", "Dashboard", "Bookmarks","Offers","Profile","Edit Profile", "Logout"];
     }else if (localStorage.loginType === "company"){
       pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
+      pages_names = ["Home", "Job Applicants", "Create Job Posting","Profile","Edit Profile", "Logout"];
     }else{
-      pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
+      pages_names = ["Home","SignIn", "SignUp", "About"];
+      pages = ["Home","SignIn", "SignUp","AboutUs"];
     }
   }else{
-    pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
+    pages_names = ["Home","SignIn", "SignUp", "About"];
+    pages = ["Home","SignIn", "SignUp","AboutUs"];
   }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -114,52 +115,16 @@ function HeaderBar() {
           
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'Center',justifyContent: 'Center' }}>
             
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block", mr:3 }}
                 href={ "../" + page+"Page"} //Page name MUST BE the same as page variable
               >
-                {page}
+                {pages_names[index]}
               </Button>
             ))}
-          </Box>
-          
-          
-          {/* Mail icon */}
-
-          
-
-          {/* User Icon */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>
