@@ -93,6 +93,20 @@ function Dashboard() {
           overflow="auto"
         >
           <Grid item xs={12}>
+            <form onSubmit={handleSearchSubmit}>
+              <TextField
+                id="search"
+                label="Search"
+                type="search"
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={searchTerm}
+                onChange={handleSearch}
+                sx={{ mt: 2, mb: 2, width: '95%' }} // added this line to adjust width and spacing
+
+              />
+            </form>
             {currentView.map((job_posting) => (
               <JobPostingSummary
                 handleLinkChange={onLinkChange}
