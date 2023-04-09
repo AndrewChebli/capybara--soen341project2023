@@ -49,16 +49,17 @@ function Dashboard() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     const filteredData = data.filter((jobPosting) => {
-      return jobPosting.title
-        .toLowerCase()
-        .includes(event.target.value.toLowerCase());
+      return jobPosting.title.toLowerCase().includes(event.target.value.toLowerCase()) ||
+             jobPosting.description.toLowerCase().includes(event.target.value.toLowerCase());
     });
     setCurrentView(filteredData.slice(0, 5));
   };
 
   const filteredData = data.filter((jobPosting) => {
-    return jobPosting.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return jobPosting.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           jobPosting.description.toLowerCase().includes(searchTerm.toLowerCase());
   });
+  
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -97,7 +98,6 @@ function Dashboard() {
                 value={searchTerm}
                 onChange={handleSearch}
                 sx={{ mt: 2, mb: 2, width: '95%' }} // added this line to adjust width and spacing
-
               />
             </form>
             {currentView.map((job_posting) => (
