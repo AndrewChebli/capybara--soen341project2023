@@ -50,14 +50,16 @@ function Dashboard() {
     setSearchTerm(event.target.value);
     const filteredData = data.filter((jobPosting) => {
       return jobPosting.title.toLowerCase().includes(event.target.value.toLowerCase()) ||
-             jobPosting.description.toLowerCase().includes(event.target.value.toLowerCase());
+             jobPosting.description.toLowerCase().includes(event.target.value.toLowerCase()) ||
+             jobPosting.company.toLowerCase().includes(event.target.value.toLowerCase());
     });
     setCurrentView(filteredData.slice(0, 5));
   };
 
   const filteredData = data.filter((jobPosting) => {
     return jobPosting.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           jobPosting.description.toLowerCase().includes(searchTerm.toLowerCase());
+           jobPosting.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           jobPosting.company.toLowerCase().includes(searchTerm.toLowerCase());
   });
   
 
