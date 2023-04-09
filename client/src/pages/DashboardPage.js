@@ -53,7 +53,9 @@ function Dashboard() {
              jobPosting.description.toLowerCase().includes(event.target.value.toLowerCase()) ||
              jobPosting.company.toLowerCase().includes(event.target.value.toLowerCase()) ||
              jobPosting.location.toLowerCase().includes(event.target.value.toLowerCase()) ||
-             jobPosting.requirements.join(" ").toLowerCase().includes(event.target.value.toLowerCase());
+             jobPosting.requirements.join(" ").toLowerCase().includes(event.target.value.toLowerCase()) ||
+             jobPosting.benefits.join(" ").toLowerCase().includes(event.target.value.toLowerCase()) ||
+             jobPosting.companyDescription.toLowerCase().includes(event.target.value.toLowerCase());
     });
     setCurrentView(filteredData.slice(0, 5));
   };
@@ -63,7 +65,9 @@ function Dashboard() {
            jobPosting.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
            jobPosting.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
            jobPosting.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           jobPosting.requirements.join(" ").toLowerCase().includes(searchTerm.toLowerCase());
+           jobPosting.requirements.join(" ").toLowerCase().includes(searchTerm.toLowerCase()) ||
+           jobPosting.benefits.join(" ").toLowerCase().includes(searchTerm.toLowerCase()) ||
+           jobPosting.companyDescription.toLowerCase().includes(searchTerm.toLowerCase());
   });
   
 
