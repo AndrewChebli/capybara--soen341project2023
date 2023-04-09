@@ -55,6 +55,10 @@ function Dashboard() {
     });
     setCurrentView(filteredData.slice(0, 5));
   };
+
+  const filteredData = data.filter((jobPosting) => {
+    return jobPosting.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
   return (
     <div >
       <Grow in={true} timeout={3000}>
