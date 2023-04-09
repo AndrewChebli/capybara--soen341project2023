@@ -59,6 +59,16 @@ function Dashboard() {
   const filteredData = data.filter((jobPosting) => {
     return jobPosting.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    if (searchTerm.trim() === "") {
+      setCurrentView(data.slice(0, 5));
+    } else {
+      setCurrentView(filteredData.slice(0, 5));
+    }
+  };
+
   return (
     <div >
       <Grow in={true} timeout={3000}>
