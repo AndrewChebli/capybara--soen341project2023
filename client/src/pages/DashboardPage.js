@@ -46,6 +46,15 @@ function Dashboard() {
     setCurrentLink(id);
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    const filteredData = data.filter((jobPosting) => {
+      return jobPosting.title
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
+    });
+    setCurrentView(filteredData.slice(0, 5));
+  };
   return (
     <div >
       <Grow in={true} timeout={3000}>
