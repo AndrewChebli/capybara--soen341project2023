@@ -3,6 +3,7 @@ const Company = require("../models/CompanyRegister.model.js");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
 const Admin = require("../models/AdminRegister.model.js");
+const reportController = require("./report-controllers");
 
 // @route   POST /admin/register
 // @desc    Register a new admin
@@ -179,9 +180,11 @@ const removeEmployeeAsAdmin = async (req, res, next) => {
 
 const removeJobAsAdmin = async (req, res, next) => {
   let job;
-  const jobId = req.params.id;
+  const jobId = req.params._id;
+  console.log("jobid " + jobId);
+  
   try {
-    job = Job.findById(jobId).exec();
+    job = await Job.findById(jobId).exec();
   } catch (error) {
     const err = new HttpError(
       "Something went wrong, could not delete job.",
@@ -190,15 +193,19 @@ const removeJobAsAdmin = async (req, res, next) => {
     return next(err);
   }
 
+  console.log("Job to be deleted " + job);
+
   if (!job) {
     const err = new HttpError("Could not find job for this id.", 404);
     return next(err);
   } else {
     try {
       await job.remove();
+      // await removeReportAsAdmin(req, res, next); // req res next is expecting something specific 
     } catch (error) {
+      console.log(error);
       const err = new HttpError(
-        "Something went wrong, could not delete job.",
+        "Something went wrong, could not delete job, or the report.",
         500
       );
       return next(err);
@@ -206,6 +213,10 @@ const removeJobAsAdmin = async (req, res, next) => {
     res.status(200).json({ message: "Deleted job." });
   }
 };
+
+const removeReportAsAdmin = async (req, res, next) => {
+  reportController.removeReport(req, res, next);
+}
 
 exports.registerAdmin = registerAdmin;
 exports.loginAdmin = loginAdmin;
@@ -215,3 +226,4 @@ exports.deleteAdmin = deleteAdmin;
 exports.removeCompanyAsAdmin = removeCompanyAsAdmin;
 exports.removeEmployeeAsAdmin = removeEmployeeAsAdmin;
 exports.removeJobAsAdmin = removeJobAsAdmin;
+exports.removeReportAsAdmin = removeReportAsAdmin;

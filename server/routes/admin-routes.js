@@ -38,6 +38,11 @@ router.delete("/company/:_id", (req, res, next) => {
   adminController.removeCompanyAsAdmin(req, res, next);
 });
 
+router.delete("/job/:_id", (req, res, next) => {
+  console.log("DELETE request to /admin/remove/job/:_id");
+  adminController.removeJobAsAdmin(req, res, next);
+});
+
 
 module.exports = router;
 

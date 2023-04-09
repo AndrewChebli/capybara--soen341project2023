@@ -24,6 +24,9 @@ function HeaderBar() {
     }else if (localStorage.loginType === "company"){
       pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
       pages_names = ["Home", "Job Applicants", "Create Job Posting","Profile","Edit Profile", "Logout"];
+    }else if (localStorage.loginType === "admin"){
+      pages = ["Home","Reports","Dashboard" ,"Logout"];
+      pages_names = ["Home","Reports","Dashboard", "Logout"];
     }else{
       pages_names = ["Home","SignIn", "SignUp", "About"];
       pages = ["Home","SignIn", "SignUp","AboutUs"];
