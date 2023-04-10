@@ -116,7 +116,7 @@ export default function SignIn() {
             Sign in
           </Typography>
           </Box>
-          <Box component="form" onSubmit={loginService} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -126,6 +126,11 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={values.email}
+              onChange={handleChange("email")}
+              onBlur={handleEmailBlur}
+              error={emailError}
+              helperText={emailHelperText}
             />
             <TextField
               margin="normal"
@@ -133,9 +138,20 @@ export default function SignIn() {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               autoComplete="current-password"
+              value={values.password}
+              onChange={handleChange('password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClickShowPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
