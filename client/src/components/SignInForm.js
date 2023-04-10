@@ -79,6 +79,23 @@ export default function SignIn() {
       loginService(event);
     }
   };
+  
+  const validateEmail = (email) => {
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return regex.test(email);
+  };
+
+  const handleEmailBlur = (event) => {
+    const email = event.target.value;
+    const isValid = validateEmail(email);
+    if (!isValid) {
+      setEmailError(true);
+      setEmailHelperText("Please enter a valid email address");
+    } else {
+      setEmailError(false);
+      setEmailHelperText("");
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" >
