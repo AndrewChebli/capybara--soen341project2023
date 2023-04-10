@@ -72,6 +72,9 @@ export default function SignIn() {
     setShowPassword(!showPassword);
   };
 
+  //boolean to enable and disable the signup button
+  const isFormValid = !emailError && values.email && values.password;
+
   //handle the submit button
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -169,6 +172,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!isFormValid}
             >
               Sign In
             </Button>
