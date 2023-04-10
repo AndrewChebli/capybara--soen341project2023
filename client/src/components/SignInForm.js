@@ -60,6 +60,25 @@ export default function SignIn() {
   const [emailError, setEmailError] = React.useState(false);
   const [emailHelperText, setEmailHelperText] = React.useState("");
 
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+    if (!emailError && values.email && values.password) {
+      loginService(event);
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" >
