@@ -52,6 +52,13 @@ export default function SignIn() {
 
 
     // ================END OF FRONT-END ENDPOINT=====================
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [values, setValues] = React.useState({
+    email: "",
+    password: "",
+  });
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailHelperText, setEmailHelperText] = React.useState("");
 
   return (
     <ThemeProvider theme={theme}>
