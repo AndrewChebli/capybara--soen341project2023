@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Visibility, VisibilityOff } from "@mui/icons-material"; 
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
 
 
 
@@ -64,6 +67,10 @@ export default function SignIn() {
     setValues({ ...values, [prop]: event.target.value });
   };
 
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -80,6 +87,7 @@ export default function SignIn() {
     }
   };
   
+
   const validateEmail = (email) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return regex.test(email);
