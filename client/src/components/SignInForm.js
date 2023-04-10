@@ -67,14 +67,12 @@ export default function SignIn() {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
+  //function to show the password when pressing on the icon
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  //handle the submit button
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -87,12 +85,13 @@ export default function SignIn() {
     }
   };
   
-
+  //function that will specify what the email format should look like
   const validateEmail = (email) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return regex.test(email);
   };
 
+  //takes care of checking if the email inputted was good or not
   const handleEmailBlur = (event) => {
     const email = event.target.value;
     const isValid = validateEmail(email);
