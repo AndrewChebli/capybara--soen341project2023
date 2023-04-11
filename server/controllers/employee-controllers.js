@@ -2,6 +2,7 @@ const HttpError = require("../models/http-error");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
 const { getJobById } = require("./jobs-controllers");
+const { all } = require("../routes/employee-routes");
 
 const getAllEmployess = async (req, res, next) => {
   Employee.find()
@@ -103,28 +104,28 @@ const deleteEmployee = async (req, res, next) => {
 
   let allJobs;
 
-  try { 
+  try {
     allJobs = await Job.find().exec();
     allJobs.forEach(async (job) => {
       console.log(job.applicants);
       job.applicants.forEach(async (applicant) => {
         console.log(applicant.applicant + "<->" + employeeId);
-        if(applicant.applicant === employeeId){
-          console.log("========================removing " +  applicant.applicant)
+        if (applicant.applicant === employeeId) {
+          console.log(
+            "========================removing " + applicant.applicant
+          );
           job.applicants.pull(applicant);
-          }
+        }
       });
       await job.save();
     });
-  }catch(err)
-  {
+  } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete employee applications.",
       500
     );
     return next(error);
   }
-
 
   try {
     employee = await Employee.findById(employeeId);
@@ -240,7 +241,7 @@ const getAllOffers = async (req, res, next) => {
     allOffers[i] = allOffers[i].toObject({ getters: true });
     for (let j = 0; j < allOffers[i].selected_applicants.length; j++) {
       if (_id === allOffers[i].selected_applicants[j].applicant_id) {
-        console.log("found")
+        console.log("found");
         myOffers.push(allOffers[i]);
       }
     }
@@ -252,22 +253,22 @@ const getAllOffers = async (req, res, next) => {
 const getNews = async (req, res, next) => {
   let news;
   try {
-    news  = fetch("https://newsdata.io/api/1/news?apikey=pub_198561604e298373f3b46663b31ff10631502&language=en&category=business,technology", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    news = fetch(
+      "https://newsdata.io/api/1/news?apikey=pub_198561604e298373f3b46663b31ff10631502&language=en&category=business,technology",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     let response = await news;
     response = await response.json();
-    
-    if(response.status === "success"){
-      console.log(
-        "=========================worked========================="
-      )
-      res.json({status: 200, news: response});
-    }
-    else{
+
+    if (response.status === "success") {
+      console.log("=========================worked=========================");
+      res.json({ status: 200, news: response });
+    } else {
       const error = new HttpError(
         "Something went wrong, could not find news.",
         500
@@ -281,7 +282,144 @@ const getNews = async (req, res, next) => {
     );
     return next(error);
   }
-}
+};
+
+const getBookmarks = async (req, res, next) => {
+  let _id = req.params._id;
+  let existingEmployee;
+
+  try {
+    existingEmployee = await Employee.findById(_id).exec();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a employee.",
+      500
+    );
+    return next(error);
+  }
+
+  if(existingEmployee.bookmarks.length === 0){
+    const error = new HttpError("No bookmarks yet", 400);
+    return next(error);
+  }
+
+
+  console.log(existingEmployee.bookmarks);
+  let myBookmarks = [];
+
+  try {
+    let allJobs = await Job.find().exec();
+    let allIds = [];
+
+    allJobs.forEach((job) => {
+      job = job.toObject({ getters: true });
+      allIds.push(job.id);
+    });
+
+    existingEmployee.bookmarks.forEach((bookmark) => {
+      if (!allIds.includes(bookmark)) {
+        myBookmarks.splice(bookmark, 1);
+      } 
+    });
+
+    existingEmployee.bookmarks.forEach((bookmark) => {
+      allJobs.forEach((job) => {
+        job = job.toObject({ getters: true });
+        if (job.id === bookmark) {
+          myBookmarks.push(job);
+        }
+      });
+    });
+
+    console.log(myBookmarks);
+          
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a job.",
+      500
+    );
+    return next(error);
+  }
+
+  res.json({ status: 200, bookmarks: myBookmarks});
+};
+
+const addBookmark = async (req, res, next) => {
+  let _id = req.params._id;
+  console.log(_id + "  Addbookmark");
+  let existingEmployee;
+  let bookmark = req.body.jobPostingId;
+  console.log("Job Id Bookmark : " + bookmark);
+
+  try {
+    existingEmployee = await Employee.findById(_id);
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      "Something went wrong, could not find a employee.",
+      500
+    );
+    return next(error);
+  }
+  
+
+  if(existingEmployee.bookmarks.includes(bookmark)){
+    console.log("Already bookmarked");
+    const error = new HttpError("Already bookmarked", 400);
+    return next(error);
+  }
+
+  existingEmployee.bookmarks.push(bookmark);
+
+  try {
+    let result = await existingEmployee.save(
+      { new: true },
+    );
+    console.log(result.bookmarks);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not add bookmark.",
+      500
+    );
+    return next(error);
+  }
+
+  res.json({ status: 200, message: "Added bookmark" });
+};
+
+const deleteBookmark = async (req, res, next) => {
+  let _id = req.params._id;
+  let bookmarkToDelete = req.body.index;
+  console.log("We got here" + bookmarkToDelete)
+  let existingEmployee;
+
+  try{
+    existingEmployee = await Employee.findById(_id);
+  }catch(err){
+    const error = new HttpError(
+      "Something went wrong, could not find employee.",
+      500
+    );
+    return next(error);
+  }
+
+  console.log(existingEmployee.bookmarks);
+  existingEmployee.bookmarks.splice(bookmarkToDelete, 1);
+  console.log(existingEmployee.bookmarks);
+
+  try{
+    existingEmployee.save();
+  }catch(err){
+    const error = new HttpError(
+      "Something went wrong, could delete bookmark.",
+      500
+    );
+    return next(error);
+  }
+  
+  res.json({ status: 200, message: "Deleted bookmark" });
+};
+  
 
 exports.getAllEmployess = getAllEmployess;
 exports.getEmployeeById = getEmployeeById;
@@ -291,3 +429,6 @@ exports.deleteEmployee = deleteEmployee;
 exports.loginEmployee = loginEmployee;
 exports.getAllOffers = getAllOffers;
 exports.getNews = getNews;
+exports.getBookmarks = getBookmarks;
+exports.addBookmark = addBookmark;
+exports.deleteBookmark = deleteBookmark;

@@ -80,6 +80,34 @@ function JobPostingSummary(props) {
     setIsModalOpen(false);
   };
 
+  const handleBookmarkClick = async (e) => {
+    
+    e.stopPropagation();
+    console.log("Bookmark Clicked");
+      async function addBookmark() {
+        let response_from_backend = await fetch(
+          "http://localhost:8080/api/employee/bookmarks/" +
+            localStorage.getItem("_id"),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              jobPostingId: id,
+            }),
+          }
+        );
+        console.log(response_from_backend);
+        if (response_from_backend.status === 200) {
+          toast.success('Job Posting added to bookmarks.');
+        } else {
+          toast.error('Error adding bookmark.');
+        }
+      }
+      addBookmark();
+  };
+
   return (
     <div>
       <Card
@@ -178,7 +206,7 @@ function JobPostingSummary(props) {
                   </Grid>
                   <Grid item xs={2}>
                     <Button>
-                      <BookmarkAddIcon />
+                      <BookmarkAddIcon onClick = {handleBookmarkClick}/>
                     </Button>
                     <Button onClick={handleReportClick}>
                       <FlagIcon color={reportReason ? "error" : "disabled"} />
