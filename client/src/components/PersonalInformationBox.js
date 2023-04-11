@@ -20,6 +20,9 @@ function PersonalInformationBox(props) {
     phoneNumber: "",
   });
   const [bio, setBio] = React.useState("");
+  
+  //creating state to check if an email is valid or not
+  const [isValidEmail, setIsValidEmail] = React.useState(false);
 
   const handleFirstNameChange = (e) => {
     let data = { ...personalInfo };
@@ -40,6 +43,11 @@ function PersonalInformationBox(props) {
     data.email = e.target.value;
     setPersonalInfo(data);
     props.handlePersonalInfo(personalInfo);
+
+    // email validation using regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValidEmail(emailRegex.test(e.target.value));
+    props.handleEmailValidation(isValidEmail);
   };
 
   const handlePasswordChange = (e) => {
@@ -135,9 +143,10 @@ function PersonalInformationBox(props) {
                   onChange={(e) => {
                     handleEmailChange(e);
                   }}
+                  error={!isValidEmail}
                 />
               </Grid>
-              <Grid item xs={6}>
+                            <Grid item xs={6}>
                 <TextField
                   required
                   fullWidth
@@ -181,15 +190,14 @@ function PersonalInformationBox(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                aria-required
                   fullWidth
                   name="bio"
                   label="Short Bio"
                   id="bio"
                   multiline={true}
                   rows={4}
-                  value={bio}
-                  onInput={(e) => {
+                  onChange={(e) => {
                     handleBioChange(e);
                   }}
                 />
