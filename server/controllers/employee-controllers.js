@@ -3,6 +3,7 @@ const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
 const { getJobById } = require("./jobs-controllers");
 const { all } = require("../routes/employee-routes");
+const bcrypt = require('bcryptjs');
 
 const getAllEmployess = async (req, res, next) => {
   Employee.find()
@@ -69,32 +70,75 @@ const getEmployeeById = async (req, res, next) => {
   }
 };
 
-const registerEmployee = async (req, res, next) => {
-  console.log(req.body);
-  const createdEmployee = new Employee({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    resume: req.body.resume,
-    resumeName: req.body.resumeName,
-    skills: req.body.skills,
-    phoneNumber: req.body.phoneNumber,
-    bio: req.body.bio,
-    experience: req.body.experience,
-    education: req.body.education,
-  });
 
-  try {
-    await createdEmployee.save();
-  } catch (err) {
-    const error = new HttpError(
-      "Signing up failed, please try again later.",
-      500
-    );
-    return next(error);
-  }
-  res.status(201).json({ employee: createdEmployee });
+
+// const registerEmployee = async (req, res, next) => {
+//   console.log(req.body);
+//   const createdEmployee = new Employee({
+//     firstName: req.body.firstName,
+//     lastName: req.body.lastName,
+//     email: req.body.email,
+//     password: req.body.password,
+//     resume: req.body.resume,
+//     resumeName: req.body.resumeName,
+//     skills: req.body.skills,
+//     phoneNumber: req.body.phoneNumber,
+//     bio: req.body.bio,
+//     experience: req.body.experience,
+//     education: req.body.education,
+//   });
+
+//   try {
+//     await createdEmployee.save();
+//   } catch (err) {
+//     const error = new HttpError(
+//       "Signing up failed, please try again later.",
+//       500
+//     );
+//     return next(error);
+//   }
+//   res.status(201).json({ employee: createdEmployee });
+// };
+
+const registerEmployee = async (req, res, next) => {
+console.log(req.body);
+const { firstName, lastName, email, password, resume, resumeName, skills, phoneNumber, bio, experience, education } = req.body;
+
+let hashedPassword;
+try {
+hashedPassword = await bcrypt.hash(password, 12);
+} catch (err) {
+const error = new HttpError(
+"Could not create user, please try again.",
+500
+);
+return next(error);
+}
+
+const createdEmployee = new Employee({
+firstName,
+lastName,
+email,
+password: hashedPassword,
+resume,
+resumeName,
+skills,
+phoneNumber,
+bio,
+experience,
+education
+});
+
+try {
+await createdEmployee.save();
+} catch (err) {
+const error = new HttpError(
+"Signing up failed, please try again later.",
+500
+);
+return next(error);
+}
+res.status(201).json({ employee: createdEmployee });
 };
 
 const deleteEmployee = async (req, res, next) => {

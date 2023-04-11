@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Visibility, VisibilityOff } from "@mui/icons-material"; 
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-
+const bcrypt = require('bcryptjs');
 
 
 const theme = createTheme();
@@ -33,7 +33,7 @@ export default function SignIn() {
             },
             body: JSON.stringify({
               email: data.get('email'),
-              password: data.get('password'),
+              password: bcrypt.hash(data.get('password'),12),
             })
         });
 
