@@ -71,31 +71,38 @@ const getEmployeeById = async (req, res, next) => {
 
 const registerEmployee = async (req, res, next) => {
   console.log(req.body);
-  const createdEmployee = new Employee({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    resume: req.body.resume,
-    resumeName: req.body.resumeName,
-    skills: req.body.skills,
-    phoneNumber: req.body.phoneNumber,
-    bio: req.body.bio,
-    experience: req.body.experience,
-    education: req.body.education,
-  });
 
   try {
+    const existingEmployee = await Employee.findOne({ email: req.body.email.toLowerCase() });
+    if (existingEmployee) {
+      throw new Error('Email already exists');
+    }
+
+    const createdEmployee = new Employee({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email.toLowerCase(),
+      password: req.body.password,
+      resume: req.body.resume,
+      resumeName: req.body.resumeName,
+      skills: req.body.skills,
+      phoneNumber: req.body.phoneNumber,
+      bio: req.body.bio,
+      experience: req.body.experience,
+      education: req.body.education,
+    });
+
     await createdEmployee.save();
+    res.status(201).json({ employee: createdEmployee });
   } catch (err) {
     const error = new HttpError(
-      "Signing up failed, please try again later.",
+      err.message || "Signing up failed, please try again later.",
       500
     );
     return next(error);
   }
-  res.status(201).json({ employee: createdEmployee });
 };
+
 
 const deleteEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
