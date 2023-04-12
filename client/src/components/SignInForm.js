@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Visibility, VisibilityOff } from "@mui/icons-material"; 
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-
+const bcrypt = require('bcryptjs');
 
 
 const theme = createTheme();
@@ -26,6 +26,8 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
     
+        //const hashpass = await bcrypt.hash(data.get('password'),12);
+
         const response = await fetch("http://localhost:8080/api/employee/login", {
           method: "POST",
           headers: {
@@ -36,6 +38,7 @@ export default function SignIn() {
               password: data.get('password'),
             })
         });
+        
 
         console.log(response);
         if (response.status === 201) {
@@ -81,8 +84,8 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
-      password: data.get("password"),
-    });
+      password: bcrypt.hashSync(data.get("password")), 
+    });  
     if (!emailError && values.email && values.password) {
       loginService(event);
     }
