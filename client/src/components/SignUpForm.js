@@ -21,12 +21,20 @@ export default function SignUpForm() {
   const [resumeName, setResumeName] = useState(null);
   const [skills, setSkills] = useState([""]);
   const [bio , setBio] = useState(null);
+  const [isEmailValidated, setIsEmailValidated] = useState(false);
+
+function handleEmailValidation(isValidEmail) {
+  setIsEmailValidated(isValidEmail);
+}
+
 
   const steps = [
     {
       label: "Personal Information",
       description: "Enter your personal information",
-      component: <PersonalInformationBox handlePersonalInfo = {setPersonalInfo} handleBio = {setBio}/>,
+      component: <PersonalInformationBox handlePersonalInfo={setPersonalInfo} 
+  handleBio={setBio} 
+  handleEmailValidation={handleEmailValidation}/>,
     },
     {
       label: "Work Experience",
@@ -56,7 +64,7 @@ export default function SignUpForm() {
       handleNext();
     }
   };
-
+  
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -129,6 +137,7 @@ export default function SignUpForm() {
                       variant="contained"
                       onClick={handleChange}
                       sx={{ mt: 1, mr: 1 }}
+                      disabled={!isEmailValidated}
                     >
                       {activeStep === steps.length - 1 ? "Submit" : "Next"}
                     </Button>
