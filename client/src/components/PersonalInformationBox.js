@@ -46,6 +46,7 @@ function PersonalInformationBox(props) {
 
     // email validation using regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    console.log(emailRegex.test(e.target.value))
     setIsValidEmail(emailRegex.test(e.target.value));
     props.handleEmailValidation(isValidEmail);
   };

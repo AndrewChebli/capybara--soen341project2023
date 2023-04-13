@@ -34,9 +34,9 @@ function LogoutPage() {
     }, 2000);
   };
   if (query === "success") {
-    localStorage.setItem("loginStatus", "out");
-    localStorage.setItem("loginType", "undefined");
-    localStorage.setItem("_id", "undefined");
+    sessionStorage.setItem("loginStatus", "out");
+    sessionStorage.setItem("loginType", "undefined");
+    sessionStorage.setItem("_id", "undefined");
     window.location.href = "/HomePage";
   }
   return (

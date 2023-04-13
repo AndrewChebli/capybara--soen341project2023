@@ -40,7 +40,7 @@ function Dashboard() {
     getAllJobs();
   }, []);
 
-  if (localStorage.getItem("loginStatus") === "false") {
+  if (sessionStorage.getItem("loginStatus") === "false") {
     window.location.href = "/SignInPage";
   }
 

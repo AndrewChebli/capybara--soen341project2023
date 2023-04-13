@@ -117,11 +117,12 @@ function JobPostingSummary(props) {
       async function addBookmark() {
         let response_from_backend = await fetch(
           "http://localhost:8080/api/employee/bookmarks/" +
-            localStorage.getItem("_id"),
+          sessionStorage.getItem("_id"),
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: "Bearer " + sessionStorage.getItem("token"),
             },
             body: JSON.stringify({
               jobPostingId: id,

@@ -14,7 +14,7 @@ function Offers() {
     async function getOffers() {
       let response_from_backend = await fetch(
         "http://localhost:8080/api/employee/getAllOffers/" +
-          localStorage.getItem("_id"),
+        sessionStorage.getItem("_id"),
         {
           method: "GET",
           headers: {

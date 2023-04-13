@@ -7,12 +7,24 @@ const bodyParser = require("body-parser");
 //const {check , validationResult} = require('express-validator');
 const HttpError = require("./models/http-error");
 
+
 app.use(express.json({ limit: "50mb", extended: true }));
 app.use(
   express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
 );
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+    
+  next();
+});
 //======================LOCAL IMPORTS======================
 
 //=========================ROUTES==========================
