@@ -15,13 +15,14 @@ import AdbIcon from "@mui/icons-material/Adb";
 let pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
 let pages_names = ["Home", "Dashboard", "Bookmarks","Offers","Profile","EditProfile", "Logout"];
 function HeaderBar() {
-  
+  let status = sessionStorage.getItem("loginStatus");
+  let loginType = sessionStorage.getItem("loginType");
 
-  if(localStorage.getItem("loginStatus") === "true"){
-    if(localStorage.loginType === "employee"){
+  if(status === "true"){
+    if(loginType === "employee"){
     pages = ["Home", "Dashboard", "Bookmarks","Offers","Profile","EditProfile", "Logout"];
     pages_names = ["Home", "Dashboard", "Bookmarks","Offers","Profile","Edit Profile", "Logout"];
-    }else if (localStorage.loginType === "company"){
+    }else if (loginType === "company"){
       pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
       pages_names = ["Home", "Job Applicants", "Create Job Posting","Profile","Edit Profile", "Logout"];
     }else{

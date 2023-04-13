@@ -26,7 +26,7 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
     
-        //const hashpass = await bcrypt.hash(data.get('password'),12);
+        const hashpass = await bcrypt.hash(data.get('password'),12);
 
         const response = await fetch("http://localhost:8080/api/employee/login", {
           method: "POST",
@@ -45,10 +45,10 @@ export default function SignIn() {
           const res = await response.json();
           console.log(res)
           console.log(res._id);
-          localStorage.setItem("_id", res._id);
-          localStorage.setItem("loginStatus", "true");
-          localStorage.setItem("loginType", "employee");
-          localStorage.setItem("resume", res.resume);
+          sessionStorage.setItem("_id", res._id);
+          sessionStorage.setItem("loginStatus", "true");
+          sessionStorage.setItem("loginType", "employee");
+          sessionStorage.setItem("token", res.token);
           alert("Login Successful");
           window.location.href = "http://localhost:3000/DashboardPage";
         }else{

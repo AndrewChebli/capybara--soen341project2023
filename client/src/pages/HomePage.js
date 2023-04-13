@@ -9,7 +9,6 @@ import register_image from "../images/download.jpeg";
 import keyboard_image from "../images/keyboard_typing.jpg";
 import Grow from "@mui/material/Grow";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function Home() {

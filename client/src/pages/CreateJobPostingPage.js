@@ -61,14 +61,14 @@ function CreateJobPostingPage() {
     const data = new FormData(event.currentTarget);
     console.log({
       title: data.get("title"),
-      company: localStorage.getItem("companyName"),
+      company: sessionStorage.getItem("companyName"),
       description: data.get("description"),
       salary: data.get("salary"),
       benefits: benefits,
       requirements: requirements,
       location: data.get("location"),
       deadline: data.get("deadline"),
-      company_id: localStorage.getItem("_id"),
+      company_id: sessionStorage.getItem("_id"),
       remote: data.get("remote"),
       type: data.get("type"),
     });
@@ -80,17 +80,18 @@ function CreateJobPostingPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
         body: JSON.stringify({
           title: data.get("title"),
           description: data.get("description"),
           location: data.get("location"),
           salary: data.get("salary"),
-          company: localStorage.getItem("companyName"),
+          company: sessionStorage.getItem("companyName"),
           benefits: benefits,
           requirements: requirements,
           deadline: data.get("deadline"),
-          company_id: localStorage.getItem("_id"),
+          company_id: sessionStorage.getItem("_id"),
           remote: data.get("remote"),
           type: data.get("type"),
         }),

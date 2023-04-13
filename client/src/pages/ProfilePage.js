@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import ResumeViewer from "../components/ResumeViewer";
 import Grid from "@mui/material/Grid";
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
@@ -52,7 +51,7 @@ function ProfilePage(props) {
   let url = useParams().id;
   useEffect(() => {
     async function getEmployeeInfo() {
-      let id = localStorage.getItem("_id");
+      let id = sessionStorage.getItem("_id");
       if (url !== undefined) {
         id = url;
       }

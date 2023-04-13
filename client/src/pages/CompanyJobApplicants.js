@@ -13,7 +13,7 @@ const CompanyJobApplicants = () => {
   const [jobs, setJobs] = useState([]);
   const [open, setOpen] = useState(false);
   const [jobToDelete, setJobToDelete] = useState("");
-  let company_id = localStorage.getItem("_id");
+  let company_id = sessionStorage.getItem("_id");
 
   const handleOpen = (job) => {
     setOpen(true);
@@ -30,6 +30,7 @@ const CompanyJobApplicants = () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
       });
       

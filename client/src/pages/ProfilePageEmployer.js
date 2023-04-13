@@ -22,7 +22,7 @@ function ProfilePageEmployer(props) {
 
   let { id } = useParams();
   if (id === undefined) {
-    id = localStorage.getItem("id");
+    id = sessionStorage.getItem("id");
   }
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function ProfilePageEmployer(props) {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-auth-token": localStorage.getItem("token"),
+            "x-auth-token": sessionStorage.getItem("token"),
           },
         }
       );

@@ -86,6 +86,7 @@ function EditJobPosting() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+
           },
         }
       );
@@ -116,6 +117,7 @@ function EditJobPosting() {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
         body: JSON.stringify(data),
       }
