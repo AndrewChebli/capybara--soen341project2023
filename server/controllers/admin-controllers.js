@@ -4,13 +4,15 @@ const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
 const Admin = require("../models/AdminRegister.model.js");
 const reportController = require("./report-controllers");
+const bcrypt = require("bcryptjs");
 
 // @route   POST /admin/register
 // @desc    Register a new admin
 // @access  Public
 const registerAdmin = async (req, res, next) => {
   let { email, password } = req.body;
-  let admin_created = new Admin({ email, password, approved: false });
+  let hashedPassword = await bcrypt.hash(password, 12);
+  let admin_created = new Admin({ email, password : hashedPassword, approved: false });
   try {
     await admin_created.save();
   } catch (err) {

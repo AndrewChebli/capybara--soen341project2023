@@ -1,10 +1,8 @@
 const HttpError = require("../models/http-error");
 const jwt = require("jsonwebtoken");
-const KEY = require("../config/key.env");
 
 
 module.exports = (req, res, next) => {
-console.log(JSON.stringify(KEY));
   if(req.method === 'OPTIONS') {
     return next();
   }
@@ -20,8 +18,11 @@ console.log(JSON.stringify(KEY));
     }
 
     const decodedToken = jwt.verify(token, "capybaraSoen341");
-    console.log(decodedToken);
-    req.userData = { auth_id: decodedToken._id };
+    console.log("Middleware : " + JSON.stringify(decodedToken));
+    console.log("Middleware _id : " + decodedToken._id);
+    console.log("Middleware _type: " + decodedToken.type);
+    req.userData = {_id: decodedToken._id , type: decodedToken.type };
+
     next();
 
   } catch (err) {

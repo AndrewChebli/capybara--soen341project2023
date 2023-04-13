@@ -176,7 +176,11 @@ const registerEmployee = async (req, res, next) => {
 
 const deleteEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
-  const auth_id = req.userData.auth_id
+  const auth_id = req.userData._id;
+  const auth_type = req.userData.type;
+  console.log("auth_id : " + auth_id);
+  console.log("auth_type : " + auth_type);
+  
   console.log(auth_id);
   let employee;
 
@@ -263,8 +267,10 @@ const deleteEmployee = async (req, res, next) => {
 
 const updateEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
-  const auth_id = req.userData.auth_id
-  console.log("PATCH " + auth_id);
+  const auth_id = req.userData._id;
+  const auth_type = req.userData.type;
+  console.log("auth_id : " + auth_id);
+  console.log("auth_type : " + auth_type);
 
   let existingEmployee;
   try {
@@ -427,8 +433,11 @@ const getBookmarks = async (req, res, next) => {
 
 const addBookmark = async (req, res, next) => {
   let _id = req.params._id;
-  let auth_id = req.userData.auth_id;
-  console.log("POST " + auth_id);
+  console.log(req.userData)
+  const auth_id = await req.userData._id;
+  const auth_type = await req.userData.type;
+  console.log("auth_id : " + auth_id);
+  console.log("auth_type : " + auth_type);
   let existingEmployee;
   let bookmark = req.body.jobPostingId;
 
@@ -469,7 +478,10 @@ const addBookmark = async (req, res, next) => {
 
 const deleteBookmark = async (req, res, next) => {
   let _id = req.params._id;
-  let auth_id = req.userData.auth_id;
+  const auth_id = req.userData._id;
+  const auth_type = req.userData.type;
+  console.log("auth_id : " + auth_id);
+  console.log("auth_type : " + auth_type);
   let bookmarkToDelete = req.body.index;
   let existingEmployee;
 

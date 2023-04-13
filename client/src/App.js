@@ -74,6 +74,18 @@ function App() {
           <Route path="/EditProfilePage" element={<EditProfilePage />} />
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path="/LogoutPage" element={<LogoutPage></LogoutPage>} />
+          <Route
+            path="/EditProfileEmployerPage"
+            element={<EditProfilePageEmployer />}
+          />
+          <Route
+            path="/ProfilePageEmployerPage/:id"
+            element={<ProfilePageEmployer />}
+          />
+          <Route
+            path="/ProfilePageEmployerPage"
+            element={<ProfilePageEmployer />}
+          />
           <Route path = "/JobPostingPage/:id" element = {<JobPostingPage />} />
           <Route path = "ViewCandidate/:id" element = {< ProfilePage />} />
           <Route path = "ProfilePage/:id" element = {< ProfilePage />} />
@@ -89,18 +101,7 @@ function App() {
             element={<CompanyJobApplicants />}
           />
           <Route path="/JobPostingPage/:id" element={<JobPostingPage />} />
-          <Route
-            path="/EditProfileEmployerPage"
-            element={<EditProfilePageEmployer />}
-          />
-          <Route
-            path="/ProfilePageEmployerPage/:id"
-            element={<ProfilePageEmployer />}
-          />
-          <Route
-            path="/ProfilePageEmployerPage"
-            element={<ProfilePageEmployer />}
-          />
+
           <Route path="/EditJobPostingPage/:id" element={<EditJobPosting />} />
           <Route path="/ReportsPage" element={<Reports />} />
         </Routes>

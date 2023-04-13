@@ -138,6 +138,9 @@ const registerCompany = async (req, res, next) => {
 const removeCompany = async (req, res, next) => {
 
   const auth_id = req.userData._id;
+  const auth_type = req.userData.type;
+  console.log("auth_id : " + auth_id);
+  console.log("auth_type : " + auth_type);
   let company;
   try {
     company = await Company.findById(auth_id).exec();

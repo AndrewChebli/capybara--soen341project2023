@@ -27,7 +27,6 @@ export default function SignIn() {
         const data = new FormData(event.currentTarget);
     
         const response = await fetch("http://localhost:8080/api/universal/login", {
-        const hashpass = await bcrypt.hash(data.get('password'),12);
 
           method: "POST",
           headers: {
@@ -44,7 +43,6 @@ export default function SignIn() {
         if (response.status === 200) {
           const res = await response.json();
           console.log(res)
-          console.log(res._id);
 
           sessionStorage.setItem("_id", res._id);
           sessionStorage.setItem("loginStatus", "true");
@@ -55,7 +53,8 @@ export default function SignIn() {
           window.location.href = "http://localhost:3000/DashboardPage";
           }
           else if(res.type === "company"){
-          localStorage.setItem("companyName", res.user.companyName);
+            sessionStorage.setItem("companyName", res.companyName);
+            
           window.location.href = "http://localhost:3000/CompanyJobApplicantsPage";
           }
           else if(res.type === "admin")
