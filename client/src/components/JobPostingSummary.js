@@ -110,7 +110,7 @@ function JobPostingSummary(props) {
     setIsModalOpen(false);
   };
 
-  const handleBookmarkClick = (e) => {
+  const handleBookmarkClick = async (e) => {
     
     e.stopPropagation();
     console.log("Bookmark Clicked");

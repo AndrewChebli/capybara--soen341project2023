@@ -12,7 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { Visibility, VisibilityOff } from "@mui/icons-material"; 
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+const bcrypt = require('bcryptjs');
 
 
 const theme = createTheme();
@@ -33,6 +36,7 @@ export default function SignIn() {
               password: data.get('password'),
             })
         });
+        
 
         console.log(response);
         if (response.status === 200) {
@@ -60,7 +64,57 @@ export default function SignIn() {
 
 
     // ================END OF FRONT-END ENDPOINT=====================
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [values, setValues] = React.useState({
+    email: "",
+    password: "",
+  });
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailHelperText, setEmailHelperText] = React.useState("");
 
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  //function to show the password when pressing on the icon
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  //boolean to enable and disable the signup button
+  const isFormValid = !emailError && values.email && values.password;
+
+  //handle the submit button
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: bcrypt.hashSync(data.get("password")), 
+    });  
+    if (!emailError && values.email && values.password) {
+      loginService(event);
+    }
+  };
+  
+  //function that will specify what the email format should look like
+  const validateEmail = (email) => {
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return regex.test(email);
+  };
+
+  //takes care of checking if the email inputted was good or not
+  const handleEmailBlur = (event) => {
+    const email = event.target.value;
+    const isValid = validateEmail(email);
+    if (!isValid) {
+      setEmailError(true);
+      setEmailHelperText("Please enter a valid email address");
+    } else {
+      setEmailError(false);
+      setEmailHelperText("");
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" >
@@ -81,7 +135,7 @@ export default function SignIn() {
             Sign in
           </Typography>
           </Box>
-          <Box component="form" onSubmit={loginService} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -91,6 +145,11 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={values.email}
+              onChange={handleChange("email")}
+              onBlur={handleEmailBlur}
+              error={emailError}
+              helperText={emailHelperText}
             />
             <TextField
               margin="normal"
@@ -98,9 +157,20 @@ export default function SignIn() {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               autoComplete="current-password"
+              value={values.password}
+              onChange={handleChange('password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClickShowPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -111,6 +181,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!isFormValid}
             >
               Sign In
             </Button>

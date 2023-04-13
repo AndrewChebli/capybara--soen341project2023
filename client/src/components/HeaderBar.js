@@ -27,6 +27,7 @@ function HeaderBar() {
     }else if (localStorage.loginType === "admin"){
       pages = ["Home","Reports","Dashboard" ,"Logout"];
       pages_names = ["Home","Reports","Dashboard", "Logout"];
+
     }else{
       pages_names = ["Home","SignIn", "SignUp", "About"];
       pages = ["Home","SignIn", "SignUp","AboutUs"];
