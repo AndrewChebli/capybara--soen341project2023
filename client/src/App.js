@@ -21,6 +21,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Reports from "./pages/ReportsPage";
 import BookmarksPage from "./pages/BookmarksPage";
+import TournamentPage from "./pages/TournamentPage";
+
 import { useCallback } from "react";
 import { AuthContext } from "./context/auth-context";
 
@@ -72,10 +74,12 @@ function App() {
           <Route path="/EditProfilePage" element={<EditProfilePage />} />
           <Route path="/OffersPage" element={<OffersPage />} />
           <Route path="/LogoutPage" element={<LogoutPage></LogoutPage>} />
-          <Route path="/JobPostingPage/:id" element={<JobPostingPage />} />
-          <Route path="ViewCandidate/:id" element={<ProfilePage />} />
-          <Route path="ProfilePage/:id" element={<ProfilePage />} />
-          <Route path="/BookmarksPage" element={<BookmarksPage />} />
+          <Route path = "/JobPostingPage/:id" element = {<JobPostingPage />} />
+          <Route path = "ViewCandidate/:id" element = {< ProfilePage />} />
+          <Route path = "ProfilePage/:id" element = {< ProfilePage />} />
+          <Route path = "/BookmarksPage" element = {<BookmarksPage/>}/>
+          <Route path = "TournamentPage" element = {<TournamentPage/>}/>
+
           <Route
             path="/CreateJobPostingPage"
             element={<CreateJobPostingPage />}

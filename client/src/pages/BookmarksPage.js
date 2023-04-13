@@ -66,6 +66,7 @@ function BookmarksPage() {
   }, []);
 
   return (
+
     <Box
       sx={{
         width: "80%",
@@ -94,6 +95,7 @@ function BookmarksPage() {
       </Backdrop>
 
       <h1>Bookmarks</h1>
+
 
       <Grid container spacing={2} direction="row" sx={{ mt: 5 }}>
         {bookmarks.map((bookmark, index) => (
@@ -124,6 +126,7 @@ function BookmarksPage() {
                     {bookmark.jobDescription}
                   </Typography>
                 </CardContent>
+
                 <CardActions>
                   <Button onClick={() => handleToggle(index)} size="small">
                     View Job

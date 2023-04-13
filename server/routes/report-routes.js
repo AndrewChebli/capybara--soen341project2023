@@ -3,9 +3,9 @@ const router = express.Router();
 const reportController = require("../controllers/report-controllers");
 
 
-router.post("/job",(req,res,next)=>{
-  console.log("POST request to /report/job");
-  reportController.reportJob(req,res,next);
+router.post("/",(req,res,next)=>{
+  console.log("POST request to /report");
+  reportController.report(req,res,next);
 })
 
 router.get("/getAll",(req,res,next)=>{

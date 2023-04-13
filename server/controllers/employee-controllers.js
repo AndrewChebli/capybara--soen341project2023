@@ -377,6 +377,7 @@ const getBookmarks = async (req, res, next) => {
     return next(error);
   }
 
+
   if (existingEmployee.bookmarks.length === 0) {
     const error = new HttpError("No bookmarks yet", 400);
     return next(error);
@@ -397,6 +398,7 @@ const getBookmarks = async (req, res, next) => {
     existingEmployee.bookmarks.forEach((bookmark) => {
       if (!allIds.includes(bookmark)) {
         myBookmarks.splice(bookmark, 1);
+
       }
     });
 
@@ -410,6 +412,7 @@ const getBookmarks = async (req, res, next) => {
     });
 
     console.log(myBookmarks);
+
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find a job.",
@@ -417,6 +420,7 @@ const getBookmarks = async (req, res, next) => {
     );
     return next(error);
   }
+
 
   res.json({ status: 200, bookmarks: myBookmarks });
 };
@@ -439,6 +443,7 @@ const addBookmark = async (req, res, next) => {
     return next(error);
   }
 
+
   if (existingEmployee.bookmarks.includes(bookmark)) {
     console.log("Already bookmarked");
     const error = new HttpError("Already bookmarked", 400);
@@ -448,6 +453,7 @@ const addBookmark = async (req, res, next) => {
   existingEmployee.bookmarks.push(bookmark);
 
   try {
+
     let result = await existingEmployee.save({ new: true });
     console.log(result.bookmarks);
   } catch (err) {
@@ -477,6 +483,7 @@ const deleteBookmark = async (req, res, next) => {
     return next(error);
   }
 
+
   console.log(existingEmployee.bookmarks);
   existingEmployee.bookmarks.splice(bookmarkToDelete, 1);
   console.log(existingEmployee.bookmarks);
@@ -494,6 +501,7 @@ const deleteBookmark = async (req, res, next) => {
   res.json({ status: 200, message: "Deleted bookmark" });
 };
 
+
 exports.getAllEmployess = getAllEmployess;
 exports.getEmployeeById = getEmployeeById;
 exports.registerEmployee = registerEmployee;
@@ -504,4 +512,5 @@ exports.getAllOffers = getAllOffers;
 exports.getNews = getNews;
 exports.getBookmarks = getBookmarks;
 exports.addBookmark = addBookmark;
+
 exports.deleteBookmark = deleteBookmark;

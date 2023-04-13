@@ -25,11 +25,17 @@ function HeaderBar() {
     }else if (loginType === "company"){
       pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
       pages_names = ["Home", "Job Applicants", "Create Job Posting","Profile","Edit Profile", "Logout"];
+    }else if (localStorage.loginType === "admin"){
+      pages = ["Home","Reports","Dashboard" ,"Logout"];
+      pages_names = ["Home","Reports","Dashboard", "Logout"];
+
     }else{
-      pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
+      pages_names = ["Home","SignIn", "SignUp", "About"];
+      pages = ["Home","SignIn", "SignUp","AboutUs"];
     }
   }else{
-    pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
+    pages_names = ["Home","SignIn", "SignUp", "About"];
+    pages = ["Home","SignIn", "SignUp","AboutUs"];
   }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

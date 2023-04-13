@@ -26,9 +26,9 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
     
+        const response = await fetch("http://localhost:8080/api/universal/login", {
         const hashpass = await bcrypt.hash(data.get('password'),12);
 
-        const response = await fetch("http://localhost:8080/api/employee/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -41,16 +41,26 @@ export default function SignIn() {
         
 
         console.log(response);
-        if (response.status === 201) {
+        if (response.status === 200) {
           const res = await response.json();
           console.log(res)
           console.log(res._id);
+
           sessionStorage.setItem("_id", res._id);
           sessionStorage.setItem("loginStatus", "true");
           sessionStorage.setItem("loginType", "employee");
           sessionStorage.setItem("token", res.token);
           alert("Login Successful");
+          if(res.type === "employee"){
           window.location.href = "http://localhost:3000/DashboardPage";
+          }
+          else if(res.type === "company"){
+          localStorage.setItem("companyName", res.user.companyName);
+          window.location.href = "http://localhost:3000/CompanyJobApplicantsPage";
+          }
+          else if(res.type === "admin")
+          window.location.href = "http://localhost:3000/ReportsPage";
+
         }else{
           alert("Invalid Credentials");
         }

@@ -27,14 +27,17 @@ app.use((req, res, next) => {
 });
 //======================LOCAL IMPORTS======================
 
-
 //=========================ROUTES==========================
 
 const employeeRoutes = require("./routes/employee-routes");
 const jobRoutes = require("./routes/job-routes");
 const companyRoutes = require("./routes/company-routes");
 const reportRoutes = require("./routes/report-routes");
+const universalRoutes = require("./routes/universal-routes");
+const adminRoutes = require("./routes/admin-routes");
 
+app.use("/api/universal/", universalRoutes);
+app.use("/api/admin", adminRoutes)
 app.use("/api/employee", employeeRoutes);
 app.use("/api/company", companyRoutes);
 app.use("/api/job", jobRoutes);
@@ -45,18 +48,15 @@ app.use((req, res, next) => {
   throw error;
 });
 
-
 app.use(express.json());
 
 app.use((error, req, res, next) => {
-
   if (res.headerSent) {
     return next(error);
   }
 
   res.status(error.code || 500);
   res.json({ message: error.message || "An unknown error occurred!" });
-
 });
 
 let db;

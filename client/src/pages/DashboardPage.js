@@ -11,11 +11,13 @@ function Dashboard() {
   const [data, setData] = React.useState([]);
   const [currentLink, setCurrentLink] = React.useState();
   const [page, setPage] = React.useState(1);
-  const [currentView, setCurrentView] = React.useState([]);
+  const [currentView , setCurrentView] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
-  const page_size = Math.floor(data.length / 5);
+  const page_size = Math.ceil(data.length/5);
   console.log(data.length);
   console.log(page_size);
+
+  
 
   const handleChange = (event, value) => {
     setPage(value);
