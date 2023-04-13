@@ -1,9 +1,8 @@
 const HttpError = require("../models/http-error");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
-const { getJobById } = require("./jobs-controllers");
-const { all } = require("../routes/employee-routes");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const getAllEmployess = async (req, res, next) => {
   Employee.find()
@@ -14,7 +13,7 @@ const getAllEmployess = async (req, res, next) => {
 };
 
 const loginEmployee = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email } = req.body;
   let existingEmployee;
 
   try {
@@ -30,27 +29,50 @@ const loginEmployee = async (req, res, next) => {
   }
   if (!existingEmployee) {
     const error = new HttpError(
-      "Invalid credentials, could not log you in.",
+      "No Employee found for this email, please try again later.",
       401
     );
     return next(error);
   }
   if (existingEmployee.length === 0) {
     const error = new HttpError(
-      "Invalid credentials, could not log you in.",
+      "No Employee found for this email, please try again later.",
       401
     );
     return next(error);
   }
 
   const _id = existingEmployee[0]._id;
+  console.log("_id: " + _id);
+  console.log("existingEmployee[0].password: " + existingEmployee[0].password);
+  console.log("req.body.password: " + req.body.password);
 
   if (bcrypt.compareSync(req.body.password, existingEmployee[0].password)) {
+    console.log("passwords match")
+    let token;
+    try{
+      token = jwt.sign( 
+        {
+        _id: _id,
+        email: email,
+        },
+        "capybaraSoen341",
+        {expiresIn : "1h"}
+      );
+      }catch(err){
+        const error = new HttpError(
+          "Logging in failed, could not create token",
+          500
+        );
+        return next(error);
+    }
+
     res.status(201).json({
       message: "Logged in!",
       _id: _id,
       resume: existingEmployee[0].resume,
       resumeName: existingEmployee[0].resumeName,
+      token : token
     });
   } else {
     const error = new HttpError(
@@ -121,7 +143,7 @@ const registerEmployee = async (req, res, next) => {
   });
 
   try {
-    const existingEmployee = await Employee.findOne({ email: req.body.email.toLowerCase() });
+    const existingEmployee = await Employee.findOne({ email: req.body.email.toLowerCase() }).exec();
     if (existingEmployee) {
       throw new Error('Email already exists');
     }
@@ -130,7 +152,7 @@ const registerEmployee = async (req, res, next) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email.toLowerCase(),
-      password: req.body.password,
+      password: hashedPassword,
       resume: req.body.resume,
       resumeName: req.body.resumeName,
       skills: req.body.skills,
@@ -154,7 +176,8 @@ const registerEmployee = async (req, res, next) => {
 
 const deleteEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
-  console.log(employeeId);
+  const auth_id = req.userData.auth_id
+  console.log(auth_id);
   let employee;
 
   let allJobs;
@@ -183,7 +206,7 @@ const deleteEmployee = async (req, res, next) => {
   }
 
   try {
-    employee = await Employee.findById(employeeId);
+    employee = await Employee.findById(auth_id);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete employee.",
@@ -240,11 +263,12 @@ const deleteEmployee = async (req, res, next) => {
 
 const updateEmployee = async (req, res, next) => {
   const employeeId = req.params._id;
-  console.log("PATCH " + employeeId);
+  const auth_id = req.userData.auth_id
+  console.log("PATCH " + auth_id);
 
   let existingEmployee;
   try {
-    existingEmployee = await Employee.findByIdAndUpdate(employeeId, req.body, {
+    existingEmployee = await Employee.findByIdAndUpdate(auth_id, req.body, {
       new: true,
     }).exec();
   } catch (err) {
@@ -399,13 +423,13 @@ const getBookmarks = async (req, res, next) => {
 
 const addBookmark = async (req, res, next) => {
   let _id = req.params._id;
-  console.log(_id + "  Addbookmark");
+  let auth_id = req.userData.auth_id;
+  console.log("POST " + auth_id);
   let existingEmployee;
   let bookmark = req.body.jobPostingId;
-  console.log("Job Id Bookmark : " + bookmark);
 
   try {
-    existingEmployee = await Employee.findById(_id);
+    existingEmployee = await Employee.findById(auth_id);
   } catch (err) {
     console.log(err);
     const error = new HttpError(
@@ -439,12 +463,12 @@ const addBookmark = async (req, res, next) => {
 
 const deleteBookmark = async (req, res, next) => {
   let _id = req.params._id;
+  let auth_id = req.userData.auth_id;
   let bookmarkToDelete = req.body.index;
-  console.log("We got here" + bookmarkToDelete);
   let existingEmployee;
 
   try {
-    existingEmployee = await Employee.findById(_id);
+    existingEmployee = await Employee.findById(auth_id);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find employee.",

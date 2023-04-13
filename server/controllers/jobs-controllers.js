@@ -27,6 +27,22 @@ const getJobById = async (req, res, next) => {
 };
 
 const addJob = async (req, res, next) => {
+  const auth_id = req.userData._id;
+
+  let existingCompany;
+  try {
+    existingCompany = await Company.findById(auth_id).exec();
+  } catch (err) {
+    const error = new HttpError(
+      "Adding job failed, cannot find related company.",
+      500
+    );
+    return next(error);
+  }
+  if (!existingCompany) {
+    const error = new HttpError("Could not find company for this id.", 404);
+    return next(error);
+  }
   const {
     title,
     description,
@@ -71,20 +87,7 @@ const addJob = async (req, res, next) => {
   }
 
   let job_id = createdJob._id;
-  let existingCompany;
-  try {
-    existingCompany = await Company.findById(company_id).exec();
-  } catch (err) {
-    const error = new HttpError(
-      "Adding job failed, cannot find related company.",
-      500
-    );
-    return next(error);
-  }
-  if (!existingCompany) {
-    const error = new HttpError("Could not find company for this id.", 404);
-    return next(error);
-  }
+ 
   existingCompany.jobs.push(job_id);
 
   try{
@@ -116,6 +119,11 @@ const addJob = async (req, res, next) => {
 };
 
 const addApplicant = async (req, res, next) => {
+  const auth_id = req.userData._id;
+  if(auth_id !== req.body.applicant_id){
+    const error = new HttpError("You are not authorized to do this.", 401);
+    return next(error);
+  }
   console.log(req.body);
   const { job_id, applicant_id } = req.body;
   let existingJob;
@@ -168,6 +176,7 @@ const addApplicant = async (req, res, next) => {
 
 const deleteJobById = async (req, res, next) => {
   const _id = req.params._id;
+  const auth_id = req.userData._id;
 
   try {
     let existingJob;
@@ -175,6 +184,11 @@ const deleteJobById = async (req, res, next) => {
     if (!existingJob) {
       throw new Error("Could not find job.");
     }
+    if(auth_id !== existingJob.company_id){
+      const error = new HttpError("You are not authorized to do this.", 401);
+      return next(error);
+    }
+    
     await existingJob.remove();
     res.status(200).json({ message: "Job deleted successfully." });
   } catch (err) {
@@ -187,8 +201,22 @@ const deleteJobById = async (req, res, next) => {
 };
 
 const updateJobById = async (req, res, next) => {
+  const auth_id = req.userData._id;
   const _id = req.params._id;
-
+  let existingJob;
+  try {
+    existingJob = await Job.findById(auth_id).exec();
+  } catch (err) {
+    const error = new HttpError(
+      "Adding job failed, cannot find related company.",
+      500
+    );
+    return next(error);
+  }
+  if(auth_id !== existingJob.company_id){
+    const error = new HttpError("You are not authorized to do this.", 401);
+    return next(error);
+  }
   let updatedJob
   try {
     updatedJob = await Job.findByIdAndUpdate(

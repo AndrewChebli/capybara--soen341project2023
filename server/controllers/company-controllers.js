@@ -2,6 +2,7 @@ const HttpError = require("../models/http-error");
 const Company = require("../models/CompanyRegister.model.js");
 const Employee = require("../models/EmployeeRegister.model.js");
 const Job = require("../models/addJob.model.js");
+const jwt = require("jsonwebtoken");
 
 const getAllCompanies = (req, res, next) => {
   console.log("GET request to /company/getall");
@@ -73,10 +74,29 @@ const loginCompany = async (req, res, next) => {
   }
   const _id = existingCompany[0]._id;
   console.log(_id);
+
+  let token;
+
+  try {
+    token = jwt.sign(
+      {_id : _id,
+      email: email},
+      "capybaraSoen341",
+      {expiresIn: "1h"}
+    );
+  } catch (err) {
+    const error = new HttpError(
+      "Logging in failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+
   res.status(201).json({
     message: "Logged in!",
     _id: _id,
     companyName: existingCompany[0].companyName,
+    token : token
   });
 };
 
@@ -116,10 +136,11 @@ const registerCompany = async (req, res, next) => {
 };
 
 const removeCompany = async (req, res, next) => {
-  const companyId = req.params._id;
+
+  const auth_id = req.userData._id;
   let company;
   try {
-    company = await Company.findById(companyId).exec();
+    company = await Company.findById(auth_id).exec();
   } catch (error) {
     const err = new HttpError(
       "Something went wrong, could not delete company.",
@@ -152,6 +173,7 @@ const updateCompany = (req, res, next) => {
 };
 
 const selectApplicant = async (req, res, next) => {
+  const auth_id = req.userData._id;
   const { job_id, applicant_id } = req.body;
   let existingJob;
 
@@ -172,6 +194,12 @@ const selectApplicant = async (req, res, next) => {
 
   //looking for duplicate applicants
   let existingJobObject = existingJob.toObject({ getters: true });
+  if(existingJobObject.company_id !== auth_id)
+  {
+    const error = new HttpError("You are not authorized to select applicants for this job.", 401);
+    return next(error);
+  }
+
 
   let duplicate = false;
   existingJobObject.selected_applicants.forEach((applicant) => {
