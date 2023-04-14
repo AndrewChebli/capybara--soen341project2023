@@ -22,8 +22,9 @@ function ProfilePageEmployer(props) {
 
   let { id } = useParams();
   if (id === undefined) {
-    id = sessionStorage.getItem("id");
+    id = sessionStorage.getItem("_id");
   }
+  console.log(id)
 
   useEffect(() => {
     async function getCompanyInfo() {
@@ -48,7 +49,7 @@ function ProfilePageEmployer(props) {
 
     async function getCompanyJobs() {
       const response = await fetch(
-        "http://localhost:8080/api/company/getCompanyJobs/642363fb3184b0dc63800a4c",
+        "http://localhost:8080/api/company/getCompanyJobs/" + id,
         {
           method: "GET",
           headers: {
