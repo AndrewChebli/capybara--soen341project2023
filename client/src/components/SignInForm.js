@@ -46,7 +46,7 @@ export default function SignIn() {
 
           sessionStorage.setItem("_id", res._id);
           sessionStorage.setItem("loginStatus", "true");
-          sessionStorage.setItem("loginType", "employee");
+          sessionStorage.setItem("loginType", res.type);
           sessionStorage.setItem("token", res.token);
           alert("Login Successful");
           if(res.type === "employee"){

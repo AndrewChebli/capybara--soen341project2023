@@ -34,7 +34,7 @@ const loginUniversal = async (req, res, next) => {
     try {
       if (bcrypt.compareSync(req.body.password, existingUser.password)) {
         console.log("Password is correct");
-        type = "employee";
+        type = "company";
         const token = jwt.sign(
           { _id: existingUser._id, type: type },
           "capybaraSoen341",
