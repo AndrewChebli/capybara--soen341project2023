@@ -169,10 +169,38 @@ const removeCompany = async (req, res, next) => {
   }
 };
 
-const updateCompany = (req, res, next) => {
+const updateCompany = async (req, res, next) => {
   console.log("POST request to /company/update/:_id");
   const _id = req.params._id;
+  const auth_id = req.userData._id;
+  const auth_type = req.userData.type;
+  console.log("auth_id : " + auth_id);
+  console.log("_id : " + _id);
+  console.log("auth_type : " + auth_type);
+  console.log("-----------------body-----------------");
+  console.log(req.body);
   console.log(_id);
+  let existingCompany;
+    try {
+      existingCompany = await Company.findByIdAndUpdate(auth_id, req.body, {
+        new: true,
+        }).exec();
+    } catch (err) {
+      console.log(err)
+      const error = new HttpError(
+        "Something went wrong, could not update company.",
+        500
+      );
+      return next(error);
+
+    }
+    if(!existingCompany){
+      const error = new HttpError("Could not find company for the provided id.", 404);
+      return next(error);
+    }
+
+  res.json({ status: 200, message: "Company updated" });
+
 };
 
 const selectApplicant = async (req, res, next) => {

@@ -24,7 +24,7 @@ function ProfilePageEmployer(props) {
   if (id === undefined) {
     id = sessionStorage.getItem("_id");
   }
-  console.log(id)
+  console.log(id);
 
   useEffect(() => {
     async function getCompanyInfo() {
@@ -152,6 +152,28 @@ function ProfilePageEmployer(props) {
                 </Grid>
               </CardContent>
             </Card>
+          </Grid>
+          <Grid item xs={4} sx = {{ml:2}}>
+            <Box sx={{ mt: 5 }}>
+             
+              <Typography variant="h5" sx={{ mt: 2 }}>
+                Company Links
+              </Typography>
+              <Divider />
+              <Grid container direction="column" spacing={2} sx={{ mt: 2 }}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<WebIcon />}
+                    sx={{ width: "100%" }}
+                    href="https://+ {companyInfo.website}"
+                  >
+                      {companyInfo.website}
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Grid>

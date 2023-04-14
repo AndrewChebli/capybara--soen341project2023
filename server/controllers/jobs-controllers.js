@@ -205,7 +205,7 @@ const updateJobById = async (req, res, next) => {
   const _id = req.params._id;
   let existingJob;
   try {
-    existingJob = await Job.findById(auth_id).exec();
+    existingJob = await Job.findById(_id).exec();
   } catch (err) {
     const error = new HttpError(
       "Adding job failed, cannot find related company.",
@@ -213,6 +213,7 @@ const updateJobById = async (req, res, next) => {
     );
     return next(error);
   }
+  console.log(JSON.stringify(existingJob));
   if(auth_id !== existingJob.company_id){
     const error = new HttpError("You are not authorized to do this.", 401);
     return next(error);
