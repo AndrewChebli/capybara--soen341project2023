@@ -20,21 +20,24 @@ export default function SignUpForm() {
   const [education, setEducation] = useState(null);
   const [resumeName, setResumeName] = useState(null);
   const [skills, setSkills] = useState([""]);
-  const [bio , setBio] = useState(null);
+  const [bio, setBio] = useState(null);
   const [isEmailValidated, setIsEmailValidated] = useState(false);
 
-function handleEmailValidation(isValidEmail) {
-  setIsEmailValidated(isValidEmail);
-}
-
+  function handleEmailValidation(isValidEmail) {
+    setIsEmailValidated(isValidEmail);
+  }
 
   const steps = [
     {
       label: "Personal Information",
       description: "Enter your personal information",
-      component: <PersonalInformationBox handlePersonalInfo={setPersonalInfo} 
-  handleBio={setBio} 
-  handleEmailValidation={handleEmailValidation}/>,
+      component: (
+        <PersonalInformationBox
+          handlePersonalInfo={setPersonalInfo}
+          handleBio={setBio}
+          handleEmailValidation={handleEmailValidation}
+        />
+      ),
     },
     {
       label: "Work Experience",
@@ -44,12 +47,16 @@ function handleEmailValidation(isValidEmail) {
     {
       label: "Education",
       description: "Enter your education",
-      component: <EducationBox handleEducation={setEducation} handleSkills = {setSkills}/>,
+      component: (
+        <EducationBox handleEducation={setEducation} handleSkills={setSkills} />
+      ),
     },
     {
       label: "Resume",
       description: "Upload your resume",
-      component: <ResumeBox handleResume={setResume} handleResumeName = {setResumeName} />,
+      component: (
+        <ResumeBox handleResume={setResume} handleResumeName={setResumeName} />
+      ),
     },
   ];
 
@@ -64,15 +71,12 @@ function handleEmailValidation(isValidEmail) {
       handleNext();
     }
   };
-  
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-
-
   async function registerService() {
-
     console.log("Personal info: " + JSON.stringify(personalInfo));
     console.log("Work Experience: " + JSON.stringify(workExperience));
     console.log("Education: " + JSON.stringify(education));
@@ -90,13 +94,12 @@ function handleEmailValidation(isValidEmail) {
           email: personalInfo.email,
           password: personalInfo.password,
           phoneNumber: personalInfo.phoneNumber,
-          bio : bio,
+          bio: bio,
           skills: skills,
           experience: workExperience,
           education: education,
           resume: resume,
           resumeName: resumeName,
-
         }),
       }
     );

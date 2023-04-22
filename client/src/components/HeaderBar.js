@@ -15,20 +15,27 @@ import AdbIcon from "@mui/icons-material/Adb";
 let pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
 let pages_names = ["Home", "Dashboard", "Bookmarks","Offers","Profile","EditProfile", "Logout"];
 function HeaderBar() {
-  
+  let status = sessionStorage.getItem("loginStatus");
+  let loginType = sessionStorage.getItem("loginType");
 
-  if(localStorage.getItem("loginStatus") === "true"){
-    if(localStorage.loginType === "employee"){
+  if(status === "true"){
+    if(loginType === "employee"){
     pages = ["Home", "Dashboard", "Bookmarks","Offers","Profile","EditProfile", "Logout"];
     pages_names = ["Home", "Dashboard", "Bookmarks","Offers","Profile","Edit Profile", "Logout"];
-    }else if (localStorage.loginType === "company"){
+    }else if (loginType === "company"){
       pages = ["Home", "CompanyJobApplicants", "CreateJobPosting","ProfilePageEmployer","EditProfileEmployer", "Logout"];
-      pages_names = ["Home", "Job Applicants", "Create Job Posting","Profile","Edit Profile", "Logout"];
+      pages_names = ["Home", "Job Applicants", "Create Job Posting","ProfilePageEmployer","Edit Profile", "Logout"];
+    }else if (loginType === "admin"){
+      pages = ["Home","Reports","Dashboard" ,"Logout"];
+      pages_names = ["Home","Reports","Dashboard", "Logout"];
+
     }else{
-      pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
+      pages_names = ["Home","SignIn", "SignUp", "About"];
+      pages = ["Home","SignIn", "SignUp","AboutUs"];
     }
   }else{
-    pages = ["Home", "Dashboard", "Offers","SignIn", "SignUp"];
+    pages_names = ["Home","SignIn", "SignUp", "About"];
+    pages = ["Home","SignIn", "SignUp","AboutUs"];
   }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

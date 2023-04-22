@@ -22,8 +22,9 @@ function ProfilePageEmployer(props) {
 
   let { id } = useParams();
   if (id === undefined) {
-    id = localStorage.getItem("id");
+    id = sessionStorage.getItem("_id");
   }
+  console.log(id);
 
   useEffect(() => {
     async function getCompanyInfo() {
@@ -33,7 +34,7 @@ function ProfilePageEmployer(props) {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-auth-token": localStorage.getItem("token"),
+            "x-auth-token": sessionStorage.getItem("token"),
           },
         }
       );
@@ -48,7 +49,7 @@ function ProfilePageEmployer(props) {
 
     async function getCompanyJobs() {
       const response = await fetch(
-        "http://localhost:8080/api/company/getCompanyJobs/642363fb3184b0dc63800a4c",
+        "http://localhost:8080/api/company/getCompanyJobs/" + id,
         {
           method: "GET",
           headers: {
@@ -151,6 +152,28 @@ function ProfilePageEmployer(props) {
                 </Grid>
               </CardContent>
             </Card>
+          </Grid>
+          <Grid item xs={4} sx = {{ml:2}}>
+            <Box sx={{ mt: 5 }}>
+             
+              <Typography variant="h5" sx={{ mt: 2 }}>
+                Company Links
+              </Typography>
+              <Divider />
+              <Grid container direction="column" spacing={2} sx={{ mt: 2 }}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<WebIcon />}
+                    sx={{ width: "100%" }}
+                    href="https://+ {companyInfo.website}"
+                  >
+                      {companyInfo.website}
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Grid>

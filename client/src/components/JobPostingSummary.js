@@ -69,7 +69,38 @@ function JobPostingSummary(props) {
     }
     console.log("Report: ", reportMessage);
     console.log("Reason: ", reportReason);
-    
+    let report = {
+      type : "job",
+      message: reportMessage,
+      reason: reportReason,
+      whistleblower_id: localStorage.getItem("_id"),
+      offender_id: data._id,
+      offender_name: data.company,
+      data : data
+    };
+
+    console.log(report);
+
+    const reportService = async () => {
+      let response_from_backend = await fetch(
+        "http://localhost:8080/api/report/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: JSON.stringify(report),
+        }
+      );
+      console.log(response_from_backend);
+      if (response_from_backend.status === 201) {
+        toast.success('Job Posting reported.');
+      } else {
+        toast.error('Error reporting job posting.');
+      }
+    };
+    reportService();
     // TODO: submit report
     setIsModalOpen(false);
   };
@@ -87,11 +118,12 @@ function JobPostingSummary(props) {
       async function addBookmark() {
         let response_from_backend = await fetch(
           "http://localhost:8080/api/employee/bookmarks/" +
-            localStorage.getItem("_id"),
+          sessionStorage.getItem("_id"),
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: "Bearer " + sessionStorage.getItem("token"),
             },
             body: JSON.stringify({
               jobPostingId: id,

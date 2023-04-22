@@ -50,6 +50,7 @@ const ApplicantBox = (applicant_id, job_id) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization : "Bearer " + sessionStorage.getItem("token"),
         },
         body: JSON.stringify({
           job_id: applicant_id.job_id,
@@ -57,11 +58,13 @@ const ApplicantBox = (applicant_id, job_id) => {
         }),
       }
     );
+
     const responseData = await response.json();
+    console.log(response)
     console.log(responseData);
-    if (response === 500) {
+    if (response.status === 500) {
       console.log("error");
-    } else if (response === 200) {
+    } else if (response.status === 200) {
       setSelected(true);
       window.alert("Applicant selected");
     } else if (response.status === 422) {

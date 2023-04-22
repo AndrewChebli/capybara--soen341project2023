@@ -1,4 +1,4 @@
-const Report = require("../models/report.model");
+const Report = require("../models/Report.model");
 const HttpError = require("../models/http-error");
 
 const getAllReports = async (req, res, next) => {
@@ -33,24 +33,31 @@ const getOneReport = async (req, res, next) => {
   });
 };
 
-const reportJob = async (req, res, next) => {
-  const createTheme = new Report({
+const report = async (req, res, next) => {
+  let type = req.body.type;
+  console.log("=================REPORT==================")
+  console.log("=================" + type + "==================")
+  console.log(req.body);
+  let report = new Report({
     type: req.body.type,
     message: req.body.message,
     reason: req.body.reason,
     whistleblower_id: req.body.whistleblower_id,
-    whistleblower_name: req.body.whistleblower_name,
     offender_id: req.body.offender_id,
     offender_name: req.body.offender_name,
     data: req.body.data,
   });
   try {
-    await createTheme.save();
-  } catch (err) {
-    const error = new HttpError("Reporting job failed, please try again.", 500);
+    await report.save();
+  }
+  catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not report job.",
+      500
+    );
     return next(error);
   }
-  res.status(201).json({ report: createTheme });
+  res.status(201).json({ report: report.toObject({ getters: true }) });
 };
 
 const removeReport = async (req, res, next) => {
@@ -83,7 +90,10 @@ const removeReport = async (req, res, next) => {
 };
 
 
+
+
 exports.getAllReports = getAllReports;
 exports.getOneReport = getOneReport;
-exports.reportJob = reportJob;
+exports.report = report;
 exports.removeReport = removeReport;
+

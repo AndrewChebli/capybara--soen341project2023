@@ -12,14 +12,15 @@ import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import { Divider } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { useAuth } from "../context/auth-context";
 
-let b64 = localStorage.getItem("resume")
-  ? localStorage.getItem("resume")
+let b64 = sessionStorage.getItem("resume")
+  ? sessionStorage.getItem("resume")
   : null;
 
 function EditProfilePage() {
   const [resume, setResume] = useState(
-    localStorage.getItem("resume") ? localStorage.getItem("resume") : null
+    sessionStorage.getItem("resume") ? sessionStorage.getItem("resume") : null
   );
   const [workExperience, setWorkExperience] = useState([""]);
   const [skills, setSkills] = useState([""]);
@@ -133,20 +134,22 @@ function EditProfilePage() {
   useEffect(() => {
     async function getEmployeeInfo() {
       let response_from_backend;
+      let token =  sessionStorage.getItem("token");
       response_from_backend = await fetch(
         "http://localhost:8080/api/employee/getone/" +
-          localStorage.getItem("_id"),
+        sessionStorage.getItem("_id"),
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+
           },
         }
       );
       console.log(response_from_backend);
       let response = await response_from_backend.json();
       console.log(response);
-      localStorage.setItem("resume", response.employee.resume);
+      sessionStorage.setItem("resume", response.employee.resume);
       setEmployeeInfo(response.employee);
       setResume(response.employee.resume);
       setResumeName(response.employee.resumeName);
@@ -161,17 +164,18 @@ function EditProfilePage() {
     let response_from_backend;
     console.log("deleting account");
     response_from_backend = await fetch(
-      `http://localhost:8080/api/employee/${localStorage.getItem("_id")}`,
+      `http://localhost:8080/api/employee/${sessionStorage.getItem("_id")}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + sessionStorage.getItem("token"),
         },
       }
     );
 
     if (response_from_backend.status === 200) {
-      localStorage.clear();
+      sessionStorage.clear();
       alert("Account deleted successfully");
       window.location.href = "/";
     } else if (response_from_backend.status === 500) {
@@ -217,13 +221,14 @@ function EditProfilePage() {
     console.log(event.currentTarget);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log("sending to : " + localStorage.getItem("_id"));
+    console.log("sending to : " + sessionStorage.getItem("_id"));
     let response_from_backend = await fetch(
-      "http://localhost:8080/api/employee/" + localStorage.getItem("_id"),
+      "http://localhost:8080/api/employee/" + sessionStorage.getItem("_id"),
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
         body: JSON.stringify({
           firstName: data.get("firstName"),
@@ -246,7 +251,7 @@ function EditProfilePage() {
     let response = await response_from_backend.json();
     console.log(response);
     if (response_from_backend.status === 200) {
-      localStorage.setItem("resume", response.employee.resume);
+      sessionStorage.setItem("resume", response.employee.resume);
       console.log(response.employee);
       alert("Profile Updated");
     } else {

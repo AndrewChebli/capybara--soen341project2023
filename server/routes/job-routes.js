@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jobController = require("../controllers/jobs-controllers");
-
+const checkAuth = require("../middleware/check-auth");
 
 router.get("/all", (req, res, next) => {
   console.log("GET request to /job/all");
@@ -13,13 +13,15 @@ router.get("/getone/:_id", (req, res, next) => {
   jobController.getJobById(req, res, next);
 });
 
+router.use(checkAuth);
+
+
 router.delete("/remove/:_id", (req, res, next) => {
   console.log("GET request to /job/remove/:_id");
   const _id = req.params._id;
   console.log(_id);
   jobController.deleteJobById(req, res, next);
 });
-
 
 router.post("/add/applicant/", (req, res, next) => {
   console.log("POST request to /job/add/applicant");

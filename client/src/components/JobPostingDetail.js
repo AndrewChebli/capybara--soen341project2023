@@ -94,7 +94,7 @@ function JobPostingDetail(props) {
     event.preventDefault();
     event.stopPropagation();
     console.log("apply to job");
-    console.log(localStorage.getItem("_id"));
+    console.log(sessionStorage.getItem("_id"));
 
     const reponse = await fetch(
       `http://localhost:8080/api/job/add/applicant/`,
@@ -102,10 +102,11 @@ function JobPostingDetail(props) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
         body: JSON.stringify({
           job_id: props.id,
-          applicant_id: localStorage.getItem("_id"),
+          applicant_id: sessionStorage.getItem("_id"),
         }),
       }
     );

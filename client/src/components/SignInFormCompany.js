@@ -39,10 +39,10 @@ export default function SignInFormCompany() {
           const res = await response.json();
           console.log(res)
           console.log(res._id);
-          localStorage.setItem("_id", res._id);
-          localStorage.setItem("loginStatus", "true");
-          localStorage.setItem("loginType", "company");
-          localStorage.setItem("companyName", res.companyName);
+          sessionStorage.setItem("_id", res._id);
+          sessionStorage.setItem("loginStatus", "true");
+          sessionStorage.setItem("loginType", "company");
+          sessionStorage.setItem("companyName", res.companyName);
           alert("Login Successful");
           window.location.href = "http://localhost:3000/CompanyJobApplicantsPage";
         }else{

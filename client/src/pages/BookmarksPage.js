@@ -24,11 +24,12 @@ function BookmarksPage() {
   const handleDelete = async (index) => {
     let response_from_backend = await fetch(
       "http://localhost:8080/api/employee/bookmarks/" +
-        localStorage.getItem("_id"),
+        sessionStorage.getItem("_id"),
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
         body: JSON.stringify({
           index: index,
@@ -36,8 +37,8 @@ function BookmarksPage() {
       }
     );
 
-    console.log(response_from_backend)
-    if(response_from_backend.status === 200){
+    console.log(response_from_backend);
+    if (response_from_backend.status === 200) {
       window.location.reload();
     }
   };
@@ -46,7 +47,7 @@ function BookmarksPage() {
     async function getBookmarks() {
       let response_from_backend = await fetch(
         "http://localhost:8080/api/employee/bookmarks/" +
-          localStorage.getItem("_id"),
+        sessionStorage.getItem("_id"),
         {
           method: "GET",
           headers: {
@@ -65,6 +66,7 @@ function BookmarksPage() {
   }, []);
 
   return (
+
     <Box
       sx={{
         width: "80%",
@@ -93,6 +95,7 @@ function BookmarksPage() {
       </Backdrop>
 
       <h1>Bookmarks</h1>
+
 
       <Grid container spacing={2} direction="row" sx={{ mt: 5 }}>
         {bookmarks.map((bookmark, index) => (
@@ -123,6 +126,7 @@ function BookmarksPage() {
                     {bookmark.jobDescription}
                   </Typography>
                 </CardContent>
+
                 <CardActions>
                   <Button onClick={() => handleToggle(index)} size="small">
                     View Job
